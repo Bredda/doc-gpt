@@ -1,42 +1,46 @@
 import {
-    Entity,
-    PrimaryGeneratedColumn,
-    Column,
-    ManyToOne,
-    CreateDateColumn,
-    UpdateDateColumn,
-    JoinColumn,
-    Relation,
-  } from "typeorm";
-import { Project } from "./project.js";
-  
-  @Entity()
-  export class OriginalDocument {
-    @PrimaryGeneratedColumn()
-    id!: number;
-  
-    @Column()
-    originalname!: string;
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+  JoinColumn,
+  Relation
+} from 'typeorm';
+import { Project } from './project.js';
 
-    @Column()
-    encoding!: string;
+@Entity()
+export class OriginalDocument {
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-    @Column()
-    mimetype!: string;
+  @Column()
+  originalname!: string;
 
-    @Column()
-    path!: string;
+  @Column()
+  encoding!: string;
 
-    @Column()
-    size!: number;
+  @Column()
+  mimetype!: string;
 
-    @ManyToOne((_type) => Project, (project: Project) => project.originalDocuments, { onDelete: 'CASCADE' })
-    @JoinColumn()
-    project!: Relation<Project>;
-  
-    @CreateDateColumn()
-    createdAt!: Date;
-  
-    @UpdateDateColumn()
-    updatedAt!: Date;
-  }
+  @Column()
+  path!: string;
+
+  @Column()
+  size!: number;
+
+  @ManyToOne(
+    (_type) => Project,
+    (project: Project) => project.originalDocuments,
+    { onDelete: 'CASCADE' }
+  )
+  @JoinColumn()
+  project!: Relation<Project>;
+
+  @CreateDateColumn()
+  createdAt!: Date;
+
+  @UpdateDateColumn()
+  updatedAt!: Date;
+}

@@ -1,93 +1,114 @@
-import { Get, Route, Tags, Post, Put, Delete} from "tsoa";
-import { Request, Response } from "express";
-import {  createNewProject, deleteProjectById, getAllProjectDocuments, getProjectById, getProjectsByUserId, registerFileToProject } from "../repositories/project.repository.js";
-import { createNewProjecthat, deleteChatById, getChat, getChatsByProjectId, updateChatSettings } from "../repositories/chat.repository.js";
+import { Get, Route, Tags, Post, Put, Delete } from 'tsoa';
+import { Request, Response } from 'express';
+import {
+  createNewProject,
+  deleteProjectById,
+  getAllProjectDocuments,
+  getProjectById,
+  getProjectsByUserId,
+  registerFileToProject
+} from '../repositories/project.repository.js';
+import {
+  createNewProjecthat,
+  deleteChatById,
+  getChat,
+  getChatsByProjectId,
+  updateChatSettings
+} from '../repositories/chat.repository.js';
 
-@Route("projects")
-@Tags("Project")
+@Route('projects')
+@Tags('Project')
 class ProjectController {
-
-  @Get("/projects")
+  @Get('/projects')
   static getUserProjects = async (req: Request, res: Response) => {
-    const userId = +res.locals.jwtPayload.userId
-    const projects = await getProjectsByUserId(+userId, true)
+    const userId = +res.locals.jwtPayload.userId;
+    const projects = await getProjectsByUserId(+userId, true);
     res.send(projects);
   };
 
-  @Get("/projects/:projectId")
+  @Get('/projects/:projectId')
   static getProjectById = async (req: Request, res: Response) => {
-    const project = await getProjectById(+req.params.projectId)
-    console.log(project)
+    const project = await getProjectById(+req.params.projectId);
+    console.log(project);
     res.send(project);
   };
 
-  @Delete("/projects/:projectId")
+  @Delete('/projects/:projectId')
   static deleteUserProject = async (req: Request, res: Response) => {
-    await deleteProjectById(+req.params.projectId)
-    const projects = await getProjectsByUserId(+res.locals.jwtPayload.userId, true)
-    res.send(projects)
-  }
-
-  @Delete("/projects/:projectId/chats/:chatId")
-  static deleteUserChat = async (req: Request, res: Response) => {
-    await deleteChatById(+req.params.chatId)
-    const projects = await getProjectsByUserId(+res.locals.jwtPayload.userId, true)
-    res.send(projects)
-  }
-
-  @Get("/projects/:projectId/chats")
-  static getProjectChats = async (req: Request, res: Response) => {
-    const projects = await getChatsByProjectId(+req.params.projectId)
+    await deleteProjectById(+req.params.projectId);
+    const projects = await getProjectsByUserId(
+      +res.locals.jwtPayload.userId,
+      true
+    );
     res.send(projects);
   };
 
-  @Get("/projects/:projectId/chats/:chatId")
+  @Delete('/projects/:projectId/chats/:chatId')
+  static deleteUserChat = async (req: Request, res: Response) => {
+    await deleteChatById(+req.params.chatId);
+    const projects = await getProjectsByUserId(
+      +res.locals.jwtPayload.userId,
+      true
+    );
+    res.send(projects);
+  };
+
+  @Get('/projects/:projectId/chats')
+  static getProjectChats = async (req: Request, res: Response) => {
+    const projects = await getChatsByProjectId(+req.params.projectId);
+    res.send(projects);
+  };
+
+  @Get('/projects/:projectId/chats/:chatId')
   static getSpecificChat = async (req: Request, res: Response) => {
-    const chat = await getChat(+req.params.chatId)
+    const chat = await getChat(+req.params.chatId);
     res.send(chat);
   };
 
-  @Put("/projects/:projectId/chats/:chatId/settings")
+  @Put('/projects/:projectId/chats/:chatId/settings')
   static updateChatSettings = async (req: Request, res: Response) => {
-    await updateChatSettings(+req.params.chatId, req.body)
-    res.send("Settings updated")
-  }
+    await updateChatSettings(+req.params.chatId, req.body);
+    res.send('Settings updated');
+  };
 
-  @Post("/projects/:projectId/chats")
+  @Post('/projects/:projectId/chats')
   static createNewProjecthat = async (req: Request, res: Response) => {
-    await createNewProjecthat(+req.params.projectId, req.body)
-    const projects = await getProjectsByUserId(+res.locals.jwtPayload.userId, true)
+    await createNewProjecthat(+req.params.projectId, req.body);
+    const projects = await getProjectsByUserId(
+      +res.locals.jwtPayload.userId,
+      true
+    );
     res.status(201).send(projects);
   };
 
-  @Post("/projects")
+  @Post('/projects')
   static createNewUserProject = async (req: Request, res: Response) => {
-    const userId = +res.locals.jwtPayload.userId 
-    await createNewProject(userId, req.body)
-    const projects = await getProjectsByUserId(+res.locals.jwtPayload.userId, true)
+    const userId = +res.locals.jwtPayload.userId;
+    await createNewProject(userId, req.body);
+    const projects = await getProjectsByUserId(
+      +res.locals.jwtPayload.userId,
+      true
+    );
     res.status(201).send(projects);
   };
 
-  @Get("/projects/:projectId/context")
+  @Get('/projects/:projectId/context')
   static getProjectContext = async (req: Request, res: Response) => {
-    const context = await getAllProjectDocuments(+req.params.projectId)
+    const context = await getAllProjectDocuments(+req.params.projectId);
     res.status(200).send(context);
+  };
 
-  }
-
-  @Post("/projects/:projectId/context")
+  @Post('/projects/:projectId/context')
   static uploadToContext = async (req: Request, res: Response) => {
-    console.log(req.file)
+    console.log(req.file);
     if (req.file) {
-
-      await registerFileToProject(+req.params.projectId, req.file)
-      const context = await getAllProjectDocuments(+req.params.projectId)
+      await registerFileToProject(+req.params.projectId, req.file);
+      const context = await getAllProjectDocuments(+req.params.projectId);
       res.status(201).send(context);
     } else {
-      res.status(400).send({message: 'No file attached'});
+      res.status(400).send({ message: 'No file attached' });
     }
-  }
-
+  };
 }
 
 export default ProjectController;
