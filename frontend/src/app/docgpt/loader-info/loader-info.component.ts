@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../services/project.service';
 import { Project } from '../api/project';
 import { Chat } from '../api/chat';
-import { ActivatedRoute } from '@angular/router';
 import { NavigationService } from '../services/navigation.service';
 import { ChatService } from '../services/chat.service';
 

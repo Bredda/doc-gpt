@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { ChatService } from '../services/chat.service';
 import { NavigationService } from '../services/navigation.service';
-import { map } from 'rxjs';
 
 @Component({
   selector: 'app-query-manager',

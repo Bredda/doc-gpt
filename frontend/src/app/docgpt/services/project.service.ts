@@ -1,16 +1,7 @@
 import { Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  Observable,
-  concat,
-  concatMap,
-  flatMap,
-  switchMap,
-  tap
-} from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Project } from '../api/project';
 import { HttpClient } from '@angular/common/http';
-import { Chat } from '../api/chat';
 import { NavigationService } from './navigation.service';
 
 @Injectable({

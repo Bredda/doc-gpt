@@ -9,6 +9,6 @@ export const authGuard = () => {
   const router = inject(Router);
   return authService.isAuth().pipe(
     map((e) => (e ? true : router.parseUrl('/auth/signin'))),
-    catchError((e) => of(router.parseUrl('/auth/signin')))
+    catchError(() => of(router.parseUrl('/auth/signin')))
   );
 };

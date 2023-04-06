@@ -6,8 +6,6 @@ import {
   MessageService,
   TreeNode
 } from 'primeng/api';
-import { ProjectService } from '../services/project.service';
-import { map } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { ContextService } from '../services/context.service';
 
@@ -39,8 +37,7 @@ export class ContextManagerComponent implements OnInit {
   constructor(
     private contextService: ContextService,
     private route: ActivatedRoute,
-    private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit(): void {
@@ -80,8 +77,7 @@ export class ContextManagerComponent implements OnInit {
       rejectLabel: 'Annuler',
       accept: () => {
         this.contextService.uploadFiles(this.currentProject, files);
-      },
-      reject: (type: ConfirmEventType) => {}
+      }
     });
   }
 

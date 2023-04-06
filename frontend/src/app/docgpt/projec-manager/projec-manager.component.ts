@@ -7,8 +7,7 @@ import {
   TreeNode
 } from 'primeng/api';
 import { ProjectService } from '../services/project.service';
-import { tap } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ChatService } from '../services/chat.service';
 import { NavigationService } from '../services/navigation.service';
 
@@ -19,7 +18,7 @@ import { NavigationService } from '../services/navigation.service';
   providers: [ConfirmationService, MessageService]
 })
 export class ProjecManagerComponent implements OnInit {
-  visible: boolean = false;
+  visible = false;
   selectedNode!: any;
   newProjectName = '';
   newChatName = '';
@@ -59,7 +58,7 @@ export class ProjecManagerComponent implements OnInit {
     this.projectService.onProjectListChange().subscribe((projects) => {
       const pjs: TreeNode[] = [];
       projects.forEach((p) => {
-        let children: TreeNode[] = [];
+        const children: TreeNode[] = [];
         p.chats.forEach((c) => {
           const newChildrenNode = { label: c.name, data: c };
           children.push({
@@ -106,8 +105,7 @@ export class ProjecManagerComponent implements OnInit {
             if (this.selectedNode.data.id === Number(this.currentProjectId))
               this.router.navigate(['']);
           });
-      },
-      reject: (type: ConfirmEventType) => {}
+      }
     });
   }
 

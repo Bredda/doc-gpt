@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 
 @Injectable({
@@ -8,7 +7,7 @@ import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 export class NavigationService {
   $projectId = new BehaviorSubject<number | undefined>(undefined);
   $chatId = new BehaviorSubject<number | undefined>(undefined);
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor() {}
 
   public alertProjectHasChanged(projectId: number | undefined) {
     this.$projectId.next(projectId);

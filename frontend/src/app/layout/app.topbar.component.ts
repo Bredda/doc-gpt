@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem, MessageService } from 'primeng/api';
+import { MenuItem } from 'primeng/api';
 import { AuthService } from '../auth/services/auth.service';
 import { ProjectService } from '../docgpt/services/project.service';
 import { Project } from '../docgpt/api/project';
@@ -51,7 +51,9 @@ export class AppTopbarComponent implements OnInit {
     ];
   }
 
-  update(): void {}
+  update(): void {
+    throw new Error('Not yet imlpemented');
+  }
 
   signout() {
     this.auth.signout();
