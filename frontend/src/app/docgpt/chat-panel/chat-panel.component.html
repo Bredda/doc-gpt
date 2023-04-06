@@ -1,0 +1,35 @@
+<div *ngIf="currentChat" class="w-full flex flex-column gap-4">
+
+    <p-card *ngFor="let mess of currentChat.messages">
+        <div *ngIf="mess.origin==='user'" class="flex gap-4">
+            <span class="pi pi-user" style="font-size: 1.5rem"></span>
+            <span class="mr-8">{{mess.content}}</span>
+        </div>
+        <div *ngIf="mess.origin==='llm'" class="flex gap-4">
+            <img src="assets/open-ai.svg">
+            <span class="mr-8">{{mess.content}}</span>
+        </div>
+
+
+    </p-card>
+
+
+        <p-card *ngIf="queryProcessing !== undefined">
+            <div  class="flex gap-4">
+                <span class="pi pi-user" style="font-size: 1.5rem"></span>
+                <span class="mr-8">{{queryProcessing}}</span>
+            </div>
+        </p-card>
+        <p-card *ngIf="queryProcessing !== undefined">
+            <div  class="flex gap-4">
+                <img src="assets/open-ai.svg">
+                <span class="mr-8">...</span>
+            </div>
+        </p-card>
+
+
+
+
+</div>
+
+

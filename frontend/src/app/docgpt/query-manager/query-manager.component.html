@@ -1,0 +1,8 @@
+<div *ngIf="currentChatId !== undefined ; else noChat" class="card flex justify-content-center">
+    <input id="email1" type="text" placeholder="Query ..." pInputText class="w-full md:w-30rem mb-5" style="padding:1rem" [(ngModel)]="query">
+    <p-button label="Ask" (click)="onAsk()"></p-button>
+</div>
+
+<ng-template #noChat>
+    <h3>Ouvrez une disucssion</h3>
+</ng-template>
