@@ -1,4 +1,4 @@
-import { User } from "../models/user.js";
+import { User } from "../models/index.js";
 import { AppDataSource } from "../config/data-source.js";
 
 export const getUser = async (email: string): Promise<User> => {

@@ -1,2 +1,7 @@
 import { User } from "./user.js";
-export { User };
+import { ChatMessage } from "./chat-message.js";
+import { Chat } from "./chat.js";
+import { OriginalDocument } from "./document.js";
+import { Project } from "./project.js";
+
+export { User, ChatMessage, Chat, OriginalDocument, Project };

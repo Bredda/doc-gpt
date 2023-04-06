@@ -1,8 +1,6 @@
-import { User } from "../models/user.js";
+import { User, Project, OriginalDocument } from "../models/index.js";
 import { AppDataSource } from "../config/data-source.js";
-import { Project } from "../models/project.js";
 import { DeleteResult } from "typeorm";
-import { OriginalDocument } from "../models/document.js";
 
 export interface ICreateProjectPayload{
     name: string

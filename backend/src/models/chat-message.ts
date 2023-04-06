@@ -15,14 +15,10 @@ import { Chat } from "./chat.js";
     @PrimaryGeneratedColumn()
     id!: number;
   
-    @Column({
-      type: "text",
-    })
+    @Column()
     content!: string;
 
-    @Column({
-      type: "text",
-    })
+    @Column()
     origin!: string;
 
     @ManyToOne((_type) => Chat, (chat: Chat) => chat.messages, { onDelete: 'CASCADE' })

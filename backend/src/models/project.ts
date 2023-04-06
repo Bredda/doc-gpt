@@ -9,7 +9,6 @@ import {
     JoinColumn,
     Relation,
   } from "typeorm";
-  import { ChatMessage } from "./chat-message.js";
   import { User } from "./user.js";
 import { Chat } from "./chat.js";
 import { OriginalDocument } from "./document.js";

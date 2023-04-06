@@ -1,11 +1,11 @@
-import { Get, Route, Tags, Post, Body, Path } from "tsoa";
-import { User } from "../models/user.js";
+import { Route, Tags, Post } from "tsoa";
+import { User } from "../models/index.js";
 import { Request, Response } from "express";
 import jwt from 'jsonwebtoken'
 import { validate } from "class-validator";
 import { AppDataSource } from "../config/data-source.js";
 import config from "../config/config.js";
-import { getUser, getUserById } from "../repositories/user.repository.js";
+import { getUser } from "../repositories/user.repository.js";
 
 export interface ISigninPayload {
   email: string;

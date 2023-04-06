@@ -10,7 +10,6 @@ class ProjectController {
   @Get("/projects")
   static getUserProjects = async (req: Request, res: Response) => {
     const userId = +res.locals.jwtPayload.userId
-    let withChats = false
     const projects = await getProjectsByUserId(+userId, true)
     res.send(projects);
   };

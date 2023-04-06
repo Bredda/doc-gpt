@@ -1,12 +1,9 @@
-import { User } from "../models/user.js";
+
 import { AppDataSource } from "../config/data-source.js";
-import { Project } from "../models/project.js";
+import { Project, Chat, ChatMessage } from "../models/index.js";
 import { ChatSettings } from "../models/chat-settings.js";
-import { Chat } from "../models/chat.js";
 import { Language, LlmModel } from "../models/enum.js";
 import { DeleteResult } from "typeorm";
-import { ChatMessage } from "../models/chat-message.js";
-
 export interface ICreateChatPayload{
     name: string
     settings: ChatSettings
