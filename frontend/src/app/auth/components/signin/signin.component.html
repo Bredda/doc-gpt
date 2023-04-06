@@ -1,17 +1,39 @@
-<form class="flex flex-column align-items-center justify-content-center gap-4" [formGroup]="signinForm">
+<form
+  class="flex flex-column align-items-center justify-content-center gap-4"
+  [formGroup]="signinForm"
+  (ngSubmit)="signin()">
+  <input
+    id="email1"
+    type="email"
+    placeholder="Email address"
+    pInputText
+    class="w-full md:w-30rem mb-5"
+    style="padding: 1rem"
+    required
+    formControlName="email" />
 
-    <input id="email1" type="text" placeholder="Email address" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem" formControlName="email">
+  <p-password
+    id="password1"
+    formControlName="password"
+    placeholder="Password"
+    [toggleMask]="true"
+    styleClass="mb-5"
+    required
+    inputStyleClass="w-full p-3 md:w-30rem">
+  </p-password>
 
-    <p-password id="password1" formControlName="password" placeholder="Password" [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem"></p-password>
+  <button
+    pButton
+    pRipple
+    label="Se connecter"
+    class="w-full p-3 text-xl"
+    type="submit"
+    [disabled]="signinForm.invalid"></button>
 
-    <div class="flex align-items-center justify-content-between mb-5 gap-5">
-        <div class="flex align-items-center">
-            <p-checkbox id="rememberme1" [binary]="true" styleClass="mr-2"></p-checkbox>
-            <label for="rememberme1">Remember me</label>
-        </div>
-        <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">Forgot password?</a>
-        <a  routerLink="/auth/signup" class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">Pas de compte</a>
-    </div>
-    <button pButton pRipple label="Sign In" class="w-full p-3 text-xl" (click)="signin()"></button>
-
+  <a
+    routerLink="/auth/signup"
+    class="font-medium no-underline"
+    style="color: var(--primary-color)"
+    >Pas de compte ?</a
+  >
 </form>

@@ -9,18 +9,17 @@ import { AuthService } from '../../services/auth.service';
 })
 export class SignupComponent {
   signupForm = new FormGroup({
-    'email': new FormControl(''),
-    'password': new FormControl(''),
-  })
+    email: new FormControl(''),
+    password: new FormControl('')
+  });
 
   constructor(private auth: AuthService) {}
 
   signup(): void {
-    const email = this.signupForm.get('email')?.value
-    const password = this.signupForm.get('password')?.value
-    if (email && password)
-      this.auth.signup(email, password)
+    const email = this.signupForm.get('email')?.value;
+    const password = this.signupForm.get('password')?.value;
+    if (email && password) this.auth.signup(email, password);
   }
 
-  value = ''
+  value = '';
 }

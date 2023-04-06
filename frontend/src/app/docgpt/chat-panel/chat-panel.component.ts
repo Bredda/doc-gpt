@@ -9,21 +9,24 @@ import { NavigationService } from '../services/navigation.service';
   styleUrls: ['./chat-panel.component.scss']
 })
 export class ChatPanelComponent implements OnInit {
-
-  currentChat: Chat | undefined = undefined
+  currentChat: Chat | undefined = undefined;
   queryProcessing: string | undefined = undefined;
-  constructor(private chatService: ChatService, private navigationService: NavigationService) {
-    this.chatService.onCurrentChatChange().subscribe(c => this.currentChat = c)
+  constructor(
+    private chatService: ChatService,
+    private navigationService: NavigationService
+  ) {
+    this.chatService
+      .onCurrentChatChange()
+      .subscribe((c) => (this.currentChat = c));
   }
 
   ngOnInit(): void {
-    this.chatService.onCurrentChatChange().subscribe(c => {
-      this.currentChat = c
-      console.log(c)
-    })
-    this.chatService.onQueryProcessingChange().subscribe(q => {
-      this.queryProcessing = q
-    })
+    this.chatService.onCurrentChatChange().subscribe((c) => {
+      this.currentChat = c;
+      console.log(c);
+    });
+    this.chatService.onQueryProcessingChange().subscribe((q) => {
+      this.queryProcessing = q;
+    });
   }
-
 }

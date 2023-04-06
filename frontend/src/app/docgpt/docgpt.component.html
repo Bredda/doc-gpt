@@ -1,23 +1,20 @@
 <div class="docgpt-wrapper">
-
-    <p-toast></p-toast>
-    <p-confirmDialog></p-confirmDialog>
-    <p-splitter [panelSizes]="[25, 75]" styleClass="mb-5 h-full">
-        <ng-template pTemplate>
-            <div class="col flex flex-column align-items-center gap-2">
-                <app-projec-manager class="w-full"></app-projec-manager>
-                <p-divider class="w-full"></p-divider>
-                <app-context-manager class="w-full"></app-context-manager>
-            </div>
-        </ng-template>
-        <ng-template pTemplate>
-            <div class="col flex flex-column align-items-center gap-2">
-                <app-loader-info class="w-full"></app-loader-info>
-                <app-query-manager class="w-full"></app-query-manager>
-                <app-chat-panel class="w-full"></app-chat-panel>
-            </div>
-        </ng-template>
-    </p-splitter>
-
+  <p-toast></p-toast>
+  <p-confirmDialog></p-confirmDialog>
+  <p-splitter [panelSizes]="[25, 75]" styleClass="mb-5 h-full">
+    <ng-template pTemplate>
+      <div class="col flex flex-column align-items-center gap-2">
+        <app-projec-manager class="w-full"></app-projec-manager>
+        <p-divider class="w-full"></p-divider>
+        <app-context-manager class="w-full"></app-context-manager>
+      </div>
+    </ng-template>
+    <ng-template pTemplate>
+      <div class="col flex flex-column align-items-center gap-2">
+        <app-loader-info class="w-full"></app-loader-info>
+        <app-query-manager class="w-full"></app-query-manager>
+        <app-chat-panel class="w-full"></app-chat-panel>
+      </div>
+    </ng-template>
+  </p-splitter>
 </div>
-

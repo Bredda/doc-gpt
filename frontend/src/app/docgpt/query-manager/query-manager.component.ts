@@ -10,19 +10,23 @@ import { map } from 'rxjs';
   styleUrls: ['./query-manager.component.scss']
 })
 export class QueryManagerComponent implements OnInit {
-  query = ''
-  currentChatId: number | undefined = undefined
+  query = '';
+  currentChatId: number | undefined = undefined;
 
-  constructor(private chatService: ChatService, private navigationService: NavigationService) {}
+  constructor(
+    private chatService: ChatService,
+    private navigationService: NavigationService
+  ) {}
 
   ngOnInit(): void {
-    this.navigationService.onChatChange().subscribe(id => this.currentChatId = id)
+    this.navigationService
+      .onChatChange()
+      .subscribe((id) => (this.currentChatId = id));
   }
 
   onAsk() {
     if (this.currentChatId !== undefined) {
-      this.chatService.ask(this.currentChatId, this.query).subscribe()
+      this.chatService.ask(this.currentChatId, this.query).subscribe();
     }
-
   }
 }

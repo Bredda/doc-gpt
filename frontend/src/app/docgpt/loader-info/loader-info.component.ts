@@ -11,16 +11,22 @@ import { ChatService } from '../services/chat.service';
   templateUrl: './loader-info.component.html',
   styleUrls: ['./loader-info.component.scss']
 })
-export class LoaderInfoComponent implements OnInit{
-  currentProject: Project |undefined = undefined
-  currentChat: Chat |undefined = undefined
-  constructor(private projectService: ProjectService, private chatService: ChatService, private navigationService: NavigationService) {}
+export class LoaderInfoComponent implements OnInit {
+  currentProject: Project | undefined = undefined;
+  currentChat: Chat | undefined = undefined;
+  constructor(
+    private projectService: ProjectService,
+    private chatService: ChatService,
+    private navigationService: NavigationService
+  ) {}
 
   ngOnInit(): void {
-    this.chatService.onCurrentChatChange().subscribe(c => this.currentChat = c)
-    this.projectService.onCurrentProjectchange().subscribe(p => {
-      this.currentProject = p
-      console.log(p)
-    } )
+    this.chatService
+      .onCurrentChatChange()
+      .subscribe((c) => (this.currentChat = c));
+    this.projectService.onCurrentProjectchange().subscribe((p) => {
+      this.currentProject = p;
+      console.log(p);
+    });
   }
 }

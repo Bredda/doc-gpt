@@ -8,9 +8,8 @@ describe('DocgptComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DocgptComponent ]
-    })
-    .compileComponents();
+      declarations: [DocgptComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DocgptComponent);
     component = fixture.componentInstance;

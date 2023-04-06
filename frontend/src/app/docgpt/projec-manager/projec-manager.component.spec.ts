@@ -8,9 +8,8 @@ describe('ProjecManagerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProjecManagerComponent ]
-    })
-    .compileComponents();
+      declarations: [ProjecManagerComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ProjecManagerComponent);
     component = fixture.componentInstance;

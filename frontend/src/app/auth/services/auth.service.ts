@@ -9,43 +9,47 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
+  private url = 'http://localhost:3000/doc-gpt/auth';
+  private _user = new BehaviorSubject<User | null>(null);
 
-  private url = 'http://localhost:3000/doc-gpt/auth'
-  private _user = new BehaviorSubject<User | null>(null)
-
-  constructor(private httpClient: HttpClient, private local: LocalStorageService, private router: Router) {
-    this._user.next(this.local.getUser())
-   }
-
+  constructor(
+    private httpClient: HttpClient,
+    private local: LocalStorageService,
+    private router: Router
+  ) {
+    this._user.next(this.local.getUser());
+  }
 
   signin(email: string, password: string) {
-    this.httpClient.post<User>(`${this.url}/signin`, {email: email, password: password})
-      .pipe(tap(u => {
-        this.local.setUser(u);
-        this.router.navigate(['/'])
-      }))
-      .subscribe(u => this._user.next(u))
+    this.httpClient
+      .post<User>(`${this.url}/signin`, { email: email, password: password })
+      .pipe(
+        tap((u) => {
+          this.local.setUser(u);
+          this.router.navigate(['/']);
+        })
+      )
+      .subscribe((u) => this._user.next(u));
   }
 
   signup(email: string, password: string) {
-    this.httpClient.post<any>(`${this.url}/signup`, {email: email, password: password})
+    this.httpClient
+      .post<any>(`${this.url}/signup`, { email: email, password: password })
       .pipe(tap(() => this.signin(email, password)))
-      .subscribe()
+      .subscribe();
   }
 
   signout() {
-    this.local.removeUser()
-    this._user.next(null)
-    this.router.navigate(['auth', 'signin'])
+    this.local.removeUser();
+    this._user.next(null);
+    this.router.navigate(['auth', 'signin']);
   }
 
-  getUser(): User |null {
-    return this._user.value
+  getUser(): User | null {
+    return this._user.value;
   }
 
   isAuth(): Observable<boolean> {
-    return this._user.asObservable().pipe(map(u => u !== null))
+    return this._user.asObservable().pipe(map((u) => u !== null));
   }
-
-
 }

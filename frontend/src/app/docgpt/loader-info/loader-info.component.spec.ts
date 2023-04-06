@@ -8,9 +8,8 @@ describe('LoaderInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoaderInfoComponent ]
-    })
-    .compileComponents();
+      declarations: [LoaderInfoComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LoaderInfoComponent);
     component = fixture.componentInstance;

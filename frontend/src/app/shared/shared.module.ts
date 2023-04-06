@@ -25,23 +25,13 @@ const UI_MODULES = [
   ConfirmDialogModule,
   DividerModule,
   ContextMenuModule
-]
+];
 
-const NG_MODULES = [
-  CommonModule,
-  FormsModule,
-  ReactiveFormsModule,
-]
+const NG_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
 
 @NgModule({
   declarations: [],
-  imports: [
-    ...NG_MODULES,
-    ...UI_MODULES
-  ],
-  exports: [
-    ...NG_MODULES,
-    ...UI_MODULES
-  ]
+  imports: [...NG_MODULES, ...UI_MODULES],
+  exports: [...NG_MODULES, ...UI_MODULES]
 })
-export class SharedModule { }
+export class SharedModule {}

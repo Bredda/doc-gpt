@@ -9,14 +9,7 @@ import { SigninComponent } from './components/signin/signin.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { PasswordModule } from 'primeng/password';
 @NgModule({
-  declarations: [
-    AuthComponent,
-    SigninComponent,
-    SignupComponent
-  ],
-  imports: [
-    AuthRoutingModule,
-    SharedModule,PasswordModule,CheckboxModule
-  ]
+  declarations: [AuthComponent, SigninComponent, SignupComponent],
+  imports: [AuthRoutingModule, SharedModule, PasswordModule, CheckboxModule]
 })
-export class AuthModule { }
+export class AuthModule {}

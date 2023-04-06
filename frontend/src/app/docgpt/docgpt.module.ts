@@ -30,4 +30,4 @@ import { ChatPanelComponent } from './chat-panel/chat-panel.component';
     TreeModule
   ]
 })
-export class DocgptModule { }
+export class DocgptModule {}

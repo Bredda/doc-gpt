@@ -8,9 +8,8 @@ describe('QueryManagerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ QueryManagerComponent ]
-    })
-    .compileComponents();
+      declarations: [QueryManagerComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(QueryManagerComponent);
     component = fixture.componentInstance;

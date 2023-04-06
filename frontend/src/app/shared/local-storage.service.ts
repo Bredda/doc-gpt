@@ -5,24 +5,20 @@ import { User } from '../auth/api/user';
   providedIn: 'root'
 })
 export class LocalStorageService {
+  private KEY = 'doc-gpt-user';
 
-  private KEY = "doc-gpt-user"
+  constructor() {}
 
-  constructor() { }
-
-
-  public getUser():User |null{
-    const userString = localStorage.getItem(this.KEY)
-    return userString ? JSON.parse(userString) : null
+  public getUser(): User | null {
+    const userString = localStorage.getItem(this.KEY);
+    return userString ? JSON.parse(userString) : null;
   }
 
   public setUser(user: User): void {
-    localStorage.setItem(this.KEY, JSON.stringify(user))
+    localStorage.setItem(this.KEY, JSON.stringify(user));
   }
 
   public removeUser(): void {
-    localStorage.removeItem(this.KEY)
+    localStorage.removeItem(this.KEY);
   }
-
-
 }

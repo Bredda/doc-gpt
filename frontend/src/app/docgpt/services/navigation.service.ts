@@ -6,40 +6,34 @@ import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
   providedIn: 'root'
 })
 export class NavigationService {
-
-  $projectId = new BehaviorSubject<number | undefined>(undefined)
-  $chatId = new BehaviorSubject<number | undefined>(undefined)
-  constructor(private router: Router, private route: ActivatedRoute) {
-  }
+  $projectId = new BehaviorSubject<number | undefined>(undefined);
+  $chatId = new BehaviorSubject<number | undefined>(undefined);
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
   public alertProjectHasChanged(projectId: number | undefined) {
-    this.$projectId.next(projectId)
+    this.$projectId.next(projectId);
   }
 
   public alertChatHasChanged(chatId: number | undefined) {
-    this.$chatId.next(chatId)
+    this.$chatId.next(chatId);
   }
 
   public onNavigationChange(): Observable<any> {
-    return combineLatest([this.$projectId, this.$chatId])
-    
+    return combineLatest([this.$projectId, this.$chatId]);
   }
 
   public onChatChange(): Observable<number | undefined> {
-    return this.$chatId.asObservable()
+    return this.$chatId.asObservable();
   }
 
   public getCurrentChatId(): number | undefined {
-    return this.$chatId.value
+    return this.$chatId.value;
   }
 
   public onProjectChange(): Observable<number | undefined> {
-    return this.$projectId.asObservable()
+    return this.$projectId.asObservable();
   }
   public getCurrentProjectId(): number | undefined {
-    return this.$projectId.value
+    return this.$projectId.value;
   }
-
-
-
 }

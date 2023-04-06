@@ -21,39 +21,39 @@ export class AppTopbarComponent implements OnInit {
       label: 'Settings',
       icon: 'pi pi-refresh',
       command: () => {
-          this.update();
+        this.update();
       }
-    }, 
-    {label: 'Se déconnecter',
-    icon: 'pi pi-refresh',
-    command: () => {
+    },
+    {
+      label: 'Se déconnecter',
+      icon: 'pi pi-refresh',
+      command: () => {
         this.signout();
-    }}]
+      }
+    }
+  ];
 
-    projects: Project[] = []
+  projects: Project[] = [];
   selectedCity!: City;
 
-    constructor(private auth: AuthService, private prjService: ProjectService) {
-      
-    }
+  constructor(private auth: AuthService, private prjService: ProjectService) {}
 
   ngOnInit() {
-    this.prjService.getProjectList().subscribe(prjs => this.projects = prjs)
-      this.cities = [
-          { name: 'New York', code: 'NY' },
-          { name: 'Rome', code: 'RM' },
-          { name: 'London', code: 'LDN' },
-          { name: 'Istanbul', code: 'IST' },
-          { name: 'Paris', code: 'PRS' }
-      ];
-
+    this.prjService
+      .getProjectList()
+      .subscribe((prjs) => (this.projects = prjs));
+    this.cities = [
+      { name: 'New York', code: 'NY' },
+      { name: 'Rome', code: 'RM' },
+      { name: 'London', code: 'LDN' },
+      { name: 'Istanbul', code: 'IST' },
+      { name: 'Paris', code: 'PRS' }
+    ];
   }
 
-  update(): void {
-
-  }
+  update(): void {}
 
   signout() {
-    this.auth.signout()
+    this.auth.signout();
   }
 }

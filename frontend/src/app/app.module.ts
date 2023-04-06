@@ -26,12 +26,18 @@ import { HttpInterceptorService } from './shared/http-interceptor.service';
     HttpClientModule,
     MenuModule
   ],
-  providers: [ {
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
-    multi: true
-   },
-   { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true  }],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

@@ -8,9 +8,8 @@ describe('ContextManagerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ContextManagerComponent ]
-    })
-    .compileComponents();
+      declarations: [ContextManagerComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ContextManagerComponent);
     component = fixture.componentInstance;
