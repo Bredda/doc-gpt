@@ -1,11 +1,15 @@
 import { Route, Tags, Post } from 'tsoa';
 import { User } from '../models/index.js';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { validate } from 'class-validator';
 import { AppDataSource } from '../config/data-source.js';
 import config from '../config/config.js';
-import { getUser } from '../repositories/user.repository.js';
+import {
+  emailAlreadyExists,
+  getUser
+} from '../repositories/user.repository.js';
+import { AppError, HttpCode } from '../exceptions/exceptions.js';
 
 export interface ISigninPayload {
   email: string;
@@ -16,7 +20,7 @@ export interface ISigninPayload {
 @Tags('User')
 class AuthController {
   @Post('/signin')
-  static signin = async (req: Request, res: Response) => {
+  static signin = async (req: Request, res: Response, next: NextFunction) => {
     //Check if username and password are set
     const { email, password } = req.body;
     if (!(email && password)) {
@@ -49,36 +53,56 @@ class AuthController {
   };
 
   @Post('/signup')
-  static signup = async (req: Request, res: Response) => {
-    //Get parameters from the body
-    const { email, password, role } = req.body;
-    const user = new User();
-    user.email = email;
-    user.password = password;
-    user.role = role || 'USER';
-
-    //Validade if the parameters are ok
-    const errors = await validate(user);
-    if (errors.length > 0) {
-      res.status(400).send(errors);
-      return;
-    }
-
-    //Hash the password, to securely store on DB
-    user.hashPassword();
-
-    //Try to save. If fails, the username is already in use
+  static signup = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      await AppDataSource.manager.save(user);
-    } catch (e) {
-      res.status(400).send(e);
-      return;
-    }
+      //Get parameters from the body
+      const { email, password, role } = req.body;
 
-    //If all ok, send 201 response
-    res
-      .status(201)
-      .send({ id: user.id, email: user.email, createdAt: user.createdAt });
+      if (!email || !password)
+        throw new AppError({
+          httpCode: HttpCode.BAD_REQUEST,
+          description: 'Email et password requis'
+        });
+      if (await emailAlreadyExists(email))
+        throw new AppError({
+          httpCode: HttpCode.UNAUTHORIZED,
+          description: 'Email déjà utilisé'
+        });
+
+      const user = new User();
+      user.email = email;
+      user.password = password;
+      user.role = role || 'USER';
+
+      //Validade if the parameters are ok
+      const errors = await validate(user);
+      if (errors.length > 0) {
+        throw new AppError({
+          httpCode: HttpCode.BAD_REQUEST,
+          description: errors.toString()
+        });
+      }
+
+      //Hash the password, to securely store on DB
+      user.hashPassword();
+
+      //Try to save. If fails, the username is already in use
+      try {
+        await AppDataSource.manager.save(user);
+      } catch (e: any) {
+        throw new AppError({
+          httpCode: HttpCode.INTERNAL_SERVER_ERROR,
+          description: e.toString()
+        });
+      }
+
+      //If all ok, send 201 response
+      res
+        .status(HttpCode.CREATED)
+        .send({ id: user.id, email: user.email, createdAt: user.createdAt });
+    } catch (error) {
+      next(error);
+    }
   };
 }
 

@@ -29,17 +29,19 @@ export class HttpInterceptorService implements HttpInterceptor {
             console.log(`error status : ${error.status} ${error.statusText}`);
             switch (error.status) {
               case 401: //login
-                this.router.navigateByUrl('/signin');
+                if (!this.router.url.includes('auth'))
+                  this.router.navigateByUrl('/auth/signin');
                 break;
               case 403: //forbidden
-                this.router.navigateByUrl('/signin');
+                if (!this.router.url.includes('auth'))
+                  this.router.navigateByUrl('/auth/signin');
                 break;
             }
           }
         } else {
           console.error('some thing else happened');
         }
-        return throwError(() => new Error(error.message));
+        return throwError(() => new Error(error));
       })
     );
   }

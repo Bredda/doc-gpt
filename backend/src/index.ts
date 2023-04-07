@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import express, { Application } from 'express';
+import express, { Application, NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 import { AppDataSource } from './config/data-source.js';
@@ -8,6 +8,8 @@ import helmet from 'helmet';
 import bodyParser from 'body-parser';
 import * as dotenv from 'dotenv';
 import routes from './routes/index.js';
+import { AppError } from './exceptions/exceptions.js';
+import { errorHandler } from './middlewares/error-handler.js';
 
 dotenv.config();
 
@@ -32,6 +34,12 @@ app.use(
 );
 
 app.use('/doc-gpt', routes);
+
+app.use(
+  (err: Error | AppError, req: Request, res: Response, next: NextFunction) => {
+    errorHandler.handleError(err, req, res, next);
+  }
+);
 
 AppDataSource.initialize()
   .then(() => {

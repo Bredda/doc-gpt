@@ -25,16 +25,6 @@ export class AuthInterceptor implements HttpInterceptor {
       });
     }
 
-    return next.handle(request).pipe(
-      catchError((err: Error) => {
-        if (err instanceof HttpErrorResponse) {
-          if (err.status === 401) {
-            // redirect user to the logout page
-            this.router.navigate(['auth', 'signin']);
-          }
-        }
-        return throwError(() => new Error(err.message));
-      })
-    );
+    return next.handle(request);
   }
 }

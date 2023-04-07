@@ -20,23 +20,22 @@ export class AuthService {
     this._user.next(this.local.getUser());
   }
 
-  signin(email: string, password: string) {
-    this.httpClient
+  signin(email: string, password: string): Observable<User> {
+    return this.httpClient
       .post<User>(`${this.url}/signin`, { email: email, password: password })
       .pipe(
         tap((u) => {
           this.local.setUser(u);
+          this._user.next(u);
           this.router.navigate(['/']);
         })
-      )
-      .subscribe((u) => this._user.next(u));
+      );
   }
-
-  signup(email: string, password: string) {
-    this.httpClient
-      .post<any>(`${this.url}/signup`, { email: email, password: password })
-      .pipe(tap(() => this.signin(email, password)))
-      .subscribe();
+  signup(email: string, password: string): Observable<User> {
+    return this.httpClient.post<any>(`${this.url}/signup`, {
+      email: email,
+      password: password
+    });
   }
 
   signout() {

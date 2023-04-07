@@ -2,6 +2,7 @@
   class="flex flex-column align-items-center justify-content-center gap-4"
   [formGroup]="signinForm"
   (ngSubmit)="signin()">
+  <h3>Connexion</h3>
   <input
     id="email1"
     type="email"
@@ -37,3 +38,4 @@
     >Pas de compte ?</a
   >
 </form>
+<p-toast></p-toast>

@@ -7,6 +7,10 @@ export const getUser = async (email: string): Promise<User> => {
   });
 };
 
+export const emailAlreadyExists = async (email: string): Promise<boolean> => {
+  return await AppDataSource.manager.exists(User, { where: { email: email } });
+};
+
 export const getUserById = async (id: number): Promise<User> => {
   return await AppDataSource.manager.findOneByOrFail(User, {
     id: id
