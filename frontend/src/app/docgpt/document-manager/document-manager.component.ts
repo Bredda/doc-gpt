@@ -8,14 +8,15 @@ import {
 } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
 import { DocumentService } from '../services/documents.service';
+import { ContextService } from '../services/context.service';
 
 @Component({
-  selector: 'app-context-manager',
-  templateUrl: './context-manager.component.html',
-  styleUrls: ['./context-manager.component.scss'],
+  selector: 'app-document-manager',
+  templateUrl: './document-manager.component.html',
+  styleUrls: ['./document-manager.component.scss'],
   providers: [ConfirmationService, MessageService]
 })
-export class ContextManagerComponent implements OnInit {
+export class DocumentManagerComponent implements OnInit {
   @ViewChild('fileDropRef', { static: false }) fileDropEl!: ElementRef;
   uploadedFiles: any[] = [];
   files: TreeNode[] = [];
@@ -35,33 +36,25 @@ export class ContextManagerComponent implements OnInit {
   ];
   currentProject: string | undefined = undefined;
   constructor(
-    private contextService: DocumentService,
-    private route: ActivatedRoute,
+    private contextService: ContextService,
+    private documentService: DocumentService,
     private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit(): void {
-    this.contextService.listenCurrentProjectContext().subscribe((c) => {
-      const newContext: MenuItem[] = [];
-      c.forEach((f) => {
-        newContext.push({ id: f.id, label: f.originalname });
-      });
-      this.files = newContext;
+    this.contextService.listenToDataChange().subscribe((v) => {
+      this.files = this.transformDocsToTreeNode(v[3]);
+      this.currentProject = v[1]?.id;
     });
-    this.route.params.subscribe((paramMap) => {
-      this.currentProject = paramMap['projectId'];
-      if (this.currentProject !== undefined) {
-        this.contextService
-          .getProjectContext(this.currentProject)
-          .subscribe((c) => {
-            const newContext: MenuItem[] = [];
-            c.forEach((f) => {
-              newContext.push({ id: f.id, label: f.originalname });
-            });
-            this.files = newContext;
-          });
-      }
+  }
+
+  private transformDocsToTreeNode(documents: any[]) {
+    console.log('Transform docs', documents);
+    const newContext: MenuItem[] = [];
+    documents.forEach((f) => {
+      newContext.push({ id: f.id, label: f.originalname });
     });
+    return newContext;
   }
 
   /**
@@ -76,7 +69,7 @@ export class ContextManagerComponent implements OnInit {
       acceptLabel: 'Uploader',
       rejectLabel: 'Annuler',
       accept: () => {
-        this.contextService.uploadFiles(this.currentProject, files);
+        this.documentService.uploadFiles(this.currentProject, files);
       }
     });
   }

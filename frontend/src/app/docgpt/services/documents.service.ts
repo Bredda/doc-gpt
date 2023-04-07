@@ -7,20 +7,19 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class DocumentService {
   url = `http://localhost:3000/doc-gpt/projects`;
-  private $context = new BehaviorSubject<Array<any>>([]);
+  public documents = new BehaviorSubject<Array<any>>([]);
 
   constructor(private httpClient: HttpClient) {}
 
-  public getProjectContext(projectId: string): Observable<any[]> {
+  public getProjectDocuments(projectId: string): Observable<any[]> {
+    console.log('getProjectDocuments');
     return this.httpClient.get<any[]>(`${this.url}/${projectId}/context`);
   }
 
-  public listenCurrentProjectContext(): Observable<any[]> {
-    return this.$context.asObservable();
-  }
-
   public triggerContextRefresh(projectId: string): void {
-    this.getProjectContext(projectId).subscribe((c) => this.$context.next(c));
+    this.getProjectDocuments(projectId).subscribe((c) =>
+      this.documents.next(c)
+    );
   }
 
   public uploadFiles(projectId: string | undefined, files: Array<File>): void {
@@ -29,14 +28,14 @@ export class DocumentService {
         const formData = new FormData();
         formData.append('file', f);
         this.httpClient
-          .post(`${this.url}/${projectId}/context`, formData)
-          .subscribe(() => this.triggerContextRefresh(projectId));
+          .post<any[]>(`${this.url}/${projectId}/context`, formData)
+          .subscribe((d) => this.documents.next(d));
       });
     }
   }
 
   public getCurrentProjectContext(): Observable<any[]> {
-    return this.$context.asObservable();
+    return this.documents.asObservable();
   }
 
   public uploadFile(file: File): Observable<any> {

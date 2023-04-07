@@ -4,6 +4,7 @@ import { Project } from '../api/project';
 import { Chat } from '../api/chat';
 import { ProjectService } from './project.service';
 import { ChatService } from './chat.service';
+import { DocumentService } from './documents.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class ContextService {
   private currentProjectId: string | undefined;
   constructor(
     private projectService: ProjectService,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private documentService: DocumentService
   ) {}
 
   /**
@@ -24,9 +26,11 @@ export class ContextService {
    * @param chatId
    */
   public triggerContextChange(projectId: string, chatId: string) {
-    if (projectId !== this.currentProjectId) {
+    if (projectId !== this.currentProjectId || projectId === undefined) {
       this.currentProjectId = projectId;
       this.triggerProjectListRefresh(projectId);
+      console.log('Refreshing for project ' + projectId);
+      if (projectId !== undefined) this.triggerDocumentListRefresh(projectId);
     }
     if (chatId !== this.currentChatId) {
       console.log(
@@ -53,7 +57,7 @@ export class ContextService {
       this.projectService.currentProjecChatList,
       this.projectService.currentProject,
       this.chatService.currentChat,
-      this.currentDocuments
+      this.documentService.documents
     ]);
   }
 
@@ -110,6 +114,13 @@ export class ContextService {
           this.projectService.currentProject.next(targetProject);
         })
       )
+      .subscribe();
+  }
+
+  public triggerDocumentListRefresh(projectId: string): void {
+    this.documentService
+      .getProjectDocuments(projectId)
+      .pipe(tap((d) => this.documentService.documents.next(d)))
       .subscribe();
   }
 }
