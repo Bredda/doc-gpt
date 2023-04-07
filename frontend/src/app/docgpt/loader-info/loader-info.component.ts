@@ -1,31 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { ProjectService } from '../services/project.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Project } from '../api/project';
 import { Chat } from '../api/chat';
-import { NavigationService } from '../services/navigation.service';
-import { ChatService } from '../services/chat.service';
+import { ContextService } from '../services/context.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-loader-info',
   templateUrl: './loader-info.component.html',
   styleUrls: ['./loader-info.component.scss']
 })
-export class LoaderInfoComponent implements OnInit {
+export class LoaderInfoComponent implements OnInit, OnDestroy {
+  private listenToDataChange!: Subscription;
   currentProject: Project | undefined = undefined;
   currentChat: Chat | undefined = undefined;
-  constructor(
-    private projectService: ProjectService,
-    private chatService: ChatService,
-    private navigationService: NavigationService
-  ) {}
+  constructor(private contextService: ContextService) {}
 
   ngOnInit(): void {
-    this.chatService
-      .onCurrentChatChange()
-      .subscribe((c) => (this.currentChat = c));
-    this.projectService.onCurrentProjectchange().subscribe((p) => {
-      this.currentProject = p;
-      console.log(p);
-    });
+    this.listenToDataChange = this.contextService
+      .listenToDataChange()
+      .subscribe((v) => {
+        this.currentProject = v[1];
+        this.currentChat = v[2];
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.listenToDataChange.unsubscribe();
   }
 }

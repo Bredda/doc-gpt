@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
 import { NavigationService } from './services/navigation.service';
+import { ContextService } from './services/context.service';
 
 @Component({
   selector: 'app-docgpt',
@@ -15,13 +16,15 @@ export class DocgptComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private navigationService: NavigationService
+    private contextService: ContextService
   ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((paramMap) => {
-      this.navigationService.alertProjectHasChanged(paramMap['projectId']);
-      this.navigationService.alertChatHasChanged(paramMap['chatId']);
+      this.contextService.triggerContextChange(
+        paramMap['projectId'],
+        paramMap['chatId']
+      );
     });
   }
 }

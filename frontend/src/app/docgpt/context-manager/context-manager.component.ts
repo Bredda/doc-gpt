@@ -7,7 +7,7 @@ import {
   TreeNode
 } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
-import { ContextService } from '../services/context.service';
+import { DocumentService } from '../services/documents.service';
 
 @Component({
   selector: 'app-context-manager',
@@ -35,7 +35,7 @@ export class ContextManagerComponent implements OnInit {
   ];
   currentProject: string | undefined = undefined;
   constructor(
-    private contextService: ContextService,
+    private contextService: DocumentService,
     private route: ActivatedRoute,
     private confirmationService: ConfirmationService
   ) {}

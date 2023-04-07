@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  ConfirmEventType,
   ConfirmationService,
   MenuItem,
   MessageService,
@@ -9,7 +8,9 @@ import {
 import { ProjectService } from '../services/project.service';
 import { Router } from '@angular/router';
 import { ChatService } from '../services/chat.service';
-import { NavigationService } from '../services/navigation.service';
+import { ContextService } from '../services/context.service';
+import { Project } from '../api/project';
+import { Languages, Models } from '../api/settings';
 
 @Component({
   selector: 'app-projec-manager',
@@ -19,64 +20,54 @@ import { NavigationService } from '../services/navigation.service';
 })
 export class ProjecManagerComponent implements OnInit {
   visible = false;
-  selectedNode!: any;
-  newProjectName = '';
-  newChatName = '';
+  selectedNode!: TreeNode;
+  newName = '';
   createProjectVisible = false;
   createChatVisible = false;
   datas: TreeNode[] = [];
   items: MenuItem[] = [];
-  languages = [
-    { id: 0, name: 'English' },
-    { id: 1, name: 'Français' }
-  ];
-  selectedLanguage = { id: 0, name: 'English' };
-  selectedModel = { id: 0, name: 'gpt-3.5-turbo' };
-  models = [
-    { id: 0, name: 'gpt-3.5-turbo' },
-    { id: 1, name: 'gpt4' }
-  ];
-  currentProjectId = undefined;
-  currentChatId = undefined;
+  languages = Languages;
+  selectedLanguage = Languages[0];
+  selectedModel = Models[0];
+  models = Models;
+  currentProjectId: string | undefined;
+  currentChatId: string | undefined;
   constructor(
     private router: Router,
     private projectService: ProjectService,
     private chatService: ChatService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private navigationService: NavigationService
+    private contextService: ContextService
   ) {}
 
   ngOnInit(): void {
-    //On écoute la navigation pour changement projet/chat
-    //Permet de savoir où l'on est pour expand le tree et navigation auto sur create/delete
-    this.navigationService.onNavigationChange().subscribe((v) => {
-      this.currentProjectId = v[0];
-      this.currentChatId = v[1];
-    });
-    // On écoute le publication de la liste de sprojets + chats associés pour refresh la vue (init/création/suppression)
-    this.projectService.onProjectListChange().subscribe((projects) => {
-      const pjs: TreeNode[] = [];
-      projects.forEach((p) => {
-        const children: TreeNode[] = [];
-        p.chats.forEach((c) => {
-          const newChildrenNode = { label: c.name, data: c };
-          children.push({
-            ...newChildrenNode,
-            expanded: this.isAutoExpanded(newChildrenNode)
-          });
-        });
-        const newRoot = { label: p.name, children: children, data: p };
-        pjs.push({ ...newRoot, expanded: this.isAutoExpanded(newRoot) });
-      });
-      this.datas = pjs;
+    this.contextService.listenToDataChange().subscribe((v) => {
+      this.datas = this.transformProjectListToNode(v[0]);
+      this.currentProjectId = v[1]?.id;
+      this.currentChatId = v[2]?.id;
     });
   }
 
+  private transformProjectListToNode(projects: Project[]): TreeNode[] {
+    const pjs: TreeNode[] = [];
+    projects.forEach((p) => {
+      const children: TreeNode[] = [];
+      p.chats.forEach((c) => {
+        const newChildrenNode = { label: c.name, data: c };
+        children.push({
+          ...newChildrenNode,
+          expanded: this.isAutoExpanded(newChildrenNode)
+        });
+      });
+      const newRoot = { label: p.name, children: children, data: p };
+      pjs.push({ ...newRoot, expanded: this.isAutoExpanded(newRoot) });
+    });
+    return pjs;
+  }
+
   isAutoExpanded(t: TreeNode): boolean {
-    return (
-      t.children !== undefined && t.data.id === Number(this.currentProjectId)
-    );
+    return t.children !== undefined && t.data.id === this.currentProjectId;
   }
 
   selectedIsProject() {
@@ -84,6 +75,18 @@ export class ProjecManagerComponent implements OnInit {
   }
   selecedIsChat() {
     return !this.selectedIsProject();
+  }
+
+  navigateToSelectedNode() {
+    if (this.selectedIsProject())
+      this.router.navigate(['project', this.selectedNode.data.id]);
+    else if (this.selectedNode.parent !== undefined)
+      this.router.navigate([
+        'project',
+        this.selectedNode.parent.data.id,
+        'chat',
+        this.selectedNode.data.id
+      ]);
   }
 
   deleteProject() {
@@ -102,7 +105,7 @@ export class ProjecManagerComponent implements OnInit {
               summary: 'Confirmed',
               detail: 'Projet supprimé'
             });
-            if (this.selectedNode.data.id === Number(this.currentProjectId))
+            if (this.selectedNode.data.id === this.currentProjectId)
               this.router.navigate(['']);
           });
       }
@@ -111,35 +114,33 @@ export class ProjecManagerComponent implements OnInit {
 
   onCancelCreate() {
     this.createProjectVisible = false;
-    this.newProjectName = '';
+    this.newName = '';
   }
   onConfirmCreate() {
-    this.projectService
-      .createNewProject(this.newProjectName)
-      .subscribe((projects) => {
-        this.newProjectName = '';
-        this.createProjectVisible = false;
-        this.messageService.add({
-          severity: 'info',
-          summary: 'Confirmed',
-          detail: 'Projet créé'
-        });
-        this.router.navigate(['project', projects[projects.length - 1].id]);
+    this.projectService.createNewProject(this.newName).subscribe((projects) => {
+      this.newName = '';
+      this.createProjectVisible = false;
+      this.messageService.add({
+        severity: 'info',
+        summary: 'Confirmed',
+        detail: 'Projet créé'
       });
+      this.router.navigate(['project', projects[projects.length - 1].id]);
+    });
   }
 
   onCancelCreateChat() {
     this.createChatVisible = false;
-    this.newChatName = '';
+    this.newName = '';
   }
   onConfirmCreateChat() {
     this.chatService
       .createNewChat(this.selectedNode.data.id, {
-        name: this.newChatName,
+        name: this.newName,
         settings: { model: this.selectedModel, language: this.selectedLanguage }
       })
       .subscribe((projects) => {
-        this.newChatName = '';
+        this.newName = '';
         this.createChatVisible = false;
         this.messageService.add({
           severity: 'info',
@@ -171,22 +172,29 @@ export class ProjecManagerComponent implements OnInit {
       acceptLabel: 'Supprimer',
       rejectLabel: 'Annuler',
       accept: () => {
-        this.chatService
-          .deleteChat(
-            this.selectedNode.parent.data.id,
-            this.selectedNode.data.id
-          )
-          .subscribe(() => {
-            this.messageService.add({
-              severity: 'info',
-              summary: 'Confirmed',
-              detail: 'Conversation supprimée'
+        if (this.selectedNode.parent !== undefined)
+          this.chatService
+            .deleteChat(
+              this.selectedNode.parent.data.id,
+              this.selectedNode.data.id
+            )
+            .subscribe(() => {
+              this.messageService.add({
+                severity: 'info',
+                summary: 'Confirmed',
+                detail: 'Conversation supprimée'
+              });
+              console.log(
+                'Deleting chat ' +
+                  this.selectedNode.data.id +
+                  'while ' +
+                  this.currentChatId +
+                  ' is selected'
+              );
+              if (this.selectedNode.data.id === this.currentChatId)
+                this.router.navigate(['project', this.currentProjectId]);
             });
-            if (this.selectedNode.data.id === Number(this.currentChatId))
-              this.router.navigate(['project', this.currentProjectId]);
-          });
-      },
-      reject: (type: ConfirmEventType) => {}
+      }
     });
   }
 
@@ -196,8 +204,7 @@ export class ProjecManagerComponent implements OnInit {
         {
           label: 'Charger',
           icon: 'pi pi-fw pi-sync',
-          command: () =>
-            this.router.navigate(['project', this.selectedNode.data.id])
+          command: () => this.navigateToSelectedNode()
         },
         {
           label: 'Nouvelle conversation',
@@ -219,13 +226,7 @@ export class ProjecManagerComponent implements OnInit {
         {
           label: 'Ouvrir',
           icon: 'pi pi-fw pi-sync',
-          command: () =>
-            this.router.navigate([
-              'project',
-              this.selectedNode.parent.data.id,
-              'chat',
-              this.selectedNode.data.id
-            ])
+          command: () => this.navigateToSelectedNode()
         },
         {
           label: 'Renommer',
