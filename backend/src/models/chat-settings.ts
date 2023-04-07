@@ -3,8 +3,8 @@ import { Language, LlmModel } from './enum.js';
 
 @Entity()
 export class ChatSettings {
-  @PrimaryGeneratedColumn()
-  id!: number;
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
   @Column({
     type: 'enum',

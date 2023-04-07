@@ -6,12 +6,12 @@ export interface ICreateProjectPayload {
   name: string;
 }
 
-export const getProjectById = async (projectId: number): Promise<Project> => {
+export const getProjectById = async (projectId: string): Promise<Project> => {
   return AppDataSource.manager.findOneByOrFail(Project, { id: projectId });
 };
 
 export const getProjectsByUserId = async (
-  userId: number,
+  userId: string,
   withChats: boolean
 ): Promise<Array<Project>> => {
   let projects;
@@ -27,13 +27,13 @@ export const getProjectsByUserId = async (
 };
 
 export const deleteProjectById = async (
-  projectId: number
+  projectId: string
 ): Promise<DeleteResult> => {
   return await AppDataSource.manager.delete(Project, { id: projectId });
 };
 
 export const registerFileToProject = async (
-  projectId: number,
+  projectId: string,
   doc: Partial<OriginalDocument>
 ): Promise<OriginalDocument> => {
   const project = await AppDataSource.manager.findOneByOrFail(Project, {
@@ -46,7 +46,7 @@ export const registerFileToProject = async (
 };
 
 export const getAllProjectDocuments = async (
-  projectId: number
+  projectId: string
 ): Promise<OriginalDocument[]> => {
   return await AppDataSource.manager.findBy(OriginalDocument, {
     project: { id: projectId }
@@ -54,7 +54,7 @@ export const getAllProjectDocuments = async (
 };
 
 export const createNewProject = async (
-  userId: number,
+  userId: string,
   payload: ICreateProjectPayload
 ): Promise<Project> => {
   const user = await AppDataSource.manager.findOneByOrFail(User, {

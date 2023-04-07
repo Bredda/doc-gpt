@@ -43,13 +43,13 @@ export class ChatService {
     return this.$currentChat.asObservable();
   }
 
-  public getChatById(projectId: number, chatId: number): Observable<Chat> {
+  public getChatById(projectId: string, chatId: string): Observable<Chat> {
     return this.httpClient.get<Chat>(
       `${this.url}/projects/${projectId}/chats/${chatId}`
     );
   }
 
-  public ask(chatId: number, query: string): Observable<Chat> {
+  public ask(chatId: string, query: string): Observable<Chat> {
     this.$queryBeingPrecessed.next(query);
     return this.httpClient
       .post<Chat>(`${this.url}/llm/ask`, { chatId: chatId, query: query })
@@ -59,13 +59,13 @@ export class ChatService {
       );
   }
 
-  public deleteChat(projectId: number, chatId: number): Observable<Project[]> {
+  public deleteChat(projectId: string, chatId: string): Observable<Project[]> {
     return this.httpClient
       .delete<Project[]>(`${this.url}/projects/${projectId}/chats/${chatId}`)
       .pipe(tap((p) => this.projectService.updateProjectList(p)));
   }
 
-  public createNewChat(projectId: number, newChat: Partial<Chat>) {
+  public createNewChat(projectId: string, newChat: Partial<Chat>) {
     return this.httpClient
       .post<Project[]>(`${this.url}/projects/${projectId}/chats`, newChat)
       .pipe(tap((p) => this.projectService.updateProjectList(p)));
@@ -75,7 +75,7 @@ export class ChatService {
    * OLD
    */
 
-  public getChat(projectId: number, chatId: number): Observable<Chat> {
+  public getChat(projectId: string, chatId: string): Observable<Chat> {
     return this.httpClient.get<Chat>(
       `${this.url}/${projectId}/chats/${chatId}`
     );
@@ -85,11 +85,11 @@ export class ChatService {
     return this.$currentChat.asObservable();
   }
 
-  public triggerChatRefresh(projectId: number, chatId: number): void {
+  public triggerChatRefresh(projectId: string, chatId: string): void {
     this.getChat(projectId, chatId).subscribe((c) => this.$currentChat.next(c));
   }
 
-  public loadChat(projectId: number, chatId: number): Observable<Chat> {
+  public loadChat(projectId: string, chatId: string): Observable<Chat> {
     return this.httpClient
       .get<Chat>(`${this.url}/${projectId}/chats/${chatId}`)
       .pipe(tap((c) => this.$currentChat.next(c)));

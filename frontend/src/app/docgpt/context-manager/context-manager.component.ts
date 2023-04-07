@@ -33,7 +33,7 @@ export class ContextManagerComponent implements OnInit {
       icon: 'pi pi-fw pi-pencil'
     }
   ];
-  currentProject: number | undefined = undefined;
+  currentProject: string | undefined = undefined;
   constructor(
     private contextService: ContextService,
     private route: ActivatedRoute,

@@ -12,8 +12,8 @@ import { Project } from './project.js';
 
 @Entity()
 export class OriginalDocument {
-  @PrimaryGeneratedColumn()
-  id!: number;
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
   @Column()
   originalname!: string;

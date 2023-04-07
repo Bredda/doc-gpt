@@ -15,14 +15,14 @@ import { OriginalDocument } from './document.js';
 
 @Entity()
 export class Project {
-  @PrimaryGeneratedColumn()
-  id!: number;
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
   @Column()
   name!: string;
 
   @Column({ nullable: true })
-  userId!: number;
+  userId!: string;
   @ManyToOne((_type) => User, (user: User) => user.projects)
   @JoinColumn()
   user!: Relation<User>;

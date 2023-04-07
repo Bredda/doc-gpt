@@ -11,7 +11,7 @@ export class ContextService {
 
   constructor(private httpClient: HttpClient) {}
 
-  public getProjectContext(projectId: number): Observable<any[]> {
+  public getProjectContext(projectId: string): Observable<any[]> {
     return this.httpClient.get<any[]>(`${this.url}/${projectId}/context`);
   }
 
@@ -19,11 +19,11 @@ export class ContextService {
     return this.$context.asObservable();
   }
 
-  public triggerContextRefresh(projectId: number): void {
+  public triggerContextRefresh(projectId: string): void {
     this.getProjectContext(projectId).subscribe((c) => this.$context.next(c));
   }
 
-  public uploadFiles(projectId: number | undefined, files: Array<File>): void {
+  public uploadFiles(projectId: string | undefined, files: Array<File>): void {
     if (projectId !== undefined) {
       files.map((f) => {
         const formData = new FormData();

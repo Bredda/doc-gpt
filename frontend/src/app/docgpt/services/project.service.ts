@@ -11,7 +11,7 @@ export class ProjectService {
   private url = 'http://localhost:3000/doc-gpt/projects';
 
   private _$projectList = new BehaviorSubject<Array<Project>>([]);
-  private currentProjectId: number | undefined;
+  private currentProjectId: string | undefined;
   private $currentProject = new BehaviorSubject<Project | undefined>(undefined);
 
   constructor(
@@ -43,7 +43,7 @@ export class ProjectService {
     return this.$currentProject.asObservable();
   }
 
-  public getProjectById(projectId: number): Observable<Project> {
+  public getProjectById(projectId: string): Observable<Project> {
     return this.httpClient.get<Project>(`${this.url}/${projectId}`);
   }
 

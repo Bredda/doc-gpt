@@ -1,18 +1,18 @@
 export interface Chat {
-  id: number;
+  id: string;
   name: string;
   settings: ChatSettings;
   messages: ChatMessage[];
 }
 
 export interface ChatSettings {
-  id?: number;
+  id?: string;
   language: any;
   model: any;
 }
 
 export interface ChatMessage {
-  id: number;
+  id: string;
   content: string;
   origin: string;
 }

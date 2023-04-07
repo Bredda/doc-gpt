@@ -9,7 +9,7 @@ import { NavigationService } from '../services/navigation.service';
 })
 export class QueryManagerComponent implements OnInit {
   query = '';
-  currentChatId: number | undefined = undefined;
+  currentChatId: string | undefined = undefined;
 
   constructor(
     private chatService: ChatService,

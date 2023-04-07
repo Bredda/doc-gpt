@@ -5,15 +5,15 @@ import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
   providedIn: 'root'
 })
 export class NavigationService {
-  $projectId = new BehaviorSubject<number | undefined>(undefined);
-  $chatId = new BehaviorSubject<number | undefined>(undefined);
+  $projectId = new BehaviorSubject<string | undefined>(undefined);
+  $chatId = new BehaviorSubject<string | undefined>(undefined);
   constructor() {}
 
-  public alertProjectHasChanged(projectId: number | undefined) {
+  public alertProjectHasChanged(projectId: string | undefined) {
     this.$projectId.next(projectId);
   }
 
-  public alertChatHasChanged(chatId: number | undefined) {
+  public alertChatHasChanged(chatId: string | undefined) {
     this.$chatId.next(chatId);
   }
 
@@ -21,18 +21,18 @@ export class NavigationService {
     return combineLatest([this.$projectId, this.$chatId]);
   }
 
-  public onChatChange(): Observable<number | undefined> {
+  public onChatChange(): Observable<string | undefined> {
     return this.$chatId.asObservable();
   }
 
-  public getCurrentChatId(): number | undefined {
+  public getCurrentChatId(): string | undefined {
     return this.$chatId.value;
   }
 
-  public onProjectChange(): Observable<number | undefined> {
+  public onProjectChange(): Observable<string | undefined> {
     return this.$projectId.asObservable();
   }
-  public getCurrentProjectId(): number | undefined {
+  public getCurrentProjectId(): string | undefined {
     return this.$projectId.value;
   }
 }

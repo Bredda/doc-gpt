@@ -21,23 +21,23 @@ import {
 class ProjectController {
   @Get('/projects')
   static getUserProjects = async (req: Request, res: Response) => {
-    const userId = +res.locals.jwtPayload.userId;
-    const projects = await getProjectsByUserId(+userId, true);
+    const userId = res.locals.jwtPayload.userId;
+    const projects = await getProjectsByUserId(userId, true);
     res.send(projects);
   };
 
   @Get('/projects/:projectId')
   static getProjectById = async (req: Request, res: Response) => {
-    const project = await getProjectById(+req.params.projectId);
+    const project = await getProjectById(req.params.projectId);
     console.log(project);
     res.send(project);
   };
 
   @Delete('/projects/:projectId')
   static deleteUserProject = async (req: Request, res: Response) => {
-    await deleteProjectById(+req.params.projectId);
+    await deleteProjectById(req.params.projectId);
     const projects = await getProjectsByUserId(
-      +res.locals.jwtPayload.userId,
+      res.locals.jwtPayload.userId,
       true
     );
     res.send(projects);
@@ -45,9 +45,9 @@ class ProjectController {
 
   @Delete('/projects/:projectId/chats/:chatId')
   static deleteUserChat = async (req: Request, res: Response) => {
-    await deleteChatById(+req.params.chatId);
+    await deleteChatById(req.params.chatId);
     const projects = await getProjectsByUserId(
-      +res.locals.jwtPayload.userId,
+      res.locals.jwtPayload.userId,
       true
     );
     res.send(projects);
@@ -55,27 +55,27 @@ class ProjectController {
 
   @Get('/projects/:projectId/chats')
   static getProjectChats = async (req: Request, res: Response) => {
-    const projects = await getChatsByProjectId(+req.params.projectId);
+    const projects = await getChatsByProjectId(req.params.projectId);
     res.send(projects);
   };
 
   @Get('/projects/:projectId/chats/:chatId')
   static getSpecificChat = async (req: Request, res: Response) => {
-    const chat = await getChat(+req.params.chatId);
+    const chat = await getChat(req.params.chatId);
     res.send(chat);
   };
 
   @Put('/projects/:projectId/chats/:chatId/settings')
   static updateChatSettings = async (req: Request, res: Response) => {
-    await updateChatSettings(+req.params.chatId, req.body);
+    await updateChatSettings(req.params.chatId, req.body);
     res.send('Settings updated');
   };
 
   @Post('/projects/:projectId/chats')
   static createNewProjecthat = async (req: Request, res: Response) => {
-    await createNewProjecthat(+req.params.projectId, req.body);
+    await createNewProjecthat(req.params.projectId, req.body);
     const projects = await getProjectsByUserId(
-      +res.locals.jwtPayload.userId,
+      res.locals.jwtPayload.userId,
       true
     );
     res.status(201).send(projects);
@@ -83,10 +83,10 @@ class ProjectController {
 
   @Post('/projects')
   static createNewUserProject = async (req: Request, res: Response) => {
-    const userId = +res.locals.jwtPayload.userId;
+    const userId = res.locals.jwtPayload.userId;
     await createNewProject(userId, req.body);
     const projects = await getProjectsByUserId(
-      +res.locals.jwtPayload.userId,
+      res.locals.jwtPayload.userId,
       true
     );
     res.status(201).send(projects);
@@ -94,7 +94,7 @@ class ProjectController {
 
   @Get('/projects/:projectId/context')
   static getProjectContext = async (req: Request, res: Response) => {
-    const context = await getAllProjectDocuments(+req.params.projectId);
+    const context = await getAllProjectDocuments(req.params.projectId);
     res.status(200).send(context);
   };
 
@@ -102,8 +102,8 @@ class ProjectController {
   static uploadToContext = async (req: Request, res: Response) => {
     console.log(req.file);
     if (req.file) {
-      await registerFileToProject(+req.params.projectId, req.file);
-      const context = await getAllProjectDocuments(+req.params.projectId);
+      await registerFileToProject(req.params.projectId, req.file);
+      const context = await getAllProjectDocuments(req.params.projectId);
       res.status(201).send(context);
     } else {
       res.status(400).send({ message: 'No file attached' });

@@ -14,7 +14,8 @@ const routes: Routes = [
       {
         path: '',
         loadChildren: () =>
-          import('./docgpt/docgpt.module').then((m) => m.DocgptModule)
+          import('./docgpt/docgpt.module').then((m) => m.DocgptModule),
+        title: 'DOC GPT'
       }
     ]
   },

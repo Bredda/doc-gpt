@@ -19,7 +19,7 @@ export interface IUpdateChatPayload {
 }
 
 export const getChatsByProjectId = async (
-  projectId: number
+  projectId: string
 ): Promise<Array<Chat>> => {
   return await AppDataSource.manager.find(Chat, {
     where: {
@@ -34,7 +34,7 @@ export const getChatsByProjectId = async (
 };
 
 export const updateChatSettings = async (
-  chatId: number,
+  chatId: string,
   payload: IUpdateChatPayload
 ): Promise<any> => {
   const chat = await AppDataSource.manager.findOneOrFail(Chat, {
@@ -61,7 +61,7 @@ export const updateChatSettings = async (
 };
 
 export const addMessageToChat = async (
-  chatId: number,
+  chatId: string,
   query: string,
   origin: string
 ): Promise<Chat> => {
@@ -81,19 +81,19 @@ export const addMessageToChat = async (
   });
 };
 
-export const getChat = async (chatId: number): Promise<Chat> => {
+export const getChat = async (chatId: string): Promise<Chat> => {
   return AppDataSource.manager.findOneOrFail(Chat, {
     where: { id: chatId },
     relations: { messages: true }
   });
 };
 
-export const deleteChatById = async (chatId: number): Promise<DeleteResult> => {
+export const deleteChatById = async (chatId: string): Promise<DeleteResult> => {
   return await AppDataSource.manager.delete(Chat, { id: chatId });
 };
 
 export const createNewProjecthat = async (
-  projectId: number,
+  projectId: string,
   payload: ICreateChatPayload
 ): Promise<Chat> => {
   const chats = await getChatsByProjectId(projectId);

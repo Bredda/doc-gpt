@@ -1,7 +1,7 @@
 import { Chat } from './chat';
 
 export interface Project {
-  id: number;
+  id: string;
   name: string;
   userId: number;
   chats: Chat[];

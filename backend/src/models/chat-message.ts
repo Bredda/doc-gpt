@@ -12,8 +12,8 @@ import { Chat } from './chat.js';
 
 @Entity()
 export class ChatMessage {
-  @PrimaryGeneratedColumn()
-  id!: number;
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
   @Column()
   content!: string;
