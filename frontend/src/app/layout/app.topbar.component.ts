@@ -1,31 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from '../auth/services/auth.service';
-import { ProjectService } from '../docgpt/services/project.service';
-import { Project } from '../docgpt/api/project';
-
-interface City {
-  name: string;
-  code: string;
-}
+import { ThemeService } from '../shared/theme.service';
 
 @Component({
   selector: 'app-topbar',
   templateUrl: './app.topbar.component.html',
   styleUrls: ['./app.topbar.component.scss']
 })
-export class AppTopbarComponent implements OnInit {
-  cities: City[] = [];
+export class AppTopbarComponent {
+  darkIcon = 'pi pi-moon';
+  lightIcon = 'pi pi-sun';
+  actualIcon = 'pi pi-sun';
+  dark = false;
   items: MenuItem[] = [
     {
-      label: 'Settings',
-      icon: 'pi pi-refresh',
-      command: () => {
-        this.update();
-      }
+      label: 'Paramètres',
+      icon: 'pi pi-cog'
     },
     {
-      label: 'Se déconnecter',
+      label: 'Déconnexion',
       icon: 'pi pi-refresh',
       command: () => {
         this.signout();
@@ -33,29 +27,17 @@ export class AppTopbarComponent implements OnInit {
     }
   ];
 
-  projects: Project[] = [];
-  selectedCity!: City;
-
-  constructor(private auth: AuthService, private prjService: ProjectService) {}
-
-  ngOnInit() {
-    this.prjService
-      .getProjectList()
-      .subscribe((prjs) => (this.projects = prjs));
-    this.cities = [
-      { name: 'New York', code: 'NY' },
-      { name: 'Rome', code: 'RM' },
-      { name: 'London', code: 'LDN' },
-      { name: 'Istanbul', code: 'IST' },
-      { name: 'Paris', code: 'PRS' }
-    ];
-  }
-
-  update(): void {
-    throw new Error('Not yet imlpemented');
-  }
+  constructor(private auth: AuthService, private themeService: ThemeService) {}
 
   signout() {
     this.auth.signout();
+  }
+
+  toggleTheme() {
+    this.dark = !this.dark;
+    this.actualIcon = this.dark ? this.darkIcon : this.lightIcon;
+    this.themeService.switchTheme(
+      this.dark ? 'lara-dark-blue' : 'lara-light-blue'
+    );
   }
 }

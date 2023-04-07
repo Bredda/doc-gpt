@@ -12,6 +12,7 @@ import { ToastModule } from 'primeng/toast';
 import { DividerModule } from 'primeng/divider';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 const UI_MODULES = [
   ToolbarModule,
@@ -24,7 +25,8 @@ const UI_MODULES = [
   ToastModule,
   ConfirmDialogModule,
   DividerModule,
-  ContextMenuModule
+  ContextMenuModule,
+  InputSwitchModule
 ];
 
 const NG_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
