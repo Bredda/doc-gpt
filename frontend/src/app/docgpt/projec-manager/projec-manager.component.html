@@ -1,17 +1,21 @@
-<p-button
-  class="w-full"
-  icon="pi pi-check"
-  (click)="createProjectVisible = true"
-  label="Nouveau projet">
-</p-button>
-<p-tree
-  class="md:w-30rem"
-  [value]="datas"
-  emptyMessage="Aucun projet"
-  selectionMode="single"
-  [(selection)]="selectedNode"
-  [contextMenu]="cm">
-</p-tree>
+<p-fieldset legend="Projets" [toggleable]="true">
+  <p-button
+    class="w-full"
+    icon="pi pi-check"
+    (click)="createProjectVisible = true"
+    styleClass="p-button-outlined"
+    label="Nouveau projet">
+  </p-button>
+  <p-tree
+    class="md:w-30rem mt-4"
+    [value]="datas"
+    emptyMessage="Aucun projet"
+    selectionMode="single"
+    [(selection)]="selectedNode"
+    (onNodeSelect)="navigateToSelectedNode()"
+    [contextMenu]="cm">
+  </p-tree>
+</p-fieldset>
 
 <p-contextMenu #cm [model]="items" (onShow)="onContext()"></p-contextMenu>
 

@@ -1,6 +1,7 @@
-<div class="docgpt-wrapper">
+<div class="docgpt-wrapper" #wrapper>
   <p-toast></p-toast>
   <p-confirmDialog></p-confirmDialog>
+
   <p-splitter [panelSizes]="[25, 75]" styleClass="mb-5 h-full">
     <ng-template pTemplate>
       <div class="col flex flex-column align-items-center gap-2">
@@ -10,10 +11,11 @@
       </div>
     </ng-template>
     <ng-template pTemplate>
-      <div class="col flex flex-column align-items-center gap-2">
-        <app-loader-info class="w-full"></app-loader-info>
-        <app-query-manager class="w-full"></app-query-manager>
-        <app-chat-panel class="w-full"></app-chat-panel>
+      <div class="relative flex h-full max-w-full flex-1 flex-col">
+        <app-query-manager
+          class="absolute z-5 bottom-0 left-0 w-full border-t md:border-t-0 dark:border-white/20 md:border-transparent md:dark:border-transparent md:bg-vert-light-gradient bg-white dark:bg-gray-800 md:!bg-transparent dark:md:bg-vert-dark-gradient pt-2"></app-query-manager>
+        <app-chat-panel
+          class="relative h-full w-full transition-width flex flex-col overflow-hidden items-stretch flex-1"></app-chat-panel>
       </div>
     </ng-template>
   </p-splitter>

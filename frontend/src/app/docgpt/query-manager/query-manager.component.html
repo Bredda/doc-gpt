@@ -1,17 +1,20 @@
 <div
-  *ngIf="currentChat !== undefined ; else noChat"
-  class="card flex justify-content-center">
+  *ngIf="currentChat !== undefined
+  "
+  class="card flex justify-content-center p-inputgroup">
   <input
-    id="email1"
     type="text"
-    placeholder="Query ..."
     pInputText
+    placeholder="Query ..."
+    [(ngModel)]="query"
     class="w-full md:w-30rem mb-5"
+    style="padding: 1rem" />
+  <button
+    type="button"
+    pButton
+    icon="pi pi-send"
+    class="mb-5"
     style="padding: 1rem"
-    [(ngModel)]="query" />
-  <p-button label="Ask" (click)="onAsk()"></p-button>
+    styleClass="p-button-warn"
+    (click)="onAsk()"></button>
 </div>
-
-<ng-template #noChat>
-  <h3>Ouvrez une disucssion</h3>
-</ng-template>

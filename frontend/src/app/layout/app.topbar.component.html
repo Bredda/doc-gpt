@@ -2,6 +2,12 @@
   <div class="p-toolbar-group-start">
     <p>DOC GPT</p>
   </div>
+  <div class="p-toolbar-group-center">
+    <h2>
+      <span *ngIf="projectName !== undefined">{{projectName}}</span
+      ><span *ngIf="chatName !== undefined"> | {{chatName}}</span>
+    </h2>
+  </div>
   <div class="p-toolbar-group-end">
     <p-button
       [icon]="actualIcon"

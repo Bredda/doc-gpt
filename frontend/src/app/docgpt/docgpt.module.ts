@@ -9,7 +9,6 @@ import { TreeModule } from 'primeng/tree';
 import { DocumentManagerComponent } from './document-manager/document-manager.component';
 import { QueryManagerComponent } from './query-manager/query-manager.component';
 import { ProjecManagerComponent } from './projec-manager/projec-manager.component';
-import { LoaderInfoComponent } from './loader-info/loader-info.component';
 import { DndUploadDirective } from './directives/dnd-upload.directive';
 import { ChatPanelComponent } from './chat-panel/chat-panel.component';
 @NgModule({
@@ -18,7 +17,6 @@ import { ChatPanelComponent } from './chat-panel/chat-panel.component';
     DocumentManagerComponent,
     QueryManagerComponent,
     ProjecManagerComponent,
-    LoaderInfoComponent,
     DndUploadDirective,
     ChatPanelComponent
   ],

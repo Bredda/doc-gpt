@@ -11,12 +11,14 @@ import { AuthInterceptor } from './auth/services/auth.interceptor';
 import { MenuModule } from 'primeng/menu';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HttpInterceptorService } from './shared/http-interceptor.service';
+import { MenuBarComponent } from './layout/menu-bar.component';
 @NgModule({
   declarations: [
     AppComponent,
     AppLayoutComponent,
     AppTopbarComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    MenuBarComponent
   ],
   imports: [
     BrowserModule,

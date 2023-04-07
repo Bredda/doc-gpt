@@ -57,11 +57,18 @@ export class ProjecManagerComponent implements OnInit {
         const newChildrenNode = { label: c.name, data: c };
         children.push({
           ...newChildrenNode,
-          expanded: this.isAutoExpanded(newChildrenNode)
+          expanded: this.isAutoExpanded(newChildrenNode),
+          partialSelected: this.isAutoExpanded(newChildrenNode),
+          icon: 'pi pi-comments'
         });
       });
       const newRoot = { label: p.name, children: children, data: p };
-      pjs.push({ ...newRoot, expanded: this.isAutoExpanded(newRoot) });
+      pjs.push({
+        ...newRoot,
+        expanded: this.isAutoExpanded(newRoot),
+        partialSelected: this.isAutoExpanded(newRoot),
+        icon: 'pi pi-folder-open'
+      });
     });
     return pjs;
   }

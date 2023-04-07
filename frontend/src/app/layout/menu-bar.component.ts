@@ -1,16 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from '../auth/services/auth.service';
-import { ThemeService } from '../shared/theme.service';
 import { ContextService } from '../docgpt/services/context.service';
+import { ThemeService } from '../shared/theme.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-topbar',
-  templateUrl: './app.topbar.component.html',
-  styleUrls: ['./app.topbar.component.scss']
+  selector: 'app-menu-bar',
+  templateUrl: './menu-bar.component.html',
+  styleUrls: ['./menu-bar.component.scss']
 })
-export class AppTopbarComponent implements OnInit, OnDestroy {
+export class MenuBarComponent implements OnInit, OnDestroy {
   darkIcon = 'pi pi-moon';
   lightIcon = 'pi pi-sun';
   actualIcon = 'pi pi-sun';
@@ -28,7 +28,6 @@ export class AppTopbarComponent implements OnInit, OnDestroy {
       }
     }
   ];
-
   projectName: string | undefined;
   chatName: string | undefined;
   listenToDataChange!: Subscription;
@@ -42,14 +41,11 @@ export class AppTopbarComponent implements OnInit, OnDestroy {
     this.listenToDataChange = this.contexteService
       .listenToDataChange()
       .subscribe((v) => {
-        this.projectName = v[1] !== undefined ? v[1].name : undefined;
-        this.chatName = v[2] !== undefined ? v[2].name : undefined;
+        this.projectName = v[1]?.name;
+        this.chatName = v[2]?.name;
       });
   }
-
-  ngOnDestroy(): void {
-    this.listenToDataChange.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 
   signout() {
     this.auth.signout();

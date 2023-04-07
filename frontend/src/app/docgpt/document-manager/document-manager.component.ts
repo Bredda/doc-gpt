@@ -1,12 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
-  ConfirmEventType,
   ConfirmationService,
   MenuItem,
   MessageService,
   TreeNode
 } from 'primeng/api';
-import { ActivatedRoute } from '@angular/router';
 import { DocumentService } from '../services/documents.service';
 import { ContextService } from '../services/context.service';
 

@@ -13,6 +13,7 @@ import { DividerModule } from 'primeng/divider';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { FieldsetModule } from 'primeng/fieldset';
 
 const UI_MODULES = [
   ToolbarModule,
@@ -26,7 +27,8 @@ const UI_MODULES = [
   ConfirmDialogModule,
   DividerModule,
   ContextMenuModule,
-  InputSwitchModule
+  InputSwitchModule,
+  FieldsetModule
 ];
 
 const NG_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
