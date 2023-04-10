@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import { ChatService } from '../services/chat.service';
 import { ContextService } from '../services/context.service';
 import { Project } from '../api/project';
-import { Languages, Models } from '../api/settings';
+import { ChatType, Languages, Models } from '../api/settings';
 
 @Component({
   selector: 'app-projec-manager',
@@ -30,6 +30,8 @@ export class ProjecManagerComponent implements OnInit {
   selectedLanguage = Languages[0];
   selectedModel = Models[0];
   models = Models;
+  types = ChatType;
+  selectedType = ChatType[0];
   currentProjectId: string | undefined;
   currentChatId: string | undefined;
   constructor(
