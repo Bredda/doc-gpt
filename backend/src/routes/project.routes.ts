@@ -49,13 +49,13 @@ router.put(
 );
 //CONTEXT
 router.post(
-  '/projects/:projectId/context',
+  '/projects/:projectId/documents',
   [checkJwt],
   uploadPath.single('file'),
   ProjectController.uploadToContext
 );
 router.get(
-  '/projects/:projectId/context',
+  '/projects/:projectId/documents',
   [checkJwt],
   uploadPath.single('file'),
   ProjectController.getProjectContext

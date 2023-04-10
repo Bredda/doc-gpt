@@ -1,4 +1,11 @@
-<p-fieldset legend="Documents" [toggleable]="true">
+<p-fieldset [toggleable]="true">
+  <ng-template pTemplate="header">
+    <div class="flex align-items-center text-primary">
+      <span class="pi pi-file mr-2"></span>
+      <span class="font-bold text-lg">Documents</span>
+    </div>
+  </ng-template>
+
   <div *ngIf="this.currentProject !== undefined; else noProject">
     <div #tree class="flex flex-column gap-2">
       <p-tree

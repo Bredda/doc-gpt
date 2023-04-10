@@ -92,13 +92,14 @@ class ProjectController {
     res.status(201).send(projects);
   };
 
-  @Get('/projects/:projectId/context')
+  @Get('/projects/:projectId/documents')
+  @Tags('')
   static getProjectContext = async (req: Request, res: Response) => {
     const context = await getAllProjectDocuments(req.params.projectId);
     res.status(200).send(context);
   };
 
-  @Post('/projects/:projectId/context')
+  @Post('/projects/:projectId/documents')
   static uploadToContext = async (req: Request, res: Response) => {
     console.log(req.file);
     if (req.file) {

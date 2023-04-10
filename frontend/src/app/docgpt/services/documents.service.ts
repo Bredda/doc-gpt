@@ -13,7 +13,7 @@ export class DocumentService {
 
   public getProjectDocuments(projectId: string): Observable<any[]> {
     console.log('getProjectDocuments');
-    return this.httpClient.get<any[]>(`${this.url}/${projectId}/context`);
+    return this.httpClient.get<any[]>(`${this.url}/${projectId}/documents`);
   }
 
   public triggerContextRefresh(projectId: string): void {
@@ -28,7 +28,7 @@ export class DocumentService {
         const formData = new FormData();
         formData.append('file', f);
         this.httpClient
-          .post<any[]>(`${this.url}/${projectId}/context`, formData)
+          .post<any[]>(`${this.url}/${projectId}/documents`, formData)
           .subscribe((d) => this.documents.next(d));
       });
     }
