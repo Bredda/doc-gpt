@@ -9,6 +9,7 @@ export const Models = [
 ];
 
 export const ChatType = [
-  { id: 0, name: 'Simple conversation' },
-  { id: 1, name: 'QA sur documents' }
+  { id: 0, name: 'Conversation Chat-GPT' },
+  { id: 1, name: 'Chat with your data' },
+  { id: 1, name: 'Génération de code' }
 ];
