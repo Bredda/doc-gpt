@@ -1,6 +1,6 @@
 export const Languages = [
-  { id: 0, name: 'English' },
-  { id: 1, name: 'Français' }
+  { id: 0, name: 'Français' },
+  { id: 1, name: 'English' }
 ];
 
 export const Models = [
@@ -10,5 +10,5 @@ export const Models = [
 
 export const ChatType = [
   { id: 0, name: 'Simple conversation' },
-  { id: 0, name: 'QA sur documents' }
+  { id: 1, name: 'QA sur documents' }
 ];

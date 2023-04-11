@@ -7,8 +7,8 @@
 <div
   class="flex justify-content-center align-items-center gap-1"
   *ngIf="chatName">
-  <p-chip label="Simple conversation"></p-chip>
-  <p-chip label="Français"></p-chip>
-  <p-chip label="GTP4"></p-chip>
+  <p-chip [label]="type"></p-chip>
+  <p-chip [label]="language"></p-chip>
+  <p-chip [label]="model"></p-chip>
 </div>
 <p-divider *ngIf="chatName"></p-divider>

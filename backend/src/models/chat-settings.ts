@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  JoinColumn,
+  Relation
+} from 'typeorm';
 import { ChatType, Language, LlmModel } from './enum.js';
 
 @Entity()

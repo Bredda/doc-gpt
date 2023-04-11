@@ -143,6 +143,11 @@ export class ProjecManagerComponent implements OnInit {
     this.newName = '';
   }
   onConfirmCreateChat() {
+    console.log('Creating with ', {
+      type: this.selectedType,
+      model: this.selectedModel,
+      language: this.selectedLanguage
+    });
     this.chatService
       .createNewChat(this.selectedNode.data.id, {
         name: this.newName,
