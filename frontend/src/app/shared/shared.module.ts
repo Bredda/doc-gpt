@@ -15,6 +15,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { FieldsetModule } from 'primeng/fieldset';
 import { AutoFocusModule } from 'primeng/autofocus';
+import { ChipModule } from 'primeng/chip';
+
 const UI_MODULES = [
   ToolbarModule,
   ButtonModule,
@@ -29,7 +31,8 @@ const UI_MODULES = [
   ContextMenuModule,
   InputSwitchModule,
   FieldsetModule,
-  AutoFocusModule
+  AutoFocusModule,
+  ChipModule
 ];
 
 const NG_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];

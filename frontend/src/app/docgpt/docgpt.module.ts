@@ -11,6 +11,7 @@ import { QueryManagerComponent } from './query-manager/query-manager.component';
 import { ProjecManagerComponent } from './projec-manager/projec-manager.component';
 import { DndUploadDirective } from './directives/dnd-upload.directive';
 import { ChatPanelComponent } from './chat-panel/chat-panel.component';
+import { ChatInfoComponent } from './chat-info/chat-info.component';
 @NgModule({
   declarations: [
     DocgptComponent,
@@ -18,7 +19,8 @@ import { ChatPanelComponent } from './chat-panel/chat-panel.component';
     QueryManagerComponent,
     ProjecManagerComponent,
     DndUploadDirective,
-    ChatPanelComponent
+    ChatPanelComponent,
+    ChatInfoComponent
   ],
   imports: [
     CommonModule,

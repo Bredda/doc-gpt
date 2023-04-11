@@ -74,6 +74,8 @@ class ProjectController {
   @Post('/projects/:projectId/chats')
   static createNewProjecthat = async (req: Request, res: Response) => {
     await createNewProjecthat(req.params.projectId, req.body);
+    console.log('NEW CHAT');
+    console.log(req.body);
     const projects = await getProjectsByUserId(
       res.locals.jwtPayload.userId,
       true

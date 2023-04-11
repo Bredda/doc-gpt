@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { Language, LlmModel } from './enum.js';
+import { ChatType, Language, LlmModel } from './enum.js';
 
 @Entity()
 export class ChatSettings {
@@ -11,12 +11,19 @@ export class ChatSettings {
     enum: Language,
     default: Language.ENGLISH
   })
-  language!: string;
+  language!: number;
 
   @Column({
     type: 'enum',
     enum: LlmModel,
     default: LlmModel.GPT3_5_TURBO
   })
-  model!: string;
+  model!: number;
+
+  @Column({
+    type: 'enum',
+    enum: ChatType,
+    default: ChatType.CONVERSATIONNAL
+  })
+  type!: number;
 }

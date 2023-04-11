@@ -9,6 +9,7 @@ export interface ChatSettings {
   id?: string;
   language: any;
   model: any;
+  type: any;
 }
 
 export interface ChatMessage {

@@ -14,7 +14,7 @@ export const AppDataSource = new DataSource({
   password: process.env.POSTGRES_PASSWORD || 'postgres',
   database: process.env.POSTGRES_DB || 'postgres',
   synchronize: true,
-  logging: true,
+  logging: false,
   entities: [User, Project, ChatMessage, Chat, ChatSettings, OriginalDocument],
   subscribers: [],
   migrations: []

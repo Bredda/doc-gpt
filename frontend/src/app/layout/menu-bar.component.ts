@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './menu-bar.component.html',
   styleUrls: ['./menu-bar.component.scss']
 })
-export class MenuBarComponent implements OnInit, OnDestroy {
+export class MenuBarComponent {
   darkIcon = 'pi pi-moon';
   lightIcon = 'pi pi-sun';
   actualIcon = 'pi pi-sun';
@@ -28,24 +28,7 @@ export class MenuBarComponent implements OnInit, OnDestroy {
       }
     }
   ];
-  projectName: string | undefined;
-  chatName: string | undefined;
-  listenToDataChange!: Subscription;
-  constructor(
-    private auth: AuthService,
-    private themeService: ThemeService,
-    private contexteService: ContextService
-  ) {}
-
-  ngOnInit(): void {
-    this.listenToDataChange = this.contexteService
-      .listenToDataChange()
-      .subscribe((v) => {
-        this.projectName = v[1]?.name;
-        this.chatName = v[2]?.name;
-      });
-  }
-  ngOnDestroy(): void {}
+  constructor(private auth: AuthService, private themeService: ThemeService) {}
 
   signout() {
     this.auth.signout();

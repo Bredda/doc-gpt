@@ -7,3 +7,8 @@ export enum Language {
   FRENCH,
   ENGLISH
 }
+
+export enum ChatType {
+  CONVERSATIONNAL,
+  QA_DOCUMENTS
+}

@@ -1,16 +1,15 @@
 import { AppDataSource } from '../config/data-source.js';
 import { Project, Chat, ChatMessage } from '../models/index.js';
 import { ChatSettings } from '../models/chat-settings.js';
-import { Language, LlmModel } from '../models/enum.js';
 import { DeleteResult } from 'typeorm';
-export interface ICreateChatPayload {
-  name: string;
-  settings: ChatSettings;
-}
 
 export interface ICreateChatPayload {
   name: string;
-  settings: ChatSettings;
+  settings: {
+    language: { id: number; name: string };
+    model: { id: number; name: string };
+    type: { id: number; name: string };
+  };
 }
 
 export interface IUpdateChatPayload {
@@ -84,7 +83,7 @@ export const addMessageToChat = async (
 export const getChat = async (chatId: string): Promise<Chat> => {
   return AppDataSource.manager.findOneOrFail(Chat, {
     where: { id: chatId },
-    relations: { messages: true }
+    relations: { messages: true, settings: true }
   });
 };
 
@@ -96,23 +95,21 @@ export const createNewProjecthat = async (
   projectId: string,
   payload: ICreateChatPayload
 ): Promise<Chat> => {
-  const chats = await getChatsByProjectId(projectId);
   const project = await AppDataSource.manager.findOneByOrFail(Project, {
     id: projectId
   });
-  let newChat = { ...payload, project: project };
-  if (!newChat.settings) {
-    const defaultSettings = new ChatSettings();
-    defaultSettings.language = Language.FRENCH.toString();
-    defaultSettings.model = LlmModel.GPT3_5_TURBO.toString();
-    const newSettings = await AppDataSource.manager.save(
-      ChatSettings,
-      defaultSettings
-    );
-    newChat = { ...newChat, settings: newSettings };
-  }
-  await AppDataSource.manager.save(Chat, [...chats, newChat]);
+  const newSettings = await AppDataSource.manager.save(ChatSettings, {
+    ...new ChatSettings(),
+    language: payload.settings.language.id,
+    model: payload.settings.model.id
+  });
+  const newChat = {
+    name: payload.name,
+    project: project,
+    settings: newSettings
+  };
+  await AppDataSource.manager.save(Chat, newChat);
   return AppDataSource.manager.findOneOrFail(Chat, {
-    where: { name: payload.name }
+    where: { name: payload.name, project: { id: project.id } }
   });
 };

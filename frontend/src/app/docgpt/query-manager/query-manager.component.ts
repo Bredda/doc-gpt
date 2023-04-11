@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../services/chat.service';
-import { NavigationService } from '../services/navigation.service';
 import { ContextService } from '../services/context.service';
 import { Subscription } from 'rxjs';
 import { Chat } from '../api/chat';

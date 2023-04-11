@@ -1,0 +1,14 @@
+<div class="text-center mb-2">
+  <span *ngIf="projectName" class="text-4xl">{{projectName}}</span>
+  <span class="mr-2"></span>
+
+  <span *ngIf="chatName" class="text-2xl">{{chatName}}</span>
+</div>
+<div
+  class="flex justify-content-center align-items-center gap-1"
+  *ngIf="chatName">
+  <p-chip label="Simple conversation"></p-chip>
+  <p-chip label="Français"></p-chip>
+  <p-chip label="GTP4"></p-chip>
+</div>
+<p-divider *ngIf="chatName"></p-divider>

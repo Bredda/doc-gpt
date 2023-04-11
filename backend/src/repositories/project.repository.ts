@@ -18,7 +18,11 @@ export const getProjectsByUserId = async (
   if (withChats) {
     projects = await AppDataSource.manager.find(Project, {
       where: { userId: userId },
-      relations: { chats: true }
+      relations: {
+        chats: {
+          settings: true
+        }
+      }
     });
   } else {
     projects = await AppDataSource.manager.findBy(Project, { userId: userId });
