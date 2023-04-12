@@ -7,7 +7,9 @@ import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 export class NavigationService {
   $projectId = new BehaviorSubject<string | undefined>(undefined);
   $chatId = new BehaviorSubject<string | undefined>(undefined);
-  constructor() {}
+  constructor() {
+    //EMPTY
+  }
 
   public alertProjectHasChanged(projectId: string | undefined) {
     this.$projectId.next(projectId);

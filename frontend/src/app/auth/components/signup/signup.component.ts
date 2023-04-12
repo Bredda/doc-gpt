@@ -29,7 +29,7 @@ export class SignupComponent {
         .signup(email, password)
         .pipe(mergeMap(() => this.auth.signin(email, password)))
         .subscribe({
-          error: (err) => {
+          error: () => {
             this.messageService.add({
               severity: 'error',
               summary: 'Erreur',

@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ChatInfoComponent } from './chat-info.component';
 
 describe('ChatInfoComponent', () => {
@@ -8,9 +7,8 @@ describe('ChatInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChatInfoComponent ]
-    })
-    .compileComponents();
+      declarations: [ChatInfoComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ChatInfoComponent);
     component = fixture.componentInstance;

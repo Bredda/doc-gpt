@@ -7,7 +7,9 @@ import { User } from '../auth/api/user';
 export class LocalStorageService {
   private KEY = 'doc-gpt-user';
 
-  constructor() {}
+  constructor() {
+    //EMPTY
+  }
 
   public getUser(): User | null {
     const userString = localStorage.getItem(this.KEY);

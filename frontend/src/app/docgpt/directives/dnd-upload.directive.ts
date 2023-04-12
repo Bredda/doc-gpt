@@ -12,7 +12,9 @@ import {
 export class DndUploadDirective {
   @HostBinding('class.fileover') fileOver = false;
   @Output() fileDropped = new EventEmitter<any>();
-  constructor() {}
+  constructor() {
+    //EMPTY
+  }
 
   @HostListener('dragover', ['$event']) onDragOver(evt: any) {
     evt.preventDefault();

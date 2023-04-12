@@ -1,9 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from '../auth/services/auth.service';
-import { ContextService } from '../docgpt/services/context.service';
 import { ThemeService } from '../shared/theme.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-menu-bar',
