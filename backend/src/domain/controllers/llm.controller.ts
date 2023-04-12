@@ -1,7 +1,7 @@
 import { Route, Tags, Post } from 'tsoa';
 import { Request, Response } from 'express';
 import { addMessageToChat } from '../repositories/chat.repository.js';
-import { queries } from '../llm/query.js';
+import { queries } from '../../llm/query.js';
 
 @Route('llm')
 @Tags('LLM')

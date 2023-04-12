@@ -3,6 +3,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
 import { NavigationService } from './services/navigation.service';
 import { ContextService } from './services/context.service';
+import { LlmService } from './services/llm.service';
 
 @Component({
   selector: 'app-docgpt',
@@ -16,7 +17,8 @@ export class DocgptComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private contextService: ContextService
+    private contextService: ContextService,
+    private llmService: LlmService
   ) {}
 
   ngOnInit(): void {
@@ -26,5 +28,6 @@ export class DocgptComponent implements OnInit {
         paramMap['chatId']
       );
     });
+    this.llmService.query('ma query');
   }
 }

@@ -12,6 +12,10 @@ import { MenuModule } from 'primeng/menu';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HttpInterceptorService } from './shared/http-interceptor.service';
 import { MenuBarComponent } from './layout/menu-bar.component';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +30,7 @@ import { MenuBarComponent } from './layout/menu-bar.component';
     AppRoutingModule,
     SharedModule,
     HttpClientModule,
+    SocketIoModule.forRoot(config),
     MenuModule
   ],
   providers: [

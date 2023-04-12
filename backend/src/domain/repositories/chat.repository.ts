@@ -1,7 +1,6 @@
-import { AppDataSource } from '../config/data-source.js';
-import { Project, Chat, ChatMessage } from '../models/index.js';
-import { ChatSettings } from '../models/chat-settings.js';
+import { AppDataSource } from '../../config/data-source.js';
 import { DeleteResult } from 'typeorm';
+import { Chat, ChatMessage, ChatSettings, Project } from '../api/index.js';
 
 export interface ICreateChatPayload {
   name: string;
