@@ -7,9 +7,13 @@ import {
 import { initOpenApi } from './services/llm-models.js';
 import { initMotorheadMemory } from './services/memory.js';
 import { getConversationPrompt } from './services/prompts.service.js';
+import { Chat } from '../domain/api/index.js';
 
 class LLMQuerier {
-  static conversationQuery = async (chatId: string, query: string) => {
+  static conversationQuery = async (
+    chatId: string,
+    query: string
+  ): Promise<Chat> => {
     const chat = await getChat(chatId);
     await addMessageToChat(chatId, query, 'user');
     const memory = await initMotorheadMemory(chatId);
@@ -21,8 +25,8 @@ class LLMQuerier {
       llm: model
     });
     const resp = await chain.call({ input: query });
-    await addMessageToChat(chatId, resp.response, 'llm');
-    return resp;
+    const newChat = await addMessageToChat(chatId, resp.response, 'llm');
+    return newChat;
   };
 }
 

@@ -14,7 +14,7 @@ export class QueryManagerComponent implements OnInit {
   listenToDataChange!: Subscription;
   query = '';
   currentChat: Chat | undefined;
-
+  loading = false;
   constructor(
     private chatService: ChatService,
     private contextService: ContextService,
@@ -25,12 +25,15 @@ export class QueryManagerComponent implements OnInit {
     this.listenToDataChange = this.contextService
       .listenToDataChange()
       .subscribe((v) => (this.currentChat = v[2]));
+    this.llm
+      .listenToProcessing()
+      .subscribe((processing) => (this.loading = processing));
   }
 
   onAsk() {
-    console.log('Asking');
     if (this.currentChat !== undefined) {
       this.llm.query(this.currentChat.id, this.query);
+      this.query = '';
     }
   }
 }

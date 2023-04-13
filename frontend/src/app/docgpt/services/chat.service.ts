@@ -28,6 +28,15 @@ export class ChatService {
       `${this.url}/projects/${projectId}/chats/${chatId}`
     );
   }
+
+  public addTempNewqueryToCurrentChat(query: string) {
+    const oldChat = this.currentChat.value;
+    if (oldChat !== undefined) {
+      oldChat?.messages.push({ id: '', content: query, origin: 'user' });
+      this.updateCurrentChat(oldChat);
+    }
+  }
+
   public updateCurrentChat(chat: Chat) {
     this.currentChat.next(chat);
   }

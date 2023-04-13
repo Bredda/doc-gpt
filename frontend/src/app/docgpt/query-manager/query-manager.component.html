@@ -16,5 +16,7 @@
     class="mb-5"
     style="padding: 1rem"
     styleClass="p-button-warn"
+    [loading]="loading"
+    [disabled]="query === ''"
     (click)="onAsk()"></button>
 </div>
