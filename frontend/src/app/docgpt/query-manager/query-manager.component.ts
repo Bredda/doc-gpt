@@ -3,6 +3,7 @@ import { ChatService } from '../services/chat.service';
 import { ContextService } from '../services/context.service';
 import { Subscription } from 'rxjs';
 import { Chat } from '../api/chat';
+import { LlmService } from '../services/llm.service';
 
 @Component({
   selector: 'app-query-manager',
@@ -16,7 +17,8 @@ export class QueryManagerComponent implements OnInit {
 
   constructor(
     private chatService: ChatService,
-    private contextService: ContextService
+    private contextService: ContextService,
+    private llm: LlmService
   ) {}
 
   ngOnInit(): void {
@@ -26,8 +28,9 @@ export class QueryManagerComponent implements OnInit {
   }
 
   onAsk() {
+    console.log('Asking');
     if (this.currentChat !== undefined) {
-      this.chatService.ask(this.currentChat.id, this.query).subscribe();
+      this.llm.query(this.currentChat.id, this.query);
     }
   }
 }

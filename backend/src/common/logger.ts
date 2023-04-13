@@ -1,9 +1,17 @@
 import winston from 'winston';
+const { combine, timestamp, colorize, printf, splat, prettyPrint } =
+  winston.format;
+const myFormat = printf(({ level, message, timestamp, ...metadata }) => {
+  let msg = `${timestamp} [${level}] : ${message} `;
+  if (metadata) {
+    msg += JSON.stringify(metadata);
+  }
+  return msg;
+});
 
 const logger = winston.createLogger({
   level: 'info',
-  format: winston.format.json(),
-  defaultMeta: { service: 'user-service' },
+  format: combine(colorize(), splat(), timestamp(), myFormat),
   transports: [
     //
     // - Write all logs with importance level of `error` or less to `error.log`

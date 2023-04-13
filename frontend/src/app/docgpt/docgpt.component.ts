@@ -16,8 +16,7 @@ export class DocgptComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private contextService: ContextService,
-    private llmService: LlmService
+    private contextService: ContextService
   ) {}
 
   ngOnInit(): void {
@@ -27,6 +26,5 @@ export class DocgptComponent implements OnInit {
         paramMap['chatId']
       );
     });
-    this.llmService.query('ma query');
   }
 }

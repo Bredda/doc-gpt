@@ -9,8 +9,8 @@ export class AuthRoutes extends CommonRoutesConfig {
 
   configure(): Application {
     this.app;
-    this.app.route('/doc-gpt/signin').post(AuthController.signin);
-    this.app.route('/doc-gpt/signup').post(AuthController.signup);
+    this.app.route('/doc-gpt/auth/signin').post(AuthController.signin);
+    this.app.route('/doc-gpt/auth/signup').post(AuthController.signup);
     return this.app;
   }
 }

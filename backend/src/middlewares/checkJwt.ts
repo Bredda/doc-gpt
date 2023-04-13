@@ -12,6 +12,7 @@ export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
   }
   token = token.replace('Bearer ', '');
   //Try to validate the token and get data
+  //@TODO: check user in given token
   try {
     jwtPayload = <any>jwt.verify(token, config.jwtSecret);
     res.locals.jwtPayload = jwtPayload;

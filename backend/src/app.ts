@@ -16,23 +16,20 @@ import winston from 'winston';
 import expressWinston from 'express-winston';
 import logger from './common/logger.js';
 import http, { Server } from 'http';
-import { Server as IoServer } from 'socket.io';
+import { Server as IoServer, Socket } from 'socket.io';
+import LLMQuerier from './llm/index.js';
 export class App {
   private server: Server;
-  private socket: IoServer;
+  private socket!: IoServer;
   private app: Application;
   private routes: CommonRoutesConfig[] = [];
   constructor() {
     this.app = express();
     this.server = http.createServer(this.app);
-    this.socket = new IoServer(this.server, {
-      cors: {
-        origin: '*'
-      }
-    });
+    this.setupWebSocket();
     this.setupMiddlewares();
     this.setupSwagger();
-    this.setupWebSocket();
+
     this.setupRoutes();
   }
 
@@ -73,10 +70,16 @@ export class App {
   }
 
   setupWebSocket(): void {
-    this.socket.on('connection', (socket) => {
-      logger.info('a user connected');
-      this.socket.on('disconnect', () => {
-        logger.info('user disconnected');
+    const io = new IoServer(this.server, {
+      cors: {
+        origin: '*'
+      }
+    });
+    io.on('connection', (socket: Socket) => {
+      socket.on('conversation-query', (data: any) => {
+        LLMQuerier.conversationQuery(data.chtId, data.query).then((resp) =>
+          socket.emit('conversation-response', resp)
+        );
       });
     });
   }
