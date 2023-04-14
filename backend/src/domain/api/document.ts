@@ -8,7 +8,7 @@ import {
   JoinColumn,
   Relation
 } from 'typeorm';
-import { Project } from './project.js';
+import { Project } from './project';
 
 @Entity()
 export class OriginalDocument {

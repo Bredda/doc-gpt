@@ -2,14 +2,11 @@ import { Route, Tags, Post } from 'tsoa';
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { validate } from 'class-validator';
-import { AppDataSource } from '../../config/data-source.js';
-import config from '../../config/config.js';
-import { AppError, HttpCode } from '../../exceptions/exceptions.js';
-import { User } from '../api/index.js';
-import {
-  getUser,
-  emailAlreadyExists
-} from '../repositories/user.repository.js';
+import { AppDataSource } from '../../config/data-source';
+import config from '../../config/config';
+import { AppError, HttpCode } from '../../exceptions/exceptions';
+import { User } from '../api/index';
+import { getUser, emailAlreadyExists } from '../repositories/user.repository';
 
 export interface ISigninPayload {
   email: string;

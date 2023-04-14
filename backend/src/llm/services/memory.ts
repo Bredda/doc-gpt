@@ -1,8 +1,6 @@
-import { MotorheadMemory } from 'langchain/memory';
+const { MotorheadMemory } = require('langchain/memory');
 
-export const initMotorheadMemory = async (
-  sessionId: string
-): Promise<MotorheadMemory> => {
+export const initMotorheadMemory = async (sessionId: string): Promise<any> => {
   const memory = new MotorheadMemory({
     sessionId: sessionId,
     motorheadURL: process.env.MOTORHEAD_URL

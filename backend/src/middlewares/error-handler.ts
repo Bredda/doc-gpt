@@ -1,4 +1,4 @@
-import { AppError, HttpCode } from '../exceptions/exceptions.js';
+import { AppError, HttpCode } from '../exceptions/exceptions';
 import { NextFunction, Request, Response } from 'express';
 
 class ErrorHandler {

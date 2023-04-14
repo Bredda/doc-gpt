@@ -6,7 +6,7 @@ import {
   Project,
   User,
   ChatSettings
-} from '../domain/api/index.js';
+} from '../domain/api/index';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',

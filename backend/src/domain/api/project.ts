@@ -9,9 +9,9 @@ import {
   JoinColumn,
   Relation
 } from 'typeorm';
-import { User } from './user.js';
-import { Chat } from './chat.js';
-import { OriginalDocument } from './document.js';
+import { User } from './user';
+import { Chat } from './chat';
+import { OriginalDocument } from './document';
 
 @Entity()
 export class Project {
