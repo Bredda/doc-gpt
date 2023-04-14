@@ -11,7 +11,7 @@ ENV POSTGRES_USER=postgres
 ENV POSTGRES_PASSWORD=postgres
 ENV POSTGRES_DB=docgpt
 
-FROM node:12-alpine AS server
+FROM node:18.15.0-alpine AS server
 WORKDIR /app
 COPY package* ./
 RUN npm install --production

@@ -1,4 +1,4 @@
-<div #target *ngIf="currentChat; else noChat">
+<div #target *ngIf="currentChat; else noChat" class="overflow-auto">
   <div
     [ngClass]="mess.origin==='llm' ? 'message message-llm w-full flex flex-column align-items-center' : 'message message-user w-full flex flex-column align-items-center'"
     *ngFor="let mess of currentChat.messages">

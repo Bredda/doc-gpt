@@ -16,12 +16,22 @@ import { Subscription } from 'rxjs';
   templateUrl: './chat-panel.component.html',
   styleUrls: ['./chat-panel.component.scss']
 })
-export class ChatPanelComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ChatPanelComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   currentChat: Chat | undefined;
   queryProcessing: string | undefined;
   @ViewChild('target', { static: false })
-  private myScrollContainer!: ElementRef;
+  set viewChildReference(v: ElementRef) {
+    console.log(v);
+    if (v != undefined) {
+      v.nativeElement.scroll({
+        top: v.nativeElement.scrollHeight,
+        left: 0,
+        behavior: 'smooth'
+      });
+    }
+  }
+
   constructor(
     private chatService: ChatService,
     private contexteService: ContextService
@@ -39,14 +49,6 @@ export class ChatPanelComponent implements OnInit, OnDestroy, AfterViewInit {
         this.queryProcessing = q;
       })
     );
-  }
-
-  ngAfterViewInit(): void {
-    this.myScrollContainer.nativeElement.scrollHeight({
-      top: this.myScrollContainer.nativeElement.scrollHeight,
-      left: 0,
-      behavior: 'smooth'
-    });
   }
 
   ngOnDestroy(): void {
