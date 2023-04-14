@@ -10,6 +10,7 @@
     placeholder="Query ..."
     [(ngModel)]="query"
     class="w-full mb-5"
+    (keydown.enter)="askFromKeydown($event)"
     style="padding: 1rem"></textarea>
   <button
     type="button"

@@ -36,4 +36,9 @@ export class QueryManagerComponent implements OnInit {
       this.query = '';
     }
   }
+
+  askFromKeydown(event: any) {
+    event.preventDefault();
+    this.onAsk();
+  }
 }
