@@ -1,8 +1,3 @@
-img {
-  width: 24px;
-  height: 24px;
-}
-
 .message {
   padding: 3rem 0 3rem 0;
   width: 100%;
@@ -12,8 +7,8 @@ img {
 }
 
 .message-user {
-  background-color: rgb(255, 255, 255);
+  background-color: var(--surface-a);
 }
 .message-llm {
-  background-color: rgb(237, 237, 237);
+  background-color: var(--surface-d);
 }
