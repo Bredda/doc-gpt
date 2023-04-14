@@ -13,16 +13,11 @@
       </div>
     </div>
   </div>
-
-  <div *ngIf="queryProcessing !== undefined">
+  <div
+    *ngIf="queryProcessing"
+    class="message message-llm w-full flex flex-column align-items-center">
     <div class="flex gap-4">
-      <span class="pi pi-user" style="font-size: 1.5rem"></span>
-      <span>{{queryProcessing}}</span>
-    </div>
-  </div>
-  <div *ngIf="queryProcessing !== undefined">
-    <div class="flex gap-4">
-      <img src="assets/open-ai.svg" />
+      <img src="assets/openai-white.svg" />
       <span>...</span>
     </div>
   </div>
