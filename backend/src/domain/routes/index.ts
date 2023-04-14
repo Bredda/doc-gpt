@@ -1,8 +1,8 @@
 import { Application } from 'express';
-import { ProjectRoutes } from './projects.routes.js';
-import { ChatsRoutes } from './chats.routes.js';
-import { AuthRoutes } from './auth.routes.js';
-import { DocumentsRoutes } from './documents.routes.js';
+import { ProjectRoutes } from './projects.routes';
+import { ChatsRoutes } from './chats.routes';
+import { AuthRoutes } from './auth.routes';
+import { DocumentsRoutes } from './documents.routes';
 
 const getRoutes = (app: Application) => {
   return [

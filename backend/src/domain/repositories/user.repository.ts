@@ -1,5 +1,5 @@
-import { User } from '../api/index.js';
-import { AppDataSource } from '../../config/data-source.js';
+import { User } from '../api/index';
+import { AppDataSource } from '../../config/data-source';
 
 export const getUser = async (email: string): Promise<User> => {
   return await AppDataSource.manager.findOneByOrFail(User, {

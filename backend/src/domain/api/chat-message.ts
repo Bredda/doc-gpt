@@ -8,7 +8,7 @@ import {
   JoinColumn,
   Relation
 } from 'typeorm';
-import { Chat } from './chat.js';
+import { Chat } from './chat';
 
 @Entity()
 export class ChatMessage {

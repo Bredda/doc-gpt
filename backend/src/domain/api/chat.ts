@@ -10,9 +10,9 @@ import {
   OneToOne,
   Relation
 } from 'typeorm';
-import { ChatMessage } from './chat-message.js';
-import { ChatSettings } from './chat-settings.js';
-import { Project } from './project.js';
+import { ChatMessage } from './chat-message';
+import { ChatSettings } from './chat-settings';
+import { Project } from './project';
 
 @Entity()
 export class Chat {

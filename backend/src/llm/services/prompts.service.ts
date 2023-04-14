@@ -1,16 +1,13 @@
-import {
+const {
   ChatPromptTemplate,
   SystemMessagePromptTemplate,
   MessagesPlaceholder,
   HumanMessagePromptTemplate
-} from 'langchain/prompts';
-import { MotorheadMemory } from 'langchain/memory';
-import { Language } from '../../domain/api/enum.js';
+} = require('langchain/prompts');
+const { MotorheadMemory } = require('langchain/memory');
+import { Language } from '../../domain/api/enum';
 
-export const getConversationPrompt = (
-  language: Language,
-  memory: MotorheadMemory
-) => {
+export const getConversationPrompt = (language: Language, memory: any) => {
   const context = memory.context
     ? `
   Here's previous context: ${memory.context}`

@@ -1,6 +1,6 @@
 import { Application } from 'express';
-import { CommonRoutesConfig } from './common.routes.config.js';
-import AuthController from '../controllers/auth.controller.js';
+import { CommonRoutesConfig } from './common.routes.config';
+import AuthController from '../controllers/auth.controller';
 
 export class AuthRoutes extends CommonRoutesConfig {
   constructor(app: Application) {

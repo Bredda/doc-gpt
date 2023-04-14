@@ -1,7 +1,7 @@
 import { Application } from 'express';
-import { CommonRoutesConfig } from './common.routes.config.js';
-import { checkJwt } from '../../middlewares/checkJwt.js';
-import ProjectController from '../controllers/project.controller.js';
+import { CommonRoutesConfig } from './common.routes.config';
+import { checkJwt } from '../../middlewares/checkJwt';
+import ProjectController from '../controllers/project.controller';
 
 export class ProjectRoutes extends CommonRoutesConfig {
   constructor(app: Application) {

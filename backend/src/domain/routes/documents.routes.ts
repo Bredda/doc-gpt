@@ -1,9 +1,9 @@
 import { Application } from 'express';
-import { CommonRoutesConfig } from './common.routes.config.js';
-import { checkJwt } from '../../middlewares/checkJwt.js';
+import { CommonRoutesConfig } from './common.routes.config';
+import { checkJwt } from '../../middlewares/checkJwt';
 import multer from 'multer';
 import os from 'os';
-import ProjectController from '../controllers/project.controller.js';
+import ProjectController from '../controllers/project.controller';
 
 export class DocumentsRoutes extends CommonRoutesConfig {
   uploadPath!: multer.Multer;

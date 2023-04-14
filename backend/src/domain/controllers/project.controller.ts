@@ -7,14 +7,14 @@ import {
   getProjectById,
   getProjectsByUserId,
   registerFileToProject
-} from '../repositories/project.repository.js';
+} from '../repositories/project.repository';
 import {
   createNewProjecthat,
   deleteChatById,
   getChat,
   getChatsByProjectId,
   updateChatSettings
-} from '../repositories/chat.repository.js';
+} from '../repositories/chat.repository';
 
 @Route('projects')
 @Tags('Project')

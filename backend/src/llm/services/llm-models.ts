@@ -1,4 +1,4 @@
-import { OpenAI } from 'langchain/llms/openai';
+const { OpenAI } = require('langchain/llms/openai');
 
 export const initOpenApi = (modelName: string) => {
   return new OpenAI({

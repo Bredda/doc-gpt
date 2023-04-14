@@ -5,7 +5,7 @@ import {
   JoinColumn,
   Relation
 } from 'typeorm';
-import { ChatType, Language, LlmModel } from './enum.js';
+import { ChatType, Language, LlmModel } from './enum';
 
 @Entity()
 export class ChatSettings {

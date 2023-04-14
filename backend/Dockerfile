@@ -17,5 +17,5 @@ COPY package* ./
 RUN npm install --production
 COPY --from=builder ./app/public ./public
 COPY --from=builder ./app/build ./build
-EXPOSE 3000
+EXPOSE ${PORT}
 CMD ["npm", "start"]

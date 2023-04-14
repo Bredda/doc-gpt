@@ -8,7 +8,7 @@ import {
   OneToMany,
   Unique
 } from 'typeorm';
-import { Project } from './project.js';
+import { Project } from './project';
 import bcrypt from 'bcrypt';
 
 @Entity()
