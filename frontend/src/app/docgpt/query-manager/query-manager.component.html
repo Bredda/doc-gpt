@@ -2,19 +2,21 @@
   *ngIf="currentChat !== undefined
   "
   class="card flex justify-content-center p-inputgroup">
-  <input
+  <textarea
     type="text"
-    pInputText
+    rows="1"
+    pInputTextarea
+    [autoResize]="true"
     placeholder="Query ..."
     [(ngModel)]="query"
-    class="w-full md:w-30rem mb-5"
-    style="padding: 1rem" />
+    class="w-full mb-5"
+    style="padding: 1rem"></textarea>
   <button
     type="button"
     pButton
     icon="pi pi-send"
     class="mb-5"
-    style="padding: 1rem"
+    style="padding: 1rem; height: 57px"
     styleClass="p-button-warn"
     [loading]="loading"
     [disabled]="query === ''"

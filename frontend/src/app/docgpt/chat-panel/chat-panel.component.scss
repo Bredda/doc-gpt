@@ -1,4 +1,19 @@
 img {
-  width: 21px;
-  height: 21px;
+  width: 24px;
+  height: 24px;
+}
+
+.message {
+  padding: 3rem 0 3rem 0;
+  width: 100%;
+  & > div {
+    width: 50%;
+  }
+}
+
+.message-user {
+  background-color: rgb(255, 255, 255);
+}
+.message-llm {
+  background-color: rgb(237, 237, 237);
 }
