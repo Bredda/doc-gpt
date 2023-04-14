@@ -1,16 +1,35 @@
-<form class="flex flex-column align-items-center justify-content-center gap-4" [formGroup]="signupForm">
+<form
+  class="flex flex-column align-items-center justify-content-center gap-4"
+  [formGroup]="signupForm">
+  <h3>Création de compte</h3>
+  <input
+    id="email1"
+    type="text"
+    placeholder="Email address"
+    pInputText
+    class="p-inputtext w-full md:w-30rem mb-5"
+    style="padding: 1rem"
+    formControlName="email" />
 
-    <input id="email1" type="text" placeholder="Email address" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem" formControlName="email">
+  <p-password
+    id="password1"
+    formControlName="password"
+    placeholder="Password"
+    [toggleMask]="true"
+    styleClass="mb-5"
+    inputStyleClass="w-full p-3 md:w-30rem"></p-password>
 
-    <p-password id="password1" formControlName="password" placeholder="Password" [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem"></p-password>
-
-    <div class="flex align-items-center justify-content-between mb-5 gap-5">
-        <div class="flex align-items-center">
-            <p-checkbox id="rememberme1" [binary]="true" styleClass="mr-2"></p-checkbox>
-            <label for="rememberme1">Remember me</label>
-        </div>
-        <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">Forgot password?</a>
-    </div>
-    <button pButton pRipple label="Sign Up" class="w-full p-3 text-xl" (click)="signup()"></button>
-
+  <button
+    pButton
+    pRipple
+    label="S'enregistrer"
+    class="w-full p-3 text-xl"
+    (click)="signup()"></button>
+  <a
+    routerLink="/auth/signin"
+    class="font-medium no-underline ml-2 text-right cursor-pointer"
+    style="color: var(--primary-color)"
+    >Déjà un compte ?</a
+  >
 </form>
+<p-toast></p-toast>

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { ChatService } from '../services/chat.service';
-import { NavigationService } from '../services/navigation.service';
-import { map } from 'rxjs';
+import { ContextService } from '../services/context.service';
+import { Subscription } from 'rxjs';
+import { Chat } from '../api/chat';
+import { LlmService } from '../services/llm.service';
 
 @Component({
   selector: 'app-query-manager',
@@ -10,19 +11,34 @@ import { map } from 'rxjs';
   styleUrls: ['./query-manager.component.scss']
 })
 export class QueryManagerComponent implements OnInit {
-  query = ''
-  currentChatId: number | undefined = undefined
-
-  constructor(private chatService: ChatService, private navigationService: NavigationService) {}
+  listenToDataChange!: Subscription;
+  query = '';
+  currentChat: Chat | undefined;
+  loading = false;
+  constructor(
+    private chatService: ChatService,
+    private contextService: ContextService,
+    private llm: LlmService
+  ) {}
 
   ngOnInit(): void {
-    this.navigationService.onChatChange().subscribe(id => this.currentChatId = id)
+    this.listenToDataChange = this.contextService
+      .listenToDataChange()
+      .subscribe((v) => (this.currentChat = v[2]));
+    this.llm
+      .listenToProcessing()
+      .subscribe((processing) => (this.loading = processing));
   }
 
   onAsk() {
-    if (this.currentChatId !== undefined) {
-      this.chatService.ask(this.currentChatId, this.query).subscribe()
+    if (this.currentChat !== undefined) {
+      this.llm.query(this.currentChat.id, this.query);
+      this.query = '';
     }
+  }
 
+  askFromKeydown(event: any) {
+    event.preventDefault();
+    this.onAsk();
   }
 }

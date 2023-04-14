@@ -1,11 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ProjectService } from './services/project.service';
-import { Project } from './api/project';
-import { ConfirmEventType, ConfirmationService, MenuItem, MessageService, TreeNode } from 'primeng/api';
-import { tap } from 'rxjs';
-import { Chat } from './api/chat';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
-import { NavigationService } from './services/navigation.service';
+import { ContextService } from './services/context.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-docgpt',
@@ -13,32 +10,25 @@ import { NavigationService } from './services/navigation.service';
   styleUrls: ['./docgpt.component.scss'],
   providers: [ConfirmationService, MessageService]
 })
-export class DocgptComponent implements OnInit {
-
-  currentProject = undefined
-  currentChat = undefined
-
-  constructor(private route: ActivatedRoute, private navigationService: NavigationService) {
-    
-  }
+export class DocgptComponent implements OnInit, OnDestroy {
+  currentProject = undefined;
+  currentChat = undefined;
+  paramsSubscription!: Subscription;
+  constructor(
+    private route: ActivatedRoute,
+    private contextService: ContextService
+  ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(paramMap => { 
-      this.navigationService.alertProjectHasChanged(paramMap["projectId"])
-      this.navigationService.alertChatHasChanged(paramMap["chatId"])
+    this.paramsSubscription = this.route.params.subscribe((paramMap) => {
+      this.contextService.triggerContextChange(
+        paramMap['projectId'],
+        paramMap['chatId']
+      );
     });
   }
 
-
-
-
-
-
-
-  
-
-
-
-  
-
+  ngOnDestroy(): void {
+    this.paramsSubscription.unsubscribe();
+  }
 }

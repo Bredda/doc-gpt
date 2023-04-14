@@ -10,12 +10,16 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './auth/services/auth.interceptor';
 import { MenuModule } from 'primeng/menu';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { HttpInterceptorService } from './shared/http-interceptor.service';
+import { MenuBarComponent } from './layout/menu-bar.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     AppLayoutComponent,
     AppTopbarComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    MenuBarComponent
   ],
   imports: [
     BrowserModule,
@@ -25,11 +29,18 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     HttpClientModule,
     MenuModule
   ],
-  providers: [ {
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
-    multi: true
-   }],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

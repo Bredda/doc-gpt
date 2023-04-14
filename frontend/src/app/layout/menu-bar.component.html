@@ -1,0 +1,11 @@
+<div class="flex justify-content-center gap-4">
+  <p-button
+    [icon]="actualIcon"
+    (click)="toggleTheme()"
+    styleClass="p-button-rounded p-button-info p-button-outlined"></p-button>
+  <p-menu #menu [model]="items" [popup]="true" appendTo="body"></p-menu>
+  <p-button
+    icon="pi pi-user"
+    styleClass="p-button-rounded p-button-info"
+    (click)="menu.toggle($event)"></p-button>
+</div>

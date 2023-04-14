@@ -12,6 +12,11 @@ import { ToastModule } from 'primeng/toast';
 import { DividerModule } from 'primeng/divider';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { FieldsetModule } from 'primeng/fieldset';
+import { AutoFocusModule } from 'primeng/autofocus';
+import { ChipModule } from 'primeng/chip';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 const UI_MODULES = [
   ToolbarModule,
@@ -24,24 +29,19 @@ const UI_MODULES = [
   ToastModule,
   ConfirmDialogModule,
   DividerModule,
-  ContextMenuModule
-]
+  ContextMenuModule,
+  InputSwitchModule,
+  FieldsetModule,
+  AutoFocusModule,
+  ChipModule,
+  InputTextareaModule
+];
 
-const NG_MODULES = [
-  CommonModule,
-  FormsModule,
-  ReactiveFormsModule,
-]
+const NG_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
 
 @NgModule({
   declarations: [],
-  imports: [
-    ...NG_MODULES,
-    ...UI_MODULES
-  ],
-  exports: [
-    ...NG_MODULES,
-    ...UI_MODULES
-  ]
+  imports: [...NG_MODULES, ...UI_MODULES],
+  exports: [...NG_MODULES, ...UI_MODULES]
 })
-export class SharedModule { }
+export class SharedModule {}

@@ -1,8 +1,8 @@
-import { Chat } from "./chat";
+import { Chat } from './chat';
 
 export interface Project {
-    id: number,
-    name: string,
-    userId: number,
-    chats: Chat[]
+  id: string;
+  name: string;
+  userId: number;
+  chats: Chat[];
 }

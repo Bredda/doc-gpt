@@ -6,21 +6,21 @@ import { DocgptComponent } from './docgpt.component';
 import { SplitterModule } from 'primeng/splitter';
 import { SharedModule } from '../shared/shared.module';
 import { TreeModule } from 'primeng/tree';
-import { ContextManagerComponent } from './context-manager/context-manager.component';
+import { DocumentManagerComponent } from './document-manager/document-manager.component';
 import { QueryManagerComponent } from './query-manager/query-manager.component';
 import { ProjecManagerComponent } from './projec-manager/projec-manager.component';
-import { LoaderInfoComponent } from './loader-info/loader-info.component';
 import { DndUploadDirective } from './directives/dnd-upload.directive';
 import { ChatPanelComponent } from './chat-panel/chat-panel.component';
+import { ChatInfoComponent } from './chat-info/chat-info.component';
 @NgModule({
   declarations: [
     DocgptComponent,
-    ContextManagerComponent,
+    DocumentManagerComponent,
     QueryManagerComponent,
     ProjecManagerComponent,
-    LoaderInfoComponent,
     DndUploadDirective,
-    ChatPanelComponent
+    ChatPanelComponent,
+    ChatInfoComponent
   ],
   imports: [
     CommonModule,
@@ -30,4 +30,4 @@ import { ChatPanelComponent } from './chat-panel/chat-panel.component';
     TreeModule
   ]
 })
-export class DocgptModule { }
+export class DocgptModule {}

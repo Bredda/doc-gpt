@@ -1,35 +1,30 @@
-<div *ngIf="currentChat" class="w-full flex flex-column gap-4">
-
-    <p-card *ngFor="let mess of currentChat.messages">
-        <div *ngIf="mess.origin==='user'" class="flex gap-4">
-            <span class="pi pi-user" style="font-size: 1.5rem"></span>
-            <span class="mr-8">{{mess.content}}</span>
-        </div>
-        <div *ngIf="mess.origin==='llm'" class="flex gap-4">
-            <img src="assets/open-ai.svg">
-            <span class="mr-8">{{mess.content}}</span>
-        </div>
-
-
-    </p-card>
-
-
-        <p-card *ngIf="queryProcessing !== undefined">
-            <div  class="flex gap-4">
-                <span class="pi pi-user" style="font-size: 1.5rem"></span>
-                <span class="mr-8">{{queryProcessing}}</span>
-            </div>
-        </p-card>
-        <p-card *ngIf="queryProcessing !== undefined">
-            <div  class="flex gap-4">
-                <img src="assets/open-ai.svg">
-                <span class="mr-8">...</span>
-            </div>
-        </p-card>
-
-
-
-
+<div #target *ngIf="currentChat; else noChat" class="overflow-auto">
+  <div
+    [ngClass]="mess.origin==='llm' ? 'message message-llm w-full flex flex-column align-items-center' : 'message message-user w-full flex flex-column align-items-center'"
+    *ngFor="let mess of currentChat.messages">
+    <div>
+      <div *ngIf="mess.origin==='user'" class="flex gap-4">
+        <span class="pi pi-user" style="font-size: 1.5rem"></span>
+        <span>{{mess.content}}</span>
+      </div>
+      <div *ngIf="mess.origin==='llm'" class="flex gap-4">
+        <img src="assets/openai-white.svg" />
+        <span>{{mess.content}}</span>
+      </div>
+    </div>
+  </div>
+  <div
+    *ngIf="queryProcessing"
+    class="message message-llm w-full flex flex-column align-items-center">
+    <div class="flex gap-4">
+      <img src="assets/openai-white.svg" />
+      <span>...</span>
+    </div>
+  </div>
 </div>
 
-
+<ng-template #noChat>
+  <div class="h-full w-full flex align-items-center justify-content-center">
+    <h2 class="text-center">Ouvrez une nouvelle discussion !</h2>
+  </div>
+</ng-template>
