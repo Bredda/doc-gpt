@@ -5,22 +5,23 @@
       <span class="font-bold text-lg">Projets</span>
     </div>
   </ng-template>
-  <p-button
-    class="w-full"
-    icon="pi pi-check"
-    (click)="createProjectVisible = true"
-    styleClass="p-button-outlined"
-    label="Nouveau projet">
-  </p-button>
-  <p-tree
-    class="md:w-30rem mt-4"
-    [value]="datas"
-    emptyMessage="Aucun projet"
-    selectionMode="single"
-    [(selection)]="selectedNode"
-    (onNodeSelect)="navigateToSelectedNode()"
-    [contextMenu]="cm">
-  </p-tree>
+  <div class="flex flex-column gap-4">
+    <p-tree
+      [value]="datas"
+      emptyMessage="Aucun projet"
+      selectionMode="single"
+      [(selection)]="selectedNode"
+      (onNodeSelect)="navigateToSelectedNode()"
+      [contextMenu]="cm">
+    </p-tree>
+    <p-button
+      icon="pi pi-plus"
+      (click)="createProjectVisible = true"
+      class="align-self-center"
+      styleClass="p-button-outlined "
+      label="Nouveau projet">
+    </p-button>
+  </div>
 </p-fieldset>
 
 <p-contextMenu #cm [model]="items" (onShow)="onContext()"></p-contextMenu>
@@ -35,7 +36,7 @@
     type="text"
     placeholder="Nom du projet"
     pInputText
-    class="w-full md:w-30rem mb-5"
+    class="p-inputtext w-full md:w-30rem mb-5"
     style="padding: 1rem"
     [(ngModel)]="newName" />
   <ng-template pTemplate="footer">

@@ -1,7 +1,7 @@
 <div
   *ngIf="currentChat !== undefined
   "
-  class="card flex justify-content-center p-inputgroup">
+  class="flex justify-content-center p-inputgroup pt-4">
   <textarea
     type="text"
     rows="1"
@@ -9,7 +9,7 @@
     [autoResize]="true"
     placeholder="Query ..."
     [(ngModel)]="query"
-    class="w-full mb-5"
+    class="mb-5 p-inputtextarea w-11"
     (keydown.enter)="askFromKeydown($event)"
     style="padding: 1rem"></textarea>
   <button

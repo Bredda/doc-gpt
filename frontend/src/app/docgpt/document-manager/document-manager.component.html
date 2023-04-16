@@ -7,27 +7,27 @@
   </ng-template>
 
   <div *ngIf="this.currentProject !== undefined; else noProject">
-    <div #tree class="flex flex-column gap-2">
+    <div #tree class="flex flex-column gap-4">
       <p-tree
         emptyMessage="Aucun fichier"
         selectionMode="multiple"
         class="w-full"
         [value]="files"></p-tree>
-      <p-card
-        class=""
-        class="dropzone"
+      <div
+        class="border-1 border-round surface-border pt-4"
         appDndUpload
         (fileDropped)="onFileDropped($event)">
-        <p class="text-center text-lg">
-          <span class="pi pi-upload"></span> Dépôt de fichiers
-        </p>
+        <div class="text-center text-lg">
+          <span class="pi pi-upload"></span> Dépôt de fichier
+        </div>
         <input
           type="file"
+          class="max-w-0"
           #fileDropRef
           id="fileDrop"
           multiple
           (change)="fileBrowseHandler($event)" />
-      </p-card>
+      </div>
     </div>
     <p-contextMenu [target]="tree" [model]="items"></p-contextMenu>
   </div>
