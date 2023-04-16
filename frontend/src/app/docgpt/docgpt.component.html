@@ -4,7 +4,7 @@
 
   <p-splitter [panelSizes]="[20, 80]" styleClass="mb-5 h-full">
     <ng-template pTemplate>
-      <div class="col flex flex-column align-items-center gap-2">
+      <div class="flex-column align-items-center gap-2">
         <app-projec-manager class="w-full"></app-projec-manager>
         <p-divider class="w-full"></p-divider>
         <app-document-manager class="w-full"></app-document-manager>
@@ -16,8 +16,7 @@
         <app-chat-info class="w-full"></app-chat-info>
 
         <app-chat-panel
-          #target
-          class="h-full w-full transition-width flex flex-col overflow-hidden"></app-chat-panel>
+          class="h-full w-full transition-width flex-1 flex-col overflow-hidden"></app-chat-panel>
         <app-query-manager
           class="absolute z-5 bottom-0 left-0 w-full pt-2"></app-query-manager>
       </div>

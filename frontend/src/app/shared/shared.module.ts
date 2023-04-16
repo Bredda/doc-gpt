@@ -17,7 +17,7 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { ChipModule } from 'primeng/chip';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-
+import { TagModule } from 'primeng/tag';
 const UI_MODULES = [
   ToolbarModule,
   ButtonModule,
@@ -34,7 +34,8 @@ const UI_MODULES = [
   FieldsetModule,
   AutoFocusModule,
   ChipModule,
-  InputTextareaModule
+  InputTextareaModule,
+  TagModule
 ];
 
 const NG_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];

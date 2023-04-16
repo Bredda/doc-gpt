@@ -3,40 +3,31 @@ import express from 'express';
 import cors from 'cors';
 const helmet = require('helmet');
 import bodyParser from 'body-parser';
-import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 import { errorHandler } from './middlewares/error-handler';
 import { AppDataSource } from './config/data-source';
-import { CommonRoutesConfig } from './domain/routes/common.routes.config';
-import { AuthRoutes } from './domain/routes/auth.routes';
-import { ChatsRoutes } from './domain/routes/chats.routes';
-import { DocumentsRoutes } from './domain/routes/documents.routes';
-import { ProjectRoutes } from './domain/routes/projects.routes';
 import winston from 'winston';
 import expressWinston from 'express-winston';
 import logger from './common/logger';
 import http, { Server } from 'http';
 import { Server as IoServer, Socket } from 'socket.io';
 import LLMQuerier from './llm/index';
+import getRoutes from './domain/routes';
 export class App {
   private server: Server;
-  private socket!: IoServer;
   private app: Application;
-  private routes: CommonRoutesConfig[] = [];
   constructor() {
     this.app = express();
     this.server = http.createServer(this.app);
     this.setupWebSocket();
     this.setupMiddlewares();
     this.setupSwagger();
-
     this.setupRoutes();
   }
 
   setupMiddlewares(): void {
     this.app.use(cors());
     this.app.use(helmet());
-    this.app.use(morgan('tiny'));
     this.app.use(bodyParser.json());
     this.app.use(express.static('public'));
   }
@@ -50,10 +41,6 @@ export class App {
         winston.format.colorize({ all: true })
       )
     };
-
-    if (!process.env.DEBUG) {
-      loggerOptions.meta = false; // when not debugging, log requests as one-liners
-    }
     this.app.use(expressWinston.logger(loggerOptions));
   }
 
@@ -89,12 +76,9 @@ export class App {
   }
 
   setupRoutes(): void {
-    this.routes = [
-      new ProjectRoutes(this.app),
-      new ChatsRoutes(this.app),
-      new AuthRoutes(this.app),
-      new DocumentsRoutes(this.app)
-    ];
+    getRoutes(this.app).forEach((r) =>
+      logger.info(`Mounting route: ${r.getName()}`)
+    );
   }
 
   public start(port: number): void {
