@@ -11,7 +11,8 @@
     "dev": "concurrently \"nodemon\" \"nodemon -x tsoa spec\"",
     "swagger": "tsoa spec",
     "build:docker": "docker build -t doc-gpt/doc-gpt-backend .",
-    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts ."
+    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
+    "typeorm": "typeorm-ts-node-commonjs"
   },
   "keywords": [],
   "author": "",

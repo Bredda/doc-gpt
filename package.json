@@ -6,7 +6,7 @@
   "scripts": {
     "dev:backend": "cd ./backend && npm run dev",
     "dev:frontend": "cd ./frontend && npm run start",
-    "dev:stack": "docker-compose up"
+    "dev:stack": "docker-compose -f docker-compose.dev.yml up"
   },
   "repository": {
     "type": "git",

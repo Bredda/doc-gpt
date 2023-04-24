@@ -152,9 +152,9 @@ export class ProjecManagerComponent implements OnInit {
       .createNewChat(this.selectedNode.data.id, {
         name: this.newName,
         settings: {
-          type: this.selectedType,
-          model: this.selectedModel,
-          language: this.selectedLanguage
+          type: this.selectedType.value,
+          model: this.selectedModel.name,
+          language: this.selectedLanguage.value
         }
       })
       .subscribe((projects) => {

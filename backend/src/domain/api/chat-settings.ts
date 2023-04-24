@@ -17,19 +17,19 @@ export class ChatSettings {
     enum: Language,
     default: Language.ENGLISH
   })
-  language!: number;
+  language!: Language;
 
   @Column({
     type: 'enum',
     enum: LlmModel,
     default: LlmModel.GPT3_5_TURBO
   })
-  model!: number;
+  model!: LlmModel;
 
   @Column({
     type: 'enum',
     enum: ChatType,
     default: ChatType.CONVERSATIONNAL
   })
-  type!: number;
+  type!: ChatType;
 }
