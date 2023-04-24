@@ -1,6 +1,9 @@
 <div class="pb-4">
   <div class="flex flex-column align-items-center p-2">
-    <span *ngIf="chatName" class="text-3xl">{{chatName}}</span>
+    <span *ngIf="chatName" class="text-3xl">{{chatName}} </span>
+    <a *ngIf="chatName" target="_blank" href="http://localhost:4173/sessions"
+      >Debug</a
+    >
     <span class="mr-2"></span>
     <span *ngIf="projectName" class="text-1xl font-italic"
       >[{{projectName}}]</span

@@ -12,6 +12,7 @@ import { ContextService } from '../services/context.service';
 import { Subscription } from 'rxjs';
 import { LlmService } from '../services/llm.service';
 import { UiService } from '../services/ui.service';
+import { Project } from '../api/project';
 
 @Component({
   selector: 'app-chat-panel',
@@ -21,6 +22,7 @@ import { UiService } from '../services/ui.service';
 export class ChatPanelComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   currentChat: Chat | undefined;
+  currentProject: Project | undefined;
   queryProcessing = false;
   @ViewChild('target', { static: false })
   set viewChildReference(v: ElementRef) {
@@ -45,6 +47,7 @@ export class ChatPanelComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.contexteService.listenToDataChange().subscribe((v) => {
         this.currentChat = v[2];
+        this.currentProject = v[1];
         window.scrollTo(0, document.body.scrollHeight);
       })
     );

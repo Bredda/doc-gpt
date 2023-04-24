@@ -9,15 +9,19 @@ import { initMotorheadMemory } from './services/memory';
 import { getConversationPrompt } from './services/prompts.service';
 import { Chat } from '../domain/api/index';
 import logger from '../common/logger';
+import {
+  enableTracing,
+  switchToTracingSession
+} from './services/tracer-service';
 
 class LLMQuerier {
   static conversationQuery = async (
     chatId: string,
     query: string
   ): Promise<Chat> => {
-    process.env.LANGCHAIN_HANDLER = 'langchain';
+    enableTracing();
     const chat = await getChat(chatId);
-    process.env.LANGCHAIN_SESSION = `${chatId}`;
+    await switchToTracingSession(chatId);
     await addMessageToChat(chatId, query, 'user');
     const memory = await initMotorheadMemory(chatId);
     const model = initOpenApi('gpt-3.5-turbo');

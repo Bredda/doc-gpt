@@ -80,6 +80,13 @@ export class ProjecManagerComponent implements OnInit {
     return pjs;
   }
 
+  getTargetProject() {
+    return (
+      this.selectedNode ||
+      this.datas.find((n) => n.data.id === this.currentProjectId)
+    );
+  }
+
   isAutoExpanded(t: TreeNode): boolean {
     return t.children !== undefined && t.data.id === this.currentProjectId;
   }
@@ -148,13 +155,9 @@ export class ProjecManagerComponent implements OnInit {
     this.newName = '';
   }
   onConfirmCreateChat() {
-    console.log('Creating with ', {
-      type: this.selectedType,
-      model: this.selectedModel,
-      language: this.selectedLanguage
-    });
+    console.log(this.getTargetProject());
     this.chatService
-      .createNewChat(this.selectedNode.data.id, {
+      .createNewChat(this.getTargetProject().data.id, {
         name: this.newName,
         settings: {
           type: this.selectedType.value,
@@ -172,7 +175,7 @@ export class ProjecManagerComponent implements OnInit {
         });
 
         const targetProject = projects.find(
-          (p) => p.id === this.selectedNode.data.id
+          (p) => p.id === this.getTargetProject().data.id
         );
         if (targetProject !== undefined) {
           const targetChat =
