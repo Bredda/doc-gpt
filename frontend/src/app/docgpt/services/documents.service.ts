@@ -12,7 +12,6 @@ export class DocumentService {
   constructor(private httpClient: HttpClient) {}
 
   public getProjectDocuments(projectId: string): Observable<any[]> {
-    console.log('getProjectDocuments');
     return this.httpClient.get<any[]>(`${this.url}/${projectId}/documents`);
   }
 

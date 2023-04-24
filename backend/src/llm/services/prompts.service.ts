@@ -5,17 +5,20 @@ const {
   HumanMessagePromptTemplate
 } = require('langchain/prompts');
 const { MotorheadMemory } = require('langchain/memory');
+import logger from '../../common/logger';
 import { Language } from '../../domain/api/enum';
 import { CONVERSATION_PROMPT, PROMPT_CONTEXT } from '../utils/prompts';
 
 export const getConversationPrompt = (language: Language, memory: any) => {
   let context = memory.context ? PROMPT_CONTEXT[language] : '';
 
-  return ChatPromptTemplate.fromPromptMessages([
+  const prompt = ChatPromptTemplate.fromPromptMessages([
     SystemMessagePromptTemplate.fromTemplate(
       `${CONVERSATION_PROMPT[language]}${context}`
     ),
     new MessagesPlaceholder('history'),
     HumanMessagePromptTemplate.fromTemplate('{input}')
   ]);
+  logger.debug(`Prompt constructed: ${prompt.toString()}`);
+  return prompt;
 };

@@ -21,18 +21,6 @@ export class DocgptComponent implements OnInit, OnDestroy {
   currentProject = undefined;
   currentChat = undefined;
   private subscriptions: Subscription[] = [];
-  paramsSubscription!: Subscription;
-  @ViewChild('target', { static: false })
-  set viewChildReference(v: ElementRef) {
-    console.log(v);
-    if (v !== undefined) {
-      v.nativeElement.scroll({
-        top: v.nativeElement.scrollHeight,
-        left: 0,
-        behavior: 'smooth'
-      });
-    }
-  }
 
   constructor(
     private route: ActivatedRoute,
@@ -42,15 +30,11 @@ export class DocgptComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions.push(
       this.route.params.subscribe((paramMap) => {
+        console.log('triggerContextChange ', paramMap);
         this.contextService.triggerContextChange(
           paramMap['projectId'],
           paramMap['chatId']
         );
-      })
-    );
-    this.subscriptions.push(
-      this.contextService.listenToDataChange().subscribe((v) => {
-        window.scrollTo(0, document.body.scrollHeight);
       })
     );
   }

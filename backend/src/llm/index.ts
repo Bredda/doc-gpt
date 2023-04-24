@@ -19,9 +19,10 @@ class LLMQuerier {
     chatId: string,
     query: string
   ): Promise<Chat> => {
+    logger.debug(`New query for chat ${chatId}: ${query}`);
     enableTracing();
     const chat = await getChat(chatId);
-    await switchToTracingSession(chatId);
+    switchToTracingSession(chatId);
     await addMessageToChat(chatId, query, 'user');
     const memory = await initMotorheadMemory(chatId);
     const model = initOpenApi('gpt-3.5-turbo');
@@ -31,9 +32,10 @@ class LLMQuerier {
       prompt: chatPrompt,
       llm: model
     });
-    logger.info(chatPrompt.toString());
+    logger.debug(`Request send to llm`);
     const resp = await chain.call({ input: query });
     const newChat = await addMessageToChat(chatId, resp.response, 'llm');
+    logger.debug(`LLM response: ${resp}`);
     return newChat;
   };
 }

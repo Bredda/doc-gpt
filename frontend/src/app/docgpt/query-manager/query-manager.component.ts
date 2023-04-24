@@ -31,6 +31,7 @@ export class QueryManagerComponent implements OnInit {
   }
 
   onAsk() {
+    console.log(this.currentChat);
     if (this.currentChat !== undefined) {
       this.llm.query(this.currentChat.id, this.query);
       this.query = '';

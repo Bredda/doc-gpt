@@ -29,15 +29,10 @@ export class ContextService {
     if (projectId !== this.currentProjectId || projectId === undefined) {
       this.currentProjectId = projectId;
       this.triggerProjectListRefresh(projectId);
-      console.log('Refreshing for project ' + projectId);
       if (projectId !== undefined) this.triggerDocumentListRefresh(projectId);
     }
     if (chatId !== this.currentChatId) {
-      console.log(
-        'Context changed from chat' + this.currentChatId + ' to ' + chatId
-      );
       this.currentChatId = chatId;
-
       this.triggerChatDetailRefresh(projectId, chatId);
     }
   }
