@@ -46,11 +46,40 @@
 </div>
 
 <ng-template #noChat>
-  <div class="h-full w-full flex align-items-center justify-content-center">
-    <div class="grid">
-      <div class="col-4">Conversation</div>
-      <div class="col-4">Chat</div>
-      <div class="col-4">Génération de code</div>
+  <div
+    class="h-full w-full flex flex-column align-items-center justify-content-center">
+    <div class="grid w-full">
+      <div class="col-4">
+        <p-card header="Conversation">
+          <p class="m-0">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+          </p>
+        </p-card>
+      </div>
+      <div class="col-4">
+        <p-card header="Chat with your data">
+          <p class="m-0">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore
+            sed consequuntur error repudiandae numquam
+          </p>
+        </p-card>
+      </div>
+      <div class="col-4">
+        <p-card header="Génération de code">
+          <p class="m-0">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore
+            sed consequuntur error repudiandae numquam deserunt quisquam
+            repellat libero asperiores earum nam nobis!
+          </p>
+        </p-card>
+      </div>
     </div>
+    <p-button
+      icon="pi pi-plus"
+      (click)="onCreateChat()"
+      class="align-self-center"
+      styleClass="p-button-outlined "
+      label="Nouvelle conversation">
+    </p-button>
   </div>
 </ng-template>

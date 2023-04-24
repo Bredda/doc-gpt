@@ -11,6 +11,7 @@ import { ChatService } from '../services/chat.service';
 import { ContextService } from '../services/context.service';
 import { Project } from '../api/project';
 import { ChatType, Languages, Models } from '../api/settings';
+import { UiService } from '../services/ui.service';
 
 @Component({
   selector: 'app-projec-manager',
@@ -40,7 +41,8 @@ export class ProjecManagerComponent implements OnInit {
     private chatService: ChatService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private contextService: ContextService
+    private contextService: ContextService,
+    private uiService: UiService
   ) {}
 
   ngOnInit(): void {
@@ -49,6 +51,9 @@ export class ProjecManagerComponent implements OnInit {
       this.currentProjectId = v[1]?.id;
       this.currentChatId = v[2]?.id;
     });
+    this.uiService
+      .listenChatDiagOpen()
+      .subscribe((v) => (this.createChatVisible = true));
   }
 
   private transformProjectListToNode(projects: Project[]): TreeNode[] {
