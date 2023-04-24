@@ -3,6 +3,7 @@ version: "3"
 services:
   db:
     image: postgres:14.1
+    container_name: doc_gpt_db
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
@@ -10,82 +11,10 @@ services:
     ports:
       - 5431:5432
   adminer:
+    container_name: doc_gpt_adminer
     image: adminer
     restart: always
     depends_on:
       - db
     ports:
       - 8080:8080
-  motorhead:
-    build: ./motorhead
-    ports:
-      - "8081:8080"
-    links:
-      - redis
-    environment:
-      PORT: 8080
-      REDIS_URL: "redis://redis:6379"
-    env_file:
-      - ./motorhead/.env
-  redis:
-    image: redis:latest
-    ports:
-      - "6379:6379"
-  langchain-frontend:
-    image: notlangchain/langchainplus-frontend:latest
-    ports:
-      - 4173:4173
-    environment:
-      - BACKEND_URL=http://langchain-backend:8000
-      - PUBLIC_BASE_URL=http://localhost:8000
-      - PUBLIC_DEV_MODE=true
-    depends_on:
-      - langchain-backend
-  langchain-backend:
-    image: notlangchain/langchainplus:latest
-    environment:
-      - PORT=8000
-      - LANGCHAIN_ENV=local
-    ports:
-      - 8000:8000
-    depends_on:
-      - langchain-db
-  langchain-db:
-    image: postgres:14.1
-    environment:
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=postgres
-    ports:
-      - 5432:5432
-  chroma-server:
-    build:
-      context: ./chroma
-      dockerfile: Dockerfile
-    volumes:
-      - ./chroma:/chroma
-      - index_data:/index_data
-    command: uvicorn chromadb.app:app --reload --workers 1 --host 0.0.0.0 --port 8000 --log-config log_config.yml
-    environment:
-      - CHROMA_DB_IMPL=clickhouse
-      - CLICKHOUSE_HOST=clickhouse
-      - CLICKHOUSE_PORT=8123
-    ports:
-      - 8000:8000
-    depends_on:
-      - clickhouse
-
-  clickhouse:
-    image: clickhouse/clickhouse-server:22.9-alpine
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-      - CLICKHOUSE_TCP_PORT=9000
-      - CLICKHOUSE_HTTP_PORT=8123
-    ports:
-      - "8123:8123"
-      - "9000:9000"
-    volumes:
-      - clickhouse_data:/bitnami/clickhouse
-      - backups:/backups
-      - ./chroma/config/backup_disk.xml:/etc/clickhouse-server/config.d/backup_disk.xml
-      - ./chroma/config/chroma_users.xml:/etc/clickhouse-server/users.d/chroma.xml

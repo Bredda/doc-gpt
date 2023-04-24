@@ -4,9 +4,10 @@
   "description": "Chat wit your data",
   "main": "index.js",
   "scripts": {
-    "dev:backend": "cd ./backend && npm run dev",
-    "dev:frontend": "cd ./frontend && npm run start",
-    "dev:stack": "docker-compose -f compose.dev.yml -f compose.chroma.yml -f compose.motorhead.yml -f compose.langchainplus.yml up"
+    "backend:dev": "cd ./backend && npm run dev",
+    "frontend:dev": "cd ./frontend && npm run start",
+    "docker:tools": "docker-compose -f ./tools/compose.tools.yml up",
+    "docker:dev": "docker-compose -f docker-compose.dev.yml up"
   },
   "repository": {
     "type": "git",
