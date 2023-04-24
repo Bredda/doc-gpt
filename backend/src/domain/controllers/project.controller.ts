@@ -15,6 +15,7 @@ import {
   getChatsByProjectId,
   updateChatSettings
 } from '../repositories/chat.repository';
+import { createNewTracingSession } from '../../llm/services/tracer-service';
 
 @Route('projects')
 @Tags('Project')
@@ -73,9 +74,8 @@ class ProjectController {
 
   @Post('/projects/:projectId/chats')
   static createNewProjecthat = async (req: Request, res: Response) => {
-    await createNewProjecthat(req.params.projectId, req.body);
-    console.log('NEW CHAT');
-    console.log(req.body);
+    const chat = await createNewProjecthat(req.params.projectId, req.body);
+    //await createNewTracingSession(chat.id);
     const projects = await getProjectsByUserId(
       res.locals.jwtPayload.userId,
       true

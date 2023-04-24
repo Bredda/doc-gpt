@@ -64,7 +64,7 @@ export class App {
     });
     io.on('connection', (socket: Socket) => {
       socket.on('conversation-query', (data: any) => {
-        LLMQuerier.conversationQuery(data.chtId, data.query).then((resp) =>
+        LLMQuerier.conversationQuery(data.chatId, data.query).then((resp) =>
           socket.emit('conversation-response', resp)
         );
       });

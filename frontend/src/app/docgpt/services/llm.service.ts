@@ -21,9 +21,10 @@ export class LlmService {
   }
 
   query(chatId: string, query: string) {
-    console.log('Query service');
     this.chatService.addTempNewqueryToCurrentChat(query);
     this.$queryBeingPrecessed.next(true);
+    console.log(chatId);
+    console.log(query);
     this.socket.emit('conversation-query', { chatId: chatId, query: query });
     this.socket.on('conversation-response', (resp) => {
       this.chatService.updateCurrentChat(resp);

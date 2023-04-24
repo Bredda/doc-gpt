@@ -47,7 +47,6 @@ export class DocumentManagerComponent implements OnInit {
   }
 
   private transformDocsToTreeNode(documents: any[]) {
-    console.log('Transform docs', documents);
     const newContext: MenuItem[] = [];
     documents.forEach((f) => {
       newContext.push({ id: f.id, label: f.originalname });

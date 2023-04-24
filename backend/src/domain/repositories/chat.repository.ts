@@ -1,6 +1,7 @@
 import { AppDataSource } from '../../config/data-source';
 import { DeleteResult } from 'typeorm';
 import { Chat, ChatMessage, ChatSettings, Project } from '../api/index';
+import { Language, LlmModel } from '../api/enum';
 
 export interface ICreateChatPayload {
   name: string;
@@ -99,8 +100,8 @@ export const createNewProjecthat = async (
   });
   const newSettings = await AppDataSource.manager.save(ChatSettings, {
     ...new ChatSettings(),
-    language: payload.settings.language.id,
-    model: payload.settings.model.id
+    language: payload.settings.language.name as Language,
+    model: payload.settings.model.name as LlmModel
   });
   const newChat = {
     name: payload.name,

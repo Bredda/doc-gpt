@@ -1,12 +1,13 @@
 {
   "name": "doc-gpt",
   "version": "0.2.0-alpha",
-  "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4.",
+  "description": "Chat wit your data",
   "main": "index.js",
   "scripts": {
-    "dev:backend": "cd ./backend && npm run dev",
-    "dev:frontend": "cd ./frontend && npm run start",
-    "dev:stack": "docker-compose up"
+    "backend:dev": "cd ./backend && npm run dev",
+    "frontend:dev": "cd ./frontend && npm run start",
+    "docker:tools": "docker-compose -f ./tools/compose.tools.yml up",
+    "docker:dev": "docker-compose -f docker-compose.dev.yml up"
   },
   "repository": {
     "type": "git",

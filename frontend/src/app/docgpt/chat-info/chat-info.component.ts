@@ -26,10 +26,9 @@ export class ChatInfoComponent implements OnInit, OnDestroy {
         this.projectName = v[1]?.name;
         this.chatName = v[2]?.name;
         if (v[2]) {
-          console.log(v[2]?.settings);
-          this.type = ChatType[v[2]?.settings.type].name;
-          this.model = Models[v[2]?.settings.model].name;
-          this.language = Languages[v[2]?.settings.language].name;
+          this.type = v[2]?.settings.type;
+          this.model = v[2]?.settings.model;
+          this.language = v[2]?.settings.language;
         }
       });
   }

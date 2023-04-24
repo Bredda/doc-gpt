@@ -11,6 +11,7 @@ import { ChatService } from '../services/chat.service';
 import { ContextService } from '../services/context.service';
 import { Project } from '../api/project';
 import { ChatType, Languages, Models } from '../api/settings';
+import { UiService } from '../services/ui.service';
 
 @Component({
   selector: 'app-projec-manager',
@@ -40,7 +41,8 @@ export class ProjecManagerComponent implements OnInit {
     private chatService: ChatService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private contextService: ContextService
+    private contextService: ContextService,
+    private uiService: UiService
   ) {}
 
   ngOnInit(): void {
@@ -49,6 +51,9 @@ export class ProjecManagerComponent implements OnInit {
       this.currentProjectId = v[1]?.id;
       this.currentChatId = v[2]?.id;
     });
+    this.uiService
+      .listenChatDiagOpen()
+      .subscribe((v) => (this.createChatVisible = true));
   }
 
   private transformProjectListToNode(projects: Project[]): TreeNode[] {
@@ -73,6 +78,13 @@ export class ProjecManagerComponent implements OnInit {
       });
     });
     return pjs;
+  }
+
+  getTargetProject() {
+    return (
+      this.selectedNode ||
+      this.datas.find((n) => n.data.id === this.currentProjectId)
+    );
   }
 
   isAutoExpanded(t: TreeNode): boolean {
@@ -143,18 +155,14 @@ export class ProjecManagerComponent implements OnInit {
     this.newName = '';
   }
   onConfirmCreateChat() {
-    console.log('Creating with ', {
-      type: this.selectedType,
-      model: this.selectedModel,
-      language: this.selectedLanguage
-    });
+    console.log(this.getTargetProject());
     this.chatService
-      .createNewChat(this.selectedNode.data.id, {
+      .createNewChat(this.getTargetProject().data.id, {
         name: this.newName,
         settings: {
-          type: this.selectedType,
-          model: this.selectedModel,
-          language: this.selectedLanguage
+          type: this.selectedType.value,
+          model: this.selectedModel.name,
+          language: this.selectedLanguage.value
         }
       })
       .subscribe((projects) => {
@@ -167,7 +175,7 @@ export class ProjecManagerComponent implements OnInit {
         });
 
         const targetProject = projects.find(
-          (p) => p.id === this.selectedNode.data.id
+          (p) => p.id === this.getTargetProject().data.id
         );
         if (targetProject !== undefined) {
           const targetChat =

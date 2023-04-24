@@ -11,6 +11,8 @@ import { Chat } from '../api/chat';
 import { ContextService } from '../services/context.service';
 import { Subscription } from 'rxjs';
 import { LlmService } from '../services/llm.service';
+import { UiService } from '../services/ui.service';
+import { Project } from '../api/project';
 
 @Component({
   selector: 'app-chat-panel',
@@ -20,6 +22,7 @@ import { LlmService } from '../services/llm.service';
 export class ChatPanelComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   currentChat: Chat | undefined;
+  currentProject: Project | undefined;
   queryProcessing = false;
   @ViewChild('target', { static: false })
   set viewChildReference(v: ElementRef) {
@@ -36,13 +39,15 @@ export class ChatPanelComponent implements OnInit, OnDestroy {
   constructor(
     private chatService: ChatService,
     private contexteService: ContextService,
-    private llm: LlmService
+    private llm: LlmService,
+    private ui: UiService
   ) {}
 
   ngOnInit(): void {
     this.subscriptions.push(
       this.contexteService.listenToDataChange().subscribe((v) => {
         this.currentChat = v[2];
+        this.currentProject = v[1];
         window.scrollTo(0, document.body.scrollHeight);
       })
     );
@@ -51,6 +56,10 @@ export class ChatPanelComponent implements OnInit, OnDestroy {
         this.queryProcessing = q;
       })
     );
+  }
+
+  onCreateChat() {
+    this.ui.triggerChatDiag();
   }
 
   ngOnDestroy(): void {
