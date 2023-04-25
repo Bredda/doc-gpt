@@ -2,6 +2,7 @@ import { Application } from 'express';
 import { CommonRoutesConfig } from './common.routes.config';
 import { checkJwt } from '../../middlewares/checkJwt';
 import ProjectController from '../controllers/project.controller';
+import ChatController from '../controllers/chat.controller';
 
 export class ChatsRoutes extends CommonRoutesConfig {
   constructor(app: Application) {
@@ -12,13 +13,13 @@ export class ChatsRoutes extends CommonRoutesConfig {
     this.app;
     this.app
       .route('/doc-gpt/projects/:projectId/chats')
-      .get([checkJwt], ProjectController.getProjectChats)
-      .post([checkJwt], ProjectController.createNewProjecthat);
+      .get([checkJwt], ChatController.getProjectChats)
+      .post([checkJwt], ChatController.createNewProjecthat);
 
     this.app
       .route('/doc-gpt/projects/:projectId/chats/:chatId')
-      .get([checkJwt], ProjectController.getSpecificChat)
-      .delete([checkJwt], ProjectController.deleteUserChat);
+      .get([checkJwt], ChatController.getSpecificChat)
+      .delete([checkJwt], ChatController.deleteUserChat);
 
     return this.app;
   }
