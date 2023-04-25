@@ -25,3 +25,13 @@ export const addDocToStore = async (
     console.log(err);
   }
 };
+
+export const getStore = async (collectionName: string): Promise<Chroma> => {
+  return Chroma.fromExistingCollection(
+    new OpenAIEmbeddings({ openAIApiKey: config.OPENAI_API_KEY }),
+    {
+      url: `http://localhost:${config.CHROMA_PORT}`,
+      collectionName: collectionName
+    }
+  );
+};

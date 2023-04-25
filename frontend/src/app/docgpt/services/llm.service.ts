@@ -20,6 +20,22 @@ export class LlmService {
     return this.$queryBeingPrecessed.asObservable();
   }
 
+  queryRetrieval(projectId: string, chatId: string, query: string) {
+    this.chatService.addTempNewqueryToCurrentChat(query);
+    this.$queryBeingPrecessed.next(true);
+    console.log(chatId);
+    console.log(query);
+    this.socket.emit('retrieval-query', {
+      projectId: projectId,
+      chatId: chatId,
+      query: query
+    });
+    this.socket.on('retrieval-response', (resp) => {
+      this.chatService.updateCurrentChat(resp);
+      this.$queryBeingPrecessed.next(false);
+    });
+  }
+
   query(chatId: string, query: string) {
     this.chatService.addTempNewqueryToCurrentChat(query);
     this.$queryBeingPrecessed.next(true);

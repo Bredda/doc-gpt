@@ -7,12 +7,14 @@
   </ng-template>
 
   <div *ngIf="this.currentProject !== undefined; else noProject">
-    <div #tree class="flex flex-column gap-4">
+    <div class="flex flex-column gap-4">
       <p-tree
         emptyMessage="Aucun fichier"
-        selectionMode="multiple"
+        selectionMode="single"
+        [(selection)]="selectedNode"
         class="w-full"
-        [value]="files"></p-tree>
+        [value]="files"
+        [contextMenu]="cm"></p-tree>
       <div
         class="border-1 border-round surface-border pt-4"
         appDndUpload
@@ -29,7 +31,7 @@
           (change)="fileBrowseHandler($event)" />
       </div>
     </div>
-    <p-contextMenu [target]="tree" [model]="items"></p-contextMenu>
+    <p-contextMenu #cm [model]="items"></p-contextMenu>
   </div>
 
   <ng-template #noProject>

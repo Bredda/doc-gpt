@@ -21,6 +21,9 @@ export class DocumentsRoutes extends CommonRoutesConfig {
         DocumentController.uploadToContext
       )
       .get([checkJwt], DocumentController.getProjectContext);
+    this.app
+      .route('/doc-gpt/projects/:projectId/documents/:docId')
+      .delete([checkJwt], DocumentController.deleteDocument);
 
     return this.app;
   }

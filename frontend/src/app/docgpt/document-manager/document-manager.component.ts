@@ -18,6 +18,7 @@ export class DocumentManagerComponent implements OnInit {
   @ViewChild('fileDropRef', { static: false }) fileDropEl!: ElementRef;
   uploadedFiles: any[] = [];
   files: TreeNode[] = [];
+  selectedNode!: TreeNode;
   items: MenuItem[] = [
     {
       label: 'Renommer',
@@ -29,7 +30,8 @@ export class DocumentManagerComponent implements OnInit {
     },
     {
       label: 'Supprimer',
-      icon: 'pi pi-fw pi-pencil'
+      icon: 'pi pi-fw pi-pencil',
+      command: () => this.deleteDocument()
     }
   ];
   currentProject: string | undefined = undefined;
@@ -47,11 +49,21 @@ export class DocumentManagerComponent implements OnInit {
   }
 
   private transformDocsToTreeNode(documents: any[]) {
-    const newContext: MenuItem[] = [];
+    const newContext: TreeNode[] = [];
     documents.forEach((f) => {
-      newContext.push({ id: f.id, label: f.originalname });
+      newContext.push({ label: f.originalname, data: f });
     });
     return newContext;
+  }
+
+  deleteDocument() {
+    console.log(this.selectedNode);
+    if (this.currentProject) {
+      this.documentService.deleteFile(
+        this.currentProject,
+        this.selectedNode.data.id
+      );
+    }
   }
 
   /**

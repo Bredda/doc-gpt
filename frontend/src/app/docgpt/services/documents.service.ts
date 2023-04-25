@@ -33,6 +33,12 @@ export class DocumentService {
     }
   }
 
+  public deleteFile(projectId: string, docId: string): void {
+    this.httpClient
+      .delete<any[]>(`${this.url}/${projectId}/documents/${docId}`)
+      .subscribe((d) => this.documents.next(d));
+  }
+
   public getCurrentProjectContext(): Observable<any[]> {
     return this.documents.asObservable();
   }

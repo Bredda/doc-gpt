@@ -5,8 +5,8 @@ Back
 Front
 
 - Formattage de la réponse, notamment lorsque du code est renvoyé
-
-Features:
+- Toast lors des ajout/suppression de document
+- Features:
 
 - améliorer tracing (aim ?)
 - Embeddgins from docs (chroma)
