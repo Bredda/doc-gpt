@@ -6,7 +6,7 @@ export const initMotorheadMemory = async (sessionId: string): Promise<any> => {
   logger.debug(`Motorhead memory initialization for chat ${sessionId}`);
   const memory = new MotorheadMemory({
     sessionId: sessionId,
-    motorheadURL: process.env.MOTORHEAD_URL
+    motorheadURL: `http://${process.env.MOTORHEAD_HOST}:${process.env.MOTORHEAD_SERVER_PORT}`
   });
   await memory.init();
 

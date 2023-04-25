@@ -6,8 +6,10 @@
   "scripts": {
     "backend:dev": "cd ./backend && npm run dev",
     "frontend:dev": "cd ./frontend && npm run start",
-    "docker:tools": "docker-compose -f ./tools/compose.tools.yml up",
-    "docker:dev": "docker-compose -f docker-compose.dev.yml up"
+    "database:dev": "docker-compose -f ./database/docker-compose.yml up",
+    "chroma:dev": "docker-compose -f ./tools/chroma/docker-compose.yml --env-file .env up",
+    "langchainplus:dev": "docker-compose -f ./tools/langchainplus/docker-compose.yml --env-file .env up",
+    "motorhead:dev": "docker-compose -f ./tools/motorhead/docker-compose.yml --env-file .env up"
   },
   "repository": {
     "type": "git",

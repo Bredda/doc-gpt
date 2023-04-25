@@ -5,7 +5,7 @@ services:
     container_name: langchainplus_front
     image: notlangchain/langchainplus-frontend:latest
     ports:
-      - 4173:4173
+      - ${LANGCHAIN_FRONT_PORT}:4173
     environment:
       - BACKEND_URL=http://langchain-backend:8000
       - PUBLIC_BASE_URL=http://localhost:8000
@@ -19,7 +19,7 @@ services:
       - PORT=8000
       - LANGCHAIN_ENV=local
     ports:
-      - 8000:8000
+      - ${LANGCHAIN_BACK_PORT}:8000
     depends_on:
       - langchain-db
   langchain-db:
@@ -30,4 +30,4 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_DB=postgres
     ports:
-      - 5432:5432
+      - ${LANGCHAIN_DB_PORT}:5432

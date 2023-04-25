@@ -19,7 +19,7 @@ export const checkJwt = async (
   //Try to validate the token and get data
   //@TODO: check user in given token
   try {
-    jwtPayload = <any>jwt.verify(token, config.jwtSecret);
+    jwtPayload = <any>jwt.verify(token, config.JWT_SECRET);
     res.locals.jwtPayload = jwtPayload;
     await getUserById(jwtPayload.userId);
   } catch (error) {
@@ -31,7 +31,7 @@ export const checkJwt = async (
   //The token is valid for 1 hour
   //We want to send a new token on every request
   const { userId, username } = jwtPayload;
-  const newToken = jwt.sign({ userId, username }, config.jwtSecret, {
+  const newToken = jwt.sign({ userId, username }, config.JWT_SECRET, {
     expiresIn: '2 days'
   });
   res.setHeader('token', newToken);

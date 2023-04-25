@@ -9,14 +9,15 @@ import {
 } from '../domain/api/index';
 import { InitTables1681723146559 } from '../../migrations/1681723146559-InitTables';
 import { InitDatas1681723156753 } from '../../migrations/1681723156753-InitDatas';
+import config from './config';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
-  host: process.env.POSTGRES_HOST || 'localhost',
-  port: 5431,
-  username: process.env.POSTGRES_USER || 'postgres',
-  password: process.env.POSTGRES_PASSWORD || 'postgres',
-  database: process.env.POSTGRES_DB || 'postgres',
+  host: config.DB_HOST,
+  port: config.DB_PORT,
+  username: config.DB_USER,
+  password: config.DB_PASSWORD,
+  database: config.DB_NAME,
   synchronize: true,
   logging: false,
   entities: [User, Project, ChatMessage, Chat, ChatSettings, OriginalDocument],
