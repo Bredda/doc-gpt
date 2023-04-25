@@ -6,7 +6,7 @@
   "scripts": {
     "backend:dev": "cd ./backend && npm run dev",
     "frontend:dev": "cd ./frontend && npm run start",
-    "database:dev": "docker-compose -f ./database/docker-compose.yml up",
+    "database:dev": "docker-compose -f ./database/docker-compose.yml --env-file .env up",
     "chroma:dev": "docker-compose -f ./tools/chroma/docker-compose.yml --env-file .env up",
     "langchainplus:dev": "docker-compose -f ./tools/langchainplus/docker-compose.yml --env-file .env up",
     "motorhead:dev": "docker-compose -f ./tools/motorhead/docker-compose.yml --env-file .env up"

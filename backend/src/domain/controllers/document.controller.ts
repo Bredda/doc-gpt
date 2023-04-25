@@ -4,6 +4,7 @@ import {
   getAllProjectDocuments,
   registerFileToProject
 } from '../repositories/project.repository';
+import { addDocToStore } from '../../llm/services/vector.service';
 
 @Route('projects')
 @Tags('Documents')
@@ -19,7 +20,8 @@ class DocumentController {
   static uploadToContext = async (req: Request, res: Response) => {
     console.log(req.file);
     if (req.file) {
-      await registerFileToProject(req.params.projectId, req.file);
+      const doc = await registerFileToProject(req.params.projectId, req.file);
+      await addDocToStore(req.params.projectId, doc);
       const context = await getAllProjectDocuments(req.params.projectId);
       res.status(201).send(context);
     } else {
