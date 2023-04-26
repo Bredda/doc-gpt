@@ -1,20 +1,14 @@
-const { ConversationChain } = require('langchain/chains');
 import { Language } from '../domain/api/enum';
-import {
-  getChat,
-  addMessageToChat
-} from '../domain/repositories/chat.repository';
-import { initOpenApi } from './services/llm-models';
-import { initMotorheadMemory } from './services/memory';
-import { getConversationPrompt } from './services/prompts.service';
+import { addMessageToChat } from '../domain/repositories/chat.repository';
+import { PromptService } from './services/prompts.service';
 import { Chat } from '../domain/api/index';
 import logger from '../common/logger';
-import {
-  enableTracing,
-  switchToTracingSession
-} from './services/tracer-service';
 import { getStore } from './services/vector.service';
 import { ConversationalRetrievalQAChain } from 'langchain/chains';
+import { ModelService } from './services/mode.service';
+import { TracingService } from './services/tracing.service';
+import { ChainService } from './services/chain.service';
+import { MemoryService } from './services/memory';
 class LLMQuerier {
   static retrivalQAQuery = async (
     projectId: string,
@@ -22,11 +16,12 @@ class LLMQuerier {
     query: string
   ): Promise<Chat> => {
     logger.debug(`New Retrieval QA query for chat ${chatId}: ${query}`);
-    enableTracing();
-    switchToTracingSession(chatId);
+    TracingService.enableTracing();
+    TracingService.switchToTracingSession(chatId);
     await addMessageToChat(chatId, query, 'user');
     const store = await getStore(projectId);
-    const model = initOpenApi('gpt-3.5-turbo');
+
+    const model = ModelService.getOpenAi();
     const chain = ConversationalRetrievalQAChain.fromLLM(
       model,
       store.asRetriever()
@@ -35,7 +30,6 @@ class LLMQuerier {
     logger.debug(store.numDimensions);
     const resp = await chain.call({ query, chatHistory: [] });
     const newChat = await addMessageToChat(chatId, resp.response, 'llm');
-    logger.debug(`LLM response: ${resp}`);
     return newChat;
   };
 
@@ -44,21 +38,20 @@ class LLMQuerier {
     query: string
   ): Promise<Chat> => {
     logger.debug(`New query for chat ${chatId}: ${query}`);
-    enableTracing();
-    switchToTracingSession(chatId);
+    TracingService.enableTracing();
+    TracingService.switchToTracingSession(chatId);
     await addMessageToChat(chatId, query, 'user');
-    const memory = await initMotorheadMemory(chatId);
-    const model = initOpenApi('gpt-3.5-turbo');
-    const chatPrompt = getConversationPrompt(Language.FRENCH, memory);
-    const chain = new ConversationChain({
-      memory,
-      prompt: chatPrompt,
-      llm: model
-    });
-    logger.debug(`Request send to llm`);
+
+    const memory = await MemoryService.initMotorheadMemory(chatId);
+    const model = ModelService.getOpenAi();
+
+    const chatPrompt = PromptService.getConversationPrompt(
+      Language.FRENCH,
+      memory
+    );
+    const chain = ChainService.getConversationChain(model, chatPrompt, memory);
     const resp = await chain.call({ input: query });
     const newChat = await addMessageToChat(chatId, resp.response, 'llm');
-    logger.debug(`LLM response: ${resp}`);
     return newChat;
   };
 }

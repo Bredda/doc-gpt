@@ -15,7 +15,7 @@ import {
   getChatsByProjectId,
   updateChatSettings
 } from '../repositories/chat.repository';
-import { createNewTracingSession } from '../../llm/services/tracer-service';
+import { createNewTracingSession } from '../../llm/services/tracing.service';
 @Route('projects')
 @Tags('Chats')
 class ChatController {

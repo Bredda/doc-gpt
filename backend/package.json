@@ -12,7 +12,8 @@
     "swagger": "tsoa spec",
     "build:docker": "docker build -t doc-gpt/doc-gpt-backend .",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
-    "typeorm": "typeorm-ts-node-commonjs"
+    "typeorm": "typeorm-ts-node-commonjs",
+    "llm:test:chroma": "ts-node -r dotenv/config tests/chroma.ts dotenv_config_path=../.env"
   },
   "keywords": [],
   "author": "",
