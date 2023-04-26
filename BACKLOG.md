@@ -1,12 +1,19 @@
 Back
 
-- lors du check du token, checker aussi si le user existe sinon 401
+- Cascasde delete chat settings with project
+- Cascade delete motorhead memory with chat
 
 Front
 
 - Formattage de la réponse, notamment lorsque du code est renvoyé
 - Toast lors des ajout/suppression de document
-- Features:
+- Moving dots while query processing
+- send query on enter
+- Error toast et message clean quand erreur dans la query vers llm
+- auto scroll dernier message
+- delete embeddings with file/project
+
+Features:
 
 - améliorer tracing (aim ?)
 - Embeddgins from docs (chroma)

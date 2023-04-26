@@ -3,12 +3,12 @@ import { addMessageToChat } from '../domain/repositories/chat.repository';
 import { PromptService } from './services/prompts.service';
 import { Chat } from '../domain/api/index';
 import logger from '../common/logger';
-import { getStore } from './services/vector.service';
 import { ConversationalRetrievalQAChain } from 'langchain/chains';
-import { ModelService } from './services/mode.service';
+import { ModelService } from './services/model.service';
 import { TracingService } from './services/tracing.service';
 import { ChainService } from './services/chain.service';
 import { MemoryService } from './services/memory';
+import { ChromaService } from './services/chroma.service';
 class LLMQuerier {
   static retrivalQAQuery = async (
     projectId: string,
@@ -19,18 +19,16 @@ class LLMQuerier {
     TracingService.enableTracing();
     TracingService.switchToTracingSession(chatId);
     await addMessageToChat(chatId, query, 'user');
-    const store = await getStore(projectId);
 
-    const model = ModelService.getOpenAi();
+    const store = await ChromaService.getCollection(projectId);
+    const memory = await MemoryService.initMotorheadMemory(chatId);
     const chain = ConversationalRetrievalQAChain.fromLLM(
-      model,
+      ModelService.getOpenAi(),
       store.asRetriever()
     );
-    logger.debug(store.collectionName);
-    logger.debug(store.numDimensions);
-    const resp = await chain.call({ query, chatHistory: [] });
-    const newChat = await addMessageToChat(chatId, resp.response, 'llm');
-    return newChat;
+    const resp = await chain.call({ question: query, chat_history: memory });
+
+    return await addMessageToChat(chatId, resp.text, 'llm');
   };
 
   static conversationQuery = async (
@@ -43,16 +41,18 @@ class LLMQuerier {
     await addMessageToChat(chatId, query, 'user');
 
     const memory = await MemoryService.initMotorheadMemory(chatId);
-    const model = ModelService.getOpenAi();
 
     const chatPrompt = PromptService.getConversationPrompt(
       Language.FRENCH,
       memory
     );
-    const chain = ChainService.getConversationChain(model, chatPrompt, memory);
+    const chain = ChainService.getConversationChain(
+      ModelService.getOpenAi(),
+      chatPrompt,
+      memory
+    );
     const resp = await chain.call({ input: query });
-    const newChat = await addMessageToChat(chatId, resp.response, 'llm');
-    return newChat;
+    return await addMessageToChat(chatId, resp.response, 'llm');
   };
 }
 

@@ -77,7 +77,7 @@ export const addMessageToChat = async (
   else OldChat.messages = [...OldChat.messages, message];
   return await AppDataSource.manager.findOneOrFail(Chat, {
     where: { id: chatId },
-    relations: { messages: true }
+    relations: { messages: true, settings: true }
   });
 };
 

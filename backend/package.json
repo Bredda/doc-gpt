@@ -13,7 +13,10 @@
     "build:docker": "docker build -t doc-gpt/doc-gpt-backend .",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
     "typeorm": "typeorm-ts-node-commonjs",
-    "llm:test:chroma": "ts-node -r dotenv/config tests/chroma.ts dotenv_config_path=../.env"
+    "llm:test:chroma": "ts-node -r dotenv/config tests/chroma.ts dotenv_config_path=../.env",
+    "llm:test:chromaIngest": "ts-node -r dotenv/config tests/chroma-ingest.ts dotenv_config_path=../.env",
+    "llm:test:chromaAfterIngest": "ts-node -r dotenv/config tests/chroma-after-ingest.ts dotenv_config_path=../.env",
+    "llm:test:chromeDeleteCollection": "ts-node -r dotenv/config tests/chroma-delete-collection.ts dotenv_config_path=../.env"
   },
   "keywords": [],
   "author": "",

@@ -11,6 +11,8 @@ import { CONVERSATION_PROMPT, PROMPT_CONTEXT } from '../utils/prompts';
 
 export class PromptService {
   static getConversationPrompt = (language: Language, memory: any) => {
+    logger.debug(`Construct conversational prompt in ${language.toString()}}`);
+
     let context = memory.context ? PROMPT_CONTEXT[language] : '';
 
     const prompt = ChatPromptTemplate.fromPromptMessages([
@@ -20,7 +22,7 @@ export class PromptService {
       new MessagesPlaceholder('history'),
       HumanMessagePromptTemplate.fromTemplate('{input}')
     ]);
-    logger.debug(`Prompt constructed: ${prompt.toString()}`);
+
     return prompt;
   };
 }

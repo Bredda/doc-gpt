@@ -5,7 +5,7 @@ const axios = require('axios');
 export class TracingService {
   static enableTracing = (): void => {
     process.env.LANGCHAIN_HANDLER = 'langchain';
-    logger.debug('Langchain tracing enabled');
+    logger.debug('Enabling Langchain tracing');
   };
   static createNewTracingSession = async (sessionName: string) => {
     await axios.post('http://localhost:4173/sessions', {

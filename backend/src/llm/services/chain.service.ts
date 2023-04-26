@@ -4,12 +4,16 @@ import {
 } from 'langchain/chains';
 import { Chroma } from 'langchain/vectorstores/chroma';
 import { BaseLLM } from 'langchain/llms/base';
+import logger from '../../common/logger';
 
 export class ChainService {
   static getChatQAChain = (
     model: BaseLLM,
     vectorStore: Chroma
   ): ConversationalRetrievalQAChain => {
+    logger.debug(
+      `Init conversational retrieval QA chain with model ${model.name}`
+    );
     return ConversationalRetrievalQAChain.fromLLM(
       model,
       vectorStore.asRetriever(),
@@ -22,6 +26,7 @@ export class ChainService {
     prompt: any,
     memory: any
   ): ConversationChain => {
+    logger.debug(`Init conversational chain with model ${model.name}`);
     return new ConversationChain({
       memory,
       prompt: prompt,

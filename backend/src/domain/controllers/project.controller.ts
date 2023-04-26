@@ -3,19 +3,11 @@ import { Request, Response } from 'express';
 import {
   createNewProject,
   deleteProjectById,
-  getAllProjectDocuments,
   getProjectById,
-  getProjectsByUserId,
-  registerFileToProject
+  getProjectsByUserId
 } from '../repositories/project.repository';
-import {
-  createNewProjecthat,
-  deleteChatById,
-  getChat,
-  getChatsByProjectId,
-  updateChatSettings
-} from '../repositories/chat.repository';
-import { createNewTracingSession } from '../../llm/services/tracing.service';
+import { updateChatSettings } from '../repositories/chat.repository';
+import { ChromaService } from '../../llm/services/chroma.service';
 
 @Route('projects')
 @Tags('Project')
@@ -41,6 +33,7 @@ class ProjectController {
       res.locals.jwtPayload.userId,
       true
     );
+    ChromaService.deleteCollection(req.params.projectId);
     res.send(projects);
   };
 

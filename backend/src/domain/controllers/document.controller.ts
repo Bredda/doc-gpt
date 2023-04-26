@@ -6,8 +6,8 @@ import {
   getDocumentById,
   registerFileToProject
 } from '../repositories/project.repository';
-import { addDocToStore } from '../../llm/services/vector.service';
 import fs from 'fs';
+import { ChromaService } from '../../llm/services/chroma.service';
 @Route('projects')
 @Tags('Documents')
 class DocumentController {
@@ -21,8 +21,8 @@ class DocumentController {
   @Post('/projects/:projectId/documents')
   static uploadToContext = async (req: Request, res: Response) => {
     if (req.file) {
-      const doc = await registerFileToProject(req.params.projectId, req.file);
-      await addDocToStore(req.params.projectId, doc);
+      await registerFileToProject(req.params.projectId, req.file);
+      await ChromaService.addFileToCollection(req.params.projectId, req.file);
       const context = await getAllProjectDocuments(req.params.projectId);
       res.status(201).send(context);
     } else {
