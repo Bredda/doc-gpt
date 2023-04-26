@@ -18,8 +18,7 @@ import { Subscription } from 'rxjs';
   providers: [ConfirmationService, MessageService]
 })
 export class DocgptComponent implements OnInit, OnDestroy {
-  currentProject = undefined;
-  currentChat = undefined;
+  currentProject!: string;
   private subscriptions: Subscription[] = [];
 
   constructor(
@@ -30,7 +29,7 @@ export class DocgptComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions.push(
       this.route.params.subscribe((paramMap) => {
-        console.log('triggerContextChange ', paramMap);
+        this.currentProject = paramMap['projectId'];
         this.contextService.triggerContextChange(
           paramMap['projectId'],
           paramMap['chatId']

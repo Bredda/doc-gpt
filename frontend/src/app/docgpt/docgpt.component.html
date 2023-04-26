@@ -1,15 +1,16 @@
 <div class="h-full flex">
   <div class="flex flex-column align-items-center gap-4 w-3 p-3 surface-ground">
     <app-projec-manager class="w-full"></app-projec-manager>
-    <app-document-manager class="w-full"></app-document-manager>
+    <app-document-manager
+      *ngIf="currentProject !== undefined"
+      class="w-full"></app-document-manager>
   </div>
 
   <div class="flex h-full max-w-full flex-1 flex-column items-stretch">
     <app-chat-info class="w-full"></app-chat-info>
 
     <app-chat-panel
-      #target
-      class="h-full w-full flex-1 flex-col overflow-auto"></app-chat-panel>
+      class="h-full w-full flex-1 flex-col overflow-hidden"></app-chat-panel>
     <app-query-manager class="w-full pt-2"></app-query-manager>
   </div>
 </div>

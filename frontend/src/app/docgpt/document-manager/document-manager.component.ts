@@ -7,6 +7,7 @@ import {
 } from 'primeng/api';
 import { DocumentService } from '../services/documents.service';
 import { ContextService } from '../services/context.service';
+import { FileUpload } from 'primeng/fileupload';
 
 @Component({
   selector: 'app-document-manager',
@@ -15,10 +16,15 @@ import { ContextService } from '../services/context.service';
   providers: [ConfirmationService, MessageService]
 })
 export class DocumentManagerComponent implements OnInit {
-  @ViewChild('fileDropRef', { static: false }) fileDropEl!: ElementRef;
+  @ViewChild('fileUpload', { static: false }) fileUploadEl!: FileUpload;
+  uploadDiagVisible = false;
   uploadedFiles: any[] = [];
   files: TreeNode[] = [];
+  progress = 0;
+  onProgress = false;
+  uploadDone = false;
   selectedNode!: TreeNode;
+  uploadUrl = '';
   items: MenuItem[] = [
     {
       label: 'Renommer',
@@ -35,16 +41,19 @@ export class DocumentManagerComponent implements OnInit {
     }
   ];
   currentProject: string | undefined = undefined;
+  currentProjectName!: string;
   constructor(
     private contextService: ContextService,
     private documentService: DocumentService,
-    private confirmationService: ConfirmationService
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
     this.contextService.listenToDataChange().subscribe((v) => {
       this.files = this.transformDocsToTreeNode(v[3]);
       this.currentProject = v[1]?.id;
+      this.currentProjectName = v[1]?.name || '';
+      this.uploadUrl = `http://localhost:3000/doc-gpt/projects/${this.currentProject}/documents`;
     });
   }
 
@@ -57,12 +66,16 @@ export class DocumentManagerComponent implements OnInit {
   }
 
   deleteDocument() {
-    console.log(this.selectedNode);
     if (this.currentProject) {
-      this.documentService.deleteFile(
-        this.currentProject,
-        this.selectedNode.data.id
-      );
+      this.documentService
+        .deleteFile(this.currentProject, this.selectedNode.data.id)
+        .subscribe(() =>
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: `Document supprimé: ${this.selectedNode.label}`
+          })
+        );
     }
   }
 
@@ -70,17 +83,34 @@ export class DocumentManagerComponent implements OnInit {
    * on file drop handler
    */
   onFileDropped($event: any) {
-    const files = Array.from($event as ArrayLike<File>);
-    this.confirmationService.confirm({
-      message: `Vous êtes sur le point d'ajouter ${files.length} document(s), souhaitez-vous continuer ?`,
-      header: 'Ajout de documents',
-      icon: 'pi pi-exclamation-triangle',
-      acceptLabel: 'Uploader',
-      rejectLabel: 'Annuler',
-      accept: () => {
-        this.documentService.uploadFiles(this.currentProject, files);
-      }
+    this.uploadedFiles = Array.from($event as ArrayLike<File>);
+    this.uploadedFiles.map((f) => {
+      return { ...f, done: false };
     });
+    this.uploadDiagVisible = true;
+  }
+
+  onUploadConfirm() {
+    this.onProgress = true;
+    let nbFileDone = 0;
+    this.progress = 1;
+    for (const f of this.uploadedFiles) {
+      this.documentService.uploadFile(this.currentProject, f).subscribe(() => {
+        console.log('upload done');
+        nbFileDone = nbFileDone + 1;
+        this.progress = Math.round(
+          (nbFileDone / this.uploadedFiles.length) * 100
+        );
+        this.onProgress = this.progress !== 100;
+        f.done = true;
+      });
+    }
+  }
+
+  closeUploadDiag() {
+    this.uploadDiagVisible = false;
+    this.progress = 0;
+    this.onProgress = false;
   }
 
   /**

@@ -18,6 +18,8 @@ import { AutoFocusModule } from 'primeng/autofocus';
 import { ChipModule } from 'primeng/chip';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { TagModule } from 'primeng/tag';
+import { ProgressBarModule } from 'primeng/progressbar';
+
 const UI_MODULES = [
   ToolbarModule,
   ButtonModule,
@@ -35,7 +37,8 @@ const UI_MODULES = [
   AutoFocusModule,
   ChipModule,
   InputTextareaModule,
-  TagModule
+  TagModule,
+  ProgressBarModule
 ];
 
 const NG_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];

@@ -6,7 +6,6 @@ Back
 Front
 
 - Formattage de la réponse, notamment lorsque du code est renvoyé
-- Toast lors des ajout/suppression de document
 - Moving dots while query processing
 - send query on enter
 - Error toast et message clean quand erreur dans la query vers llm
