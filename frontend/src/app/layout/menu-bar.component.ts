@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from '../auth/services/auth.service';
-import { ThemeService } from '../shared/theme.service';
-
+import { DialogService } from 'primeng/dynamicdialog';
+import { SettingsComponent } from './settings.component';
 @Component({
   selector: 'app-menu-bar',
   templateUrl: './menu-bar.component.html',
-  styleUrls: ['./menu-bar.component.scss']
+  styleUrls: ['./menu-bar.component.scss'],
+  providers: [DialogService]
 })
 export class MenuBarComponent {
   darkIcon = 'pi pi-moon';
@@ -16,7 +17,10 @@ export class MenuBarComponent {
   items: MenuItem[] = [
     {
       label: 'Paramètres',
-      icon: 'pi pi-cog'
+      icon: 'pi pi-cog',
+      command: () => {
+        this.openSettings();
+      }
     },
     {
       label: 'Déconnexion',
@@ -26,17 +30,17 @@ export class MenuBarComponent {
       }
     }
   ];
-  constructor(private auth: AuthService, private themeService: ThemeService) {}
+  constructor(private auth: AuthService, public dialogService: DialogService) {}
 
   signout() {
     this.auth.signout();
   }
 
-  toggleTheme() {
-    this.dark = !this.dark;
-    this.actualIcon = this.dark ? this.darkIcon : this.lightIcon;
-    this.themeService.switchTheme(
-      this.dark ? 'lara-dark-blue' : 'lara-light-blue'
-    );
+  openSettings() {
+    this.dialogService.open(SettingsComponent, {
+      header: 'Paramètres',
+      width: '70%',
+      baseZIndex: 10000
+    });
   }
 }

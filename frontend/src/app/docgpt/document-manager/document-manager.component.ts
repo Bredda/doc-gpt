@@ -8,6 +8,8 @@ import {
 import { DocumentService } from '../services/documents.service';
 import { ContextService } from '../services/context.service';
 import { FileUpload } from 'primeng/fileupload';
+import { DebugService } from 'src/app/shared/debug.service';
+import { SettingsService } from 'src/app/shared/settings.service';
 
 @Component({
   selector: 'app-document-manager',
@@ -42,10 +44,13 @@ export class DocumentManagerComponent implements OnInit {
   ];
   currentProject: string | undefined = undefined;
   currentProjectName!: string;
+  debugOn = false;
+  embeddingsUrl = '';
   constructor(
     private contextService: ContextService,
     private documentService: DocumentService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private settings: SettingsService
   ) {}
 
   ngOnInit(): void {
@@ -54,7 +59,9 @@ export class DocumentManagerComponent implements OnInit {
       this.currentProject = v[1]?.id;
       this.currentProjectName = v[1]?.name || '';
       this.uploadUrl = `http://localhost:3000/doc-gpt/projects/${this.currentProject}/documents`;
+      this.embeddingsUrl = `http://localhost:4202/  #http://127.0.0.1:8123/#default#embeddings#1%3D1%20AND%20collection_uuid%20%3D%20'${this.currentProject}'`;
     });
+    this.settings.getSettings().subscribe((s) => (this.debugOn = s.debug));
   }
 
   private transformDocsToTreeNode(documents: any[]) {

@@ -13,7 +13,7 @@ export class TracingService {
     });
   };
   static switchToTracingSession = (sessionName: string) => {
-    process.env.LANGCHAIN_SESSION = sessionName;
+    //process.env.LANGCHAIN_SESSION = sessionName;
     logger.debug(`Langchain tracing session set to ${sessionName}`);
   };
 }

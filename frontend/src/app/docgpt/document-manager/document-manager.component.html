@@ -7,6 +7,12 @@
   </ng-template>
 
   <div *ngIf="this.currentProject !== undefined; else noProject">
+    <a
+      *ngIf="debugOn && files.length > 0"
+      target="_blank"
+      [href]="embeddingsUrl"
+      >Embeddings <i class="pi pi-external-link" style="font-size: 0.75rem"></i
+    ></a>
     <div class="flex flex-column gap-4">
       <p-tree
         emptyMessage="Aucun fichier"
@@ -16,7 +22,7 @@
         [value]="files"
         [contextMenu]="cm"></p-tree>
       <div
-        class="border-1 border-round surface-border pt-4"
+        class="border-dashed border-1 pt-4"
         appDndUpload
         (fileDropped)="onFileDropped($event)">
         <div class="text-center text-lg">

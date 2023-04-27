@@ -1,0 +1,18 @@
+<div class="field grid">
+  <label for="theme" class="col-12 mb-2 md:col-2 md:mb-0">Dark Theme</label>
+  <div class="col-12 md:col-10">
+    <p-inputSwitch
+      class="p-inputswitch"
+      id="theme"
+      [ngModel]="settings.darkTheme"
+      (onChange)="toggleTheme($event)"></p-inputSwitch>
+  </div>
+  <label for="debug" class="col-12 mb-2 md:col-2 md:mb-0">Debug links</label>
+  <div class="col-12 md:col-10">
+    <p-inputSwitch
+      class="p-inputswitch"
+      id="debug"
+      [ngModel]="settings.debug"
+      (onChange)="toggleDebug($event)"></p-inputSwitch>
+  </div>
+</div>

@@ -12,6 +12,7 @@ import { MenuModule } from 'primeng/menu';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HttpInterceptorService } from './shared/http-interceptor.service';
 import { MenuBarComponent } from './layout/menu-bar.component';
+import { SettingsComponent } from './layout/settings.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { MenuBarComponent } from './layout/menu-bar.component';
     AppLayoutComponent,
     AppTopbarComponent,
     PageNotFoundComponent,
-    MenuBarComponent
+    MenuBarComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

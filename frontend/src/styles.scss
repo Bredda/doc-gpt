@@ -25,4 +25,7 @@ body {
 a {
   text-decoration: none;
   color: var(--primary-color);
+  & i {
+    margin-left: 2px;
+  }
 }
