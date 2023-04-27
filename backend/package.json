@@ -1,6 +1,6 @@
 {
   "name": "doc-gpt-backend",
-  "version": "0.1.0-alpha",
+  "version": "0.3.0-alpha",
   "description": "",
   "main": "server.js",
   "scripts": {
@@ -12,7 +12,11 @@
     "swagger": "tsoa spec",
     "build:docker": "docker build -t doc-gpt/doc-gpt-backend .",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
-    "typeorm": "typeorm-ts-node-commonjs"
+    "typeorm": "typeorm-ts-node-commonjs",
+    "llm:test:chroma": "ts-node -r dotenv/config tests/chroma.ts dotenv_config_path=../.env",
+    "llm:test:chromaIngest": "ts-node -r dotenv/config tests/chroma-ingest.ts dotenv_config_path=../.env",
+    "llm:test:chromaAfterIngest": "ts-node -r dotenv/config tests/chroma-after-ingest.ts dotenv_config_path=../.env",
+    "llm:test:chromeDeleteCollection": "ts-node -r dotenv/config tests/chroma-delete-collection.ts dotenv_config_path=../.env"
   },
   "keywords": [],
   "author": "",
@@ -45,6 +49,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
+    "chromadb": "^1.4.1",
     "class-validator": "^0.14.0",
     "cors": "^2.8.5",
     "debug": "^4.3.4",

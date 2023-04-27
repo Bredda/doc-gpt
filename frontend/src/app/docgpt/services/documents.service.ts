@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -33,14 +33,25 @@ export class DocumentService {
     }
   }
 
+  public deleteFile(projectId: string, docId: string): Observable<any> {
+    return this.httpClient
+      .delete<any[]>(`${this.url}/${projectId}/documents/${docId}`)
+      .pipe(tap((d) => this.documents.next(d)));
+  }
+
   public getCurrentProjectContext(): Observable<any[]> {
     return this.documents.asObservable();
   }
 
-  public uploadFile(file: File): Observable<any> {
+  public uploadFile(
+    projectId: string | undefined,
+    file: File
+  ): Observable<any> {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('filename_as_doc_id', 'true');
-    return this.httpClient.post(this.url, formData);
+    return this.httpClient
+      .post<any[]>(`${this.url}/${projectId}/documents`, formData)
+      .pipe(tap((docs: any[]) => this.documents.next(docs)));
   }
 }

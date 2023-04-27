@@ -4,6 +4,8 @@ import { ContextService } from '../services/context.service';
 import { ChatType } from '../api/settings';
 import { Models } from '../api/settings';
 import { Languages } from '../api/settings';
+import { DebugService } from 'src/app/shared/debug.service';
+import { SettingsService } from 'src/app/shared/settings.service';
 
 @Component({
   selector: 'app-chat-info',
@@ -17,7 +19,11 @@ export class ChatInfoComponent implements OnInit, OnDestroy {
   type!: string;
   model!: string;
   language!: string;
-  constructor(private contexteService: ContextService) {}
+  debugOn = false;
+  constructor(
+    private contexteService: ContextService,
+    private settings: SettingsService
+  ) {}
 
   ngOnInit(): void {
     this.listenToDataChange = this.contexteService
@@ -31,6 +37,7 @@ export class ChatInfoComponent implements OnInit, OnDestroy {
           this.language = v[2]?.settings.language;
         }
       });
+    this.settings.getSettings().subscribe((s) => (this.debugOn = s.debug));
   }
   ngOnDestroy(): void {
     this.listenToDataChange.unsubscribe();

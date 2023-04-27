@@ -29,7 +29,7 @@ export class ChatPanelComponent implements OnInit, OnDestroy {
     console.log(v);
     if (v != undefined) {
       v.nativeElement.scroll({
-        top: v.nativeElement.scrollHeight,
+        top: v.nativeElement.scrollHeight + 200,
         left: 0,
         behavior: 'smooth'
       });

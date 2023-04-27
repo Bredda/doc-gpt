@@ -11,8 +11,8 @@ import { DocumentService } from './documents.service';
 })
 export class ContextService {
   private currentDocuments = new BehaviorSubject<any[]>([]);
-  private currentChatId: string | undefined;
-  private currentProjectId: string | undefined;
+  public currentChatId: string | undefined;
+  public currentProjectId: string | undefined;
   constructor(
     private projectService: ProjectService,
     private chatService: ChatService,

@@ -1,6 +1,6 @@
 {
   "name": "doc-gpt-frontend",
-  "version": "0.1.0-alpha",
+  "version": "0.3.0-alpha",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

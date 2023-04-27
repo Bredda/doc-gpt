@@ -1,0 +1,24 @@
+version: "3.4"
+services:
+  weaviate:
+    image: semitechnologies/weaviate:1.18.4
+    ports:
+      - ${WEAVIATE_PORT}:8080
+    restart: on-failure:0
+    environment:
+      QUERY_DEFAULTS_LIMIT: 25
+      # Enables API key authentication.
+      AUTHENTICATION_APIKEY_ENABLED: "true"
+      # List one or more keys, separated by commas. Each key corresponds to a specific user identity below.
+      AUTHENTICATION_APIKEY_ALLOWED_KEYS: "${WIEAVIATE_API_KEY}"
+
+      # List one or more user identities, separated by commas. Each identity corresponds to a specific key above.
+      AUTHENTICATION_APIKEY_USERS: "${WEAVIATE_IDENTITY}"
+      PERSISTENCE_DATA_PATH: "/var/lib/weaviate"
+      DEFAULT_VECTORIZER_MODULE: "none"
+      CLUSTER_HOSTNAME: "node1"
+    volumes:
+      - weaviate_data:/var/lib/weaviate
+
+volumes:
+  weaviate_data:

@@ -3,7 +3,7 @@ import { CommonRoutesConfig } from './common.routes.config';
 import { checkJwt } from '../../middlewares/checkJwt';
 import multer from 'multer';
 import os from 'os';
-import ProjectController from '../controllers/project.controller';
+import DocumentController from '../controllers/document.controller';
 
 export class DocumentsRoutes extends CommonRoutesConfig {
   uploadPath!: multer.Multer;
@@ -18,9 +18,12 @@ export class DocumentsRoutes extends CommonRoutesConfig {
       .post(
         [checkJwt],
         this.uploadPath.single('file'),
-        ProjectController.uploadToContext
+        DocumentController.uploadToContext
       )
-      .get([checkJwt], ProjectController.getProjectContext);
+      .get([checkJwt], DocumentController.getProjectContext);
+    this.app
+      .route('/doc-gpt/projects/:projectId/documents/:docId')
+      .delete([checkJwt], DocumentController.deleteDocument);
 
     return this.app;
   }

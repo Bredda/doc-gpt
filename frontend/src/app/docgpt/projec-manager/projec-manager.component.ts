@@ -122,9 +122,9 @@ export class ProjecManagerComponent implements OnInit {
           .deleteProject(this.selectedNode.data)
           .subscribe(() => {
             this.messageService.add({
-              severity: 'info',
-              summary: 'Confirmed',
-              detail: 'Projet supprimé'
+              severity: 'success',
+              summary: 'Success',
+              detail: `Projet supprimé: ${this.selectedNode.label}`
             });
             if (this.selectedNode.data.id === this.currentProjectId)
               this.router.navigate(['']);
@@ -155,7 +155,6 @@ export class ProjecManagerComponent implements OnInit {
     this.newName = '';
   }
   onConfirmCreateChat() {
-    console.log(this.getTargetProject());
     this.chatService
       .createNewChat(this.getTargetProject().data.id, {
         name: this.newName,

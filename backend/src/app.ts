@@ -68,6 +68,13 @@ export class App {
           socket.emit('conversation-response', resp)
         );
       });
+      socket.on('retrieval-query', (data: any) => {
+        LLMQuerier.retrivalQAQuery(
+          data.projectId,
+          data.chatId,
+          data.query
+        ).then((resp) => socket.emit('retrieval-response', resp));
+      });
     });
   }
 

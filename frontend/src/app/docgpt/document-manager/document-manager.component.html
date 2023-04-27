@@ -7,14 +7,22 @@
   </ng-template>
 
   <div *ngIf="this.currentProject !== undefined; else noProject">
-    <div #tree class="flex flex-column gap-4">
+    <a
+      *ngIf="debugOn && files.length > 0"
+      target="_blank"
+      [href]="embeddingsUrl"
+      >Embeddings <i class="pi pi-external-link" style="font-size: 0.75rem"></i
+    ></a>
+    <div class="flex flex-column gap-4">
       <p-tree
         emptyMessage="Aucun fichier"
-        selectionMode="multiple"
+        selectionMode="single"
+        [(selection)]="selectedNode"
         class="w-full"
-        [value]="files"></p-tree>
+        [value]="files"
+        [contextMenu]="cm"></p-tree>
       <div
-        class="border-1 border-round surface-border pt-4"
+        class="border-dashed border-1 pt-4"
         appDndUpload
         (fileDropped)="onFileDropped($event)">
         <div class="text-center text-lg">
@@ -29,7 +37,7 @@
           (change)="fileBrowseHandler($event)" />
       </div>
     </div>
-    <p-contextMenu [target]="tree" [model]="items"></p-contextMenu>
+    <p-contextMenu #cm [model]="items"></p-contextMenu>
   </div>
 
   <ng-template #noProject>
@@ -39,3 +47,47 @@
 
 <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
 <p-toast></p-toast>
+
+<p-dialog
+  header="Ajout de document au projet"
+  [(visible)]="uploadDiagVisible"
+  [closable]="false"
+  [closeOnEscape]="false"
+  [modal]="true"
+  [style]="{width: '50vw'}">
+  <p>
+    Les documents suivants vont être uploadés et ajoutés au contexte du projet
+    <span class="font-bold"> {{currentProjectName}}</span>
+  </p>
+  <p-progressBar
+    [showValue]="false"
+    *ngIf="onProgress || progress ==100"
+    [value]="progress"></p-progressBar>
+  <ul class="list-disc">
+    <li class="ml-8 p-2" *ngFor="let f of uploadedFiles">
+      {{f.name}}
+      <i *ngIf="f.done" class="pi pi-check-cirle" style="color: green"></i>
+    </li>
+  </ul>
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-close"
+      *ngIf="!onProgress && progress !=100"
+      (click)="closeUploadDiag()"
+      label="Annuler"
+      styleClass="p-button-text"></p-button>
+    <p-button
+      icon="pi pi-check"
+      *ngIf="!onProgress && progress !=100"
+      (click)="onUploadConfirm()"
+      label="Confirmer"
+      styleClass="p-button-text"></p-button>
+    <p-button
+      icon="pi pi-check"
+      *ngIf="onProgress || progress ==100"
+      [loading]="onProgress"
+      (click)="closeUploadDiag()"
+      label="Fermer"
+      styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>

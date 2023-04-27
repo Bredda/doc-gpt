@@ -1,9 +1,12 @@
 <div class="pb-4">
   <div class="flex flex-column align-items-center p-2">
     <span *ngIf="chatName" class="text-3xl">{{chatName}} </span>
-    <a *ngIf="chatName" target="_blank" href="http://localhost:4173/sessions"
-      >Debug</a
-    >
+    <a
+      *ngIf="debugOn && chatName"
+      target="_blank"
+      href="http://localhost:4201/sessions"
+      >Traces <i class="pi pi-external-link" style="font-size: 0.75rem"></i
+    ></a>
     <span class="mr-2"></span>
     <span *ngIf="projectName" class="text-1xl font-italic"
       >[{{projectName}}]</span
@@ -17,4 +20,3 @@
     <p-tag [value]="model"></p-tag>
   </div>
 </div>
-<p-divider *ngIf="chatName"></p-divider>

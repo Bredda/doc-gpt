@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  db:
+    image: postgres:14.1
+    container_name: doc_gpt_db
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - ${DOCGPT_DB_PORT}:5432
+  adminer:
+    container_name: doc_gpt_adminer
+    image: adminer
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - ${DOCGPT_ADMINER_PORT}:8080

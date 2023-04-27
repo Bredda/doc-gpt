@@ -49,6 +49,19 @@ export const registerFileToProject = async (
   });
 };
 
+export const deleteFileFromProject = async (
+  projectId: string,
+  docId: string
+): Promise<DeleteResult> => {
+  return await AppDataSource.manager.delete(OriginalDocument, { id: docId });
+};
+
+export const getDocumentById = async (
+  docId: string
+): Promise<OriginalDocument | null> => {
+  return await AppDataSource.manager.findOneBy(OriginalDocument, { id: docId });
+};
+
 export const getAllProjectDocuments = async (
   projectId: string
 ): Promise<OriginalDocument[]> => {
