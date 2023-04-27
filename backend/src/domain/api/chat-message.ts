@@ -6,9 +6,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   JoinColumn,
-  Relation
+  Relation,
+  OneToMany
 } from 'typeorm';
 import { Chat } from './chat';
+import { SourceDocument } from './source-document';
 
 @Entity()
 export class ChatMessage {
@@ -26,6 +28,11 @@ export class ChatMessage {
   })
   @JoinColumn()
   chat!: Relation<Chat>;
+
+  @OneToMany(() => SourceDocument, (source) => source.message, {
+    eager: true
+  })
+  sources!: SourceDocument[];
 
   @CreateDateColumn()
   createdAt!: Date;

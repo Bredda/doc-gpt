@@ -18,10 +18,13 @@ Front
 
 Features:
 
+- Multiple type doc (pdf, txt, autre)
 - améliorer tracing (aim ?)
 - visualisation des fichiers après upload
 - Renommage de document
 - fournir max d'info sur data et usage
+- cancel request
+- streaming response
 
 Infra
 

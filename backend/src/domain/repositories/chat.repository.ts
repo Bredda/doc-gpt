@@ -3,6 +3,9 @@ import { DeleteResult } from 'typeorm';
 import { Chat, ChatMessage, ChatSettings, Project } from '../api/index';
 import { Language, LlmModel } from '../api/enum';
 import { ChatType } from '../api/enum';
+import { QAChainResponse } from '../../llm/api/qa-chain-response';
+import { SourceDocument } from '../api/source-document';
+import logger from '../../common/logger';
 
 export interface ICreateChatPayload {
   name: string;
@@ -65,16 +68,46 @@ export const addMessageToChat = async (
   query: string,
   origin: string
 ): Promise<Chat> => {
-  const OldChat: Chat = await AppDataSource.manager.findOneByOrFail(Chat, {
+  const chat: Chat = await AppDataSource.manager.findOneByOrFail(Chat, {
     id: chatId
   });
-  const message: ChatMessage = await AppDataSource.manager.save(ChatMessage, {
+  await AppDataSource.manager.save(ChatMessage, {
     content: query,
     origin: origin,
-    chat: OldChat
+    chat: chat
   });
-  if (!OldChat.messages) OldChat.messages = [message];
-  else OldChat.messages = [...OldChat.messages, message];
+
+  return await AppDataSource.manager.findOneOrFail(Chat, {
+    where: { id: chatId },
+    relations: { messages: true, settings: true }
+  });
+};
+
+export const addMessageWithSourceToChat = async (
+  chatId: string,
+  message: any
+): Promise<Chat> => {
+  const chat: Chat = await AppDataSource.manager.findOneByOrFail(Chat, {
+    id: chatId
+  });
+  // Persist new message linked to chat
+  const newMess = await AppDataSource.manager.save(ChatMessage, {
+    content: message.text,
+    sources: [],
+    origin: 'llm',
+    chat: chat
+  });
+  //Persist all source docs linked to this message
+  message.sourceDocuments.forEach(async (sd: any) => {
+    await AppDataSource.manager.save(SourceDocument, {
+      pageContent: sd.pageContent,
+      source: sd.metadata.source,
+      to: sd.metadata.loc.lines.to,
+      from: sd.metadata.loc.lines.from,
+      message: newMess
+    });
+  });
+  // Return the chat updated with new message and source docs
   return await AppDataSource.manager.findOneOrFail(Chat, {
     where: { id: chatId },
     relations: { messages: true, settings: true }
@@ -84,7 +117,12 @@ export const addMessageToChat = async (
 export const getChat = async (chatId: string): Promise<Chat> => {
   return AppDataSource.manager.findOneOrFail(Chat, {
     where: { id: chatId },
-    relations: { messages: true, settings: true }
+    relations: { messages: true, settings: true },
+    order: {
+      messages: {
+        createdAt: 'ASC'
+      }
+    }
   });
 };
 
@@ -100,7 +138,6 @@ export const createNewProjecthat = async (
     id: projectId
   });
   const newSettings = await AppDataSource.manager.save(ChatSettings, {
-    ...new ChatSettings(),
     language: payload.settings.language as Language,
     model: payload.settings.model as LlmModel,
     type: payload.settings.type as ChatType

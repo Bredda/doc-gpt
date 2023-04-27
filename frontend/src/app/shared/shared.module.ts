@@ -19,6 +19,8 @@ import { ChipModule } from 'primeng/chip';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { TagModule } from 'primeng/tag';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { AccordionModule } from 'primeng/accordion';
+import { InplaceModule } from 'primeng/inplace';
 
 const UI_MODULES = [
   ToolbarModule,
@@ -38,7 +40,9 @@ const UI_MODULES = [
   ChipModule,
   InputTextareaModule,
   TagModule,
-  ProgressBarModule
+  ProgressBarModule,
+  AccordionModule,
+  InplaceModule
 ];
 
 const NG_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];

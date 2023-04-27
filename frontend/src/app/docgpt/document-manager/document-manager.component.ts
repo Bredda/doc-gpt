@@ -59,7 +59,7 @@ export class DocumentManagerComponent implements OnInit {
       this.currentProject = v[1]?.id;
       this.currentProjectName = v[1]?.name || '';
       this.uploadUrl = `http://localhost:3000/doc-gpt/projects/${this.currentProject}/documents`;
-      this.embeddingsUrl = `http://localhost:4202/  #http://127.0.0.1:8123/#default#embeddings#1%3D1%20AND%20collection_uuid%20%3D%20'${this.currentProject}'`;
+      this.embeddingsUrl = `http://localhost:4202/#http://127.0.0.1:8123/#default#embeddings#1%3D1%20AND%20collection_uuid%20%3D%20'${this.currentProject}'`;
     });
     this.settings.getSettings().subscribe((s) => (this.debugOn = s.debug));
   }
