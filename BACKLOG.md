@@ -11,6 +11,7 @@ Front
 - Error toast et message clean quand erreur dans la query vers llm
 - Affichage des sources lorsque
 - More user settings (avatar, email change)
+- About avec version
 - Récup password
 - Menu aide
 - Better looking file upload
