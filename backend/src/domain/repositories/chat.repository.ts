@@ -1,6 +1,12 @@
 import { AppDataSource } from '../../config/data-source';
 import { DeleteResult } from 'typeorm';
-import { Chat, ChatMessage, ChatSettings, Project } from '../api/index';
+import {
+  Chat,
+  ChatMessage,
+  ChatSettings,
+  OriginalDocument,
+  Project
+} from '../api/index';
 import { Language, LlmModel } from '../api/enum';
 import { ChatType } from '../api/enum';
 import { QAChainResponse } from '../../llm/api/qa-chain-response';
@@ -79,11 +85,17 @@ export const addMessageToChat = async (
 
   return await AppDataSource.manager.findOneOrFail(Chat, {
     where: { id: chatId },
-    relations: { messages: true, settings: true }
+    relations: { messages: true, settings: true },
+    order: {
+      messages: {
+        createdAt: 'ASC'
+      }
+    }
   });
 };
 
 export const addMessageWithSourceToChat = async (
+  projectId: string,
   chatId: string,
   message: any
 ): Promise<Chat> => {
@@ -99,11 +111,24 @@ export const addMessageWithSourceToChat = async (
   });
   //Persist all source docs linked to this message
   message.sourceDocuments.forEach(async (sd: any) => {
+    const originalDoc = await AppDataSource.manager.findOneOrFail(
+      OriginalDocument,
+      {
+        where: {
+          project: {
+            id: projectId
+          },
+          path: sd.metadata.source
+        }
+      }
+    );
+
     await AppDataSource.manager.save(SourceDocument, {
       pageContent: sd.pageContent,
       source: sd.metadata.source,
       to: sd.metadata.loc.lines.to,
       from: sd.metadata.loc.lines.from,
+      originalDocId: originalDoc.id,
       message: newMess
     });
   });

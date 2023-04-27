@@ -33,7 +33,7 @@ class LLMQuerier {
       chat_history: memory
     })) as QAChainResponse;
 
-    return await addMessageWithSourceToChat(chatId, resp);
+    return await addMessageWithSourceToChat(projectId, chatId, resp);
   };
 
   static conversationQuery = async (

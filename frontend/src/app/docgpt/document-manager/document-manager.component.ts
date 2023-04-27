@@ -10,6 +10,7 @@ import { ContextService } from '../services/context.service';
 import { FileUpload } from 'primeng/fileupload';
 import { DebugService } from 'src/app/shared/debug.service';
 import { SettingsService } from 'src/app/shared/settings.service';
+import { UiService } from '../services/ui.service';
 
 @Component({
   selector: 'app-document-manager',
@@ -34,7 +35,8 @@ export class DocumentManagerComponent implements OnInit {
     },
     {
       label: 'Visualiser',
-      icon: 'pi pi-fw pi-pencil'
+      icon: 'pi pi-fw pi-pencil',
+      command: () => this.openDocument()
     },
     {
       label: 'Supprimer',
@@ -50,7 +52,8 @@ export class DocumentManagerComponent implements OnInit {
     private contextService: ContextService,
     private documentService: DocumentService,
     private messageService: MessageService,
-    private settings: SettingsService
+    private settings: SettingsService,
+    private uiService: UiService
   ) {}
 
   ngOnInit(): void {
@@ -86,6 +89,9 @@ export class DocumentManagerComponent implements OnInit {
     }
   }
 
+  openDocument() {
+    this.uiService.displayDocument(this.selectedNode.data.id);
+  }
   /**
    * on file drop handler
    */

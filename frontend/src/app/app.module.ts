@@ -13,7 +13,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { HttpInterceptorService } from './shared/http-interceptor.service';
 import { MenuBarComponent } from './layout/menu-bar.component';
 import { SettingsComponent } from './layout/settings.component';
-
+import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +41,19 @@ import { SettingsComponent } from './layout/settings.component';
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorService,
       multi: true
+    },
+    {
+      provide: HIGHLIGHT_OPTIONS,
+      useValue: {
+        coreLibraryLoader: () => import('highlight.js/lib/core'),
+        languages: {
+          typescript: () => import('highlight.js/lib/languages/typescript'),
+          css: () => import('highlight.js/lib/languages/css'),
+          xml: () => import('highlight.js/lib/languages/xml'),
+          text: () => import('highlight.js/lib/languages/plaintext')
+        },
+        themePath: 'assets/panda-syntax-light.css'
+      }
     }
   ],
   bootstrap: [AppComponent]

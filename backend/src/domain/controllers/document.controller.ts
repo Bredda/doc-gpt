@@ -1,5 +1,5 @@
 import { Get, Route, Tags, Post, Delete } from 'tsoa';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import {
   deleteFileFromProject,
   getAllProjectDocuments,
@@ -7,7 +7,9 @@ import {
   registerFileToProject
 } from '../repositories/project.repository';
 import fs from 'fs';
+import path from 'path';
 import { ChromaService } from '../../llm/services/chroma.service';
+import config from '../../config/config';
 @Route('projects')
 @Tags('Documents')
 class DocumentController {
@@ -28,6 +30,26 @@ class DocumentController {
     } else {
       res.status(400).send({ message: 'No file attached' });
     }
+  };
+
+  @Get('/projects/:projectId/documents/:docId')
+  static getDocument = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const options = {
+      root: `${config.UPLOAD_PATH}/${req.params.projectId}`
+    };
+
+    const doc = await getDocumentById(req.params.docId);
+    res.sendFile(path.basename(doc.path), options, function (err) {
+      if (err) {
+        next(err);
+      } else {
+        console.log('Sent:', doc.path);
+      }
+    });
   };
 
   @Delete('/projects/:projectId/documents/:docId')

@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { Chat } from './chat';
 import { ChatMessage } from './chat-message';
+import { OriginalDocument } from './document';
 
 @Entity()
 export class SourceDocument {
@@ -21,6 +22,9 @@ export class SourceDocument {
 
   @Column()
   source!: string;
+
+  @Column()
+  originalDocId!: string;
 
   @Column()
   from!: number;

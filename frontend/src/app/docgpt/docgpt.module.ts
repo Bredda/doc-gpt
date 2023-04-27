@@ -12,6 +12,9 @@ import { ProjecManagerComponent } from './projec-manager/projec-manager.componen
 import { DndUploadDirective } from './directives/dnd-upload.directive';
 import { ChatPanelComponent } from './chat-panel/chat-panel.component';
 import { ChatInfoComponent } from './chat-info/chat-info.component';
+import { DocumentViewerComponent } from './document-viewer/document-viewer.component';
+import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+
 @NgModule({
   declarations: [
     DocgptComponent,
@@ -20,14 +23,16 @@ import { ChatInfoComponent } from './chat-info/chat-info.component';
     ProjecManagerComponent,
     DndUploadDirective,
     ChatPanelComponent,
-    ChatInfoComponent
+    ChatInfoComponent,
+    DocumentViewerComponent
   ],
   imports: [
     CommonModule,
     DocgptRoutingModule,
     SplitterModule,
     SharedModule,
-    TreeModule
+    TreeModule,
+    HighlightModule
   ]
 })
 export class DocgptModule {}

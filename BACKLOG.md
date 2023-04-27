@@ -3,7 +3,7 @@ Back
 - Cascasde delete chat settings with project
 - Cascade delete motorhead memory with chat
 - delete embeddings with file/project
-- - delete files with project
+- delete files with project
 
 Front
 

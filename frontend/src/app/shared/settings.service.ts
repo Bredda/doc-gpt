@@ -3,6 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UserSettings } from '../docgpt/api/user-settings';
 import { LocalStorageService } from './local-storage.service';
+import { HighlightLoader } from 'ngx-highlightjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ export class SettingsService {
 
   constructor(
     private localStoreage: LocalStorageService,
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) private document: Document,
+    private hljsLoader: HighlightLoader
   ) {
     const userSettings = this.localStoreage.getSettings();
     this._settings.next(userSettings);
@@ -50,6 +52,9 @@ export class SettingsService {
   }
 
   applyTheme(dark: boolean): void {
+    this.hljsLoader.setTheme(
+      dark ? 'assets/panda-syntax-dark.css' : 'assets/panda-syntax-light.css'
+    );
     const themeLink = this.document.getElementById(
       'app-theme'
     ) as HTMLLinkElement;
