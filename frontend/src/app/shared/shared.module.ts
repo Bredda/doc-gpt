@@ -19,7 +19,10 @@ import { ChipModule } from 'primeng/chip';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { TagModule } from 'primeng/tag';
 import { ProgressBarModule } from 'primeng/progressbar';
-
+import { AccordionModule } from 'primeng/accordion';
+import { InplaceModule } from 'primeng/inplace';
+import { FilenamePipe } from './filename.pipe';
+import { SidebarModule } from 'primeng/sidebar';
 const UI_MODULES = [
   ToolbarModule,
   ButtonModule,
@@ -38,14 +41,17 @@ const UI_MODULES = [
   ChipModule,
   InputTextareaModule,
   TagModule,
-  ProgressBarModule
+  ProgressBarModule,
+  AccordionModule,
+  InplaceModule,
+  SidebarModule
 ];
 
 const NG_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
 
 @NgModule({
-  declarations: [],
+  declarations: [FilenamePipe],
   imports: [...NG_MODULES, ...UI_MODULES],
-  exports: [...NG_MODULES, ...UI_MODULES]
+  exports: [...NG_MODULES, ...UI_MODULES, FilenamePipe]
 })
 export class SharedModule {}

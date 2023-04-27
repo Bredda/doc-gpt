@@ -3,6 +3,7 @@ Back
 - Cascasde delete chat settings with project
 - Cascade delete motorhead memory with chat
 - delete embeddings with file/project
+- delete files with project
 
 Front
 
@@ -18,10 +19,13 @@ Front
 
 Features:
 
+- Multiple type doc (pdf, txt, autre)
 - améliorer tracing (aim ?)
 - visualisation des fichiers après upload
 - Renommage de document
 - fournir max d'info sur data et usage
+- cancel request
+- streaming response
 
 Infra
 

@@ -43,6 +43,15 @@ export class DocumentService {
     return this.documents.asObservable();
   }
 
+  public getUploadedDocContent(
+    projectId: string,
+    docId: string
+  ): Observable<any> {
+    return this.httpClient.get(`${this.url}/${projectId}/documents/${docId}`, {
+      responseType: 'text'
+    });
+  }
+
   public uploadFile(
     projectId: string | undefined,
     file: File

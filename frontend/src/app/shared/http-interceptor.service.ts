@@ -26,6 +26,7 @@ export class HttpInterceptorService implements HttpInterceptor {
           if (error.error instanceof ErrorEvent) {
             console.error('Error Event');
           } else {
+            console.log(error);
             console.log(`error status : ${error.status} ${error.statusText}`);
             switch (error.status) {
               case 401: //login

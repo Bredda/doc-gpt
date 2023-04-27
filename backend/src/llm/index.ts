@@ -1,5 +1,8 @@
 import { Language } from '../domain/api/enum';
-import { addMessageToChat } from '../domain/repositories/chat.repository';
+import {
+  addMessageToChat,
+  addMessageWithSourceToChat
+} from '../domain/repositories/chat.repository';
 import { PromptService } from './services/prompts.service';
 import { Chat } from '../domain/api/index';
 import logger from '../common/logger';
@@ -9,6 +12,7 @@ import { TracingService } from './services/tracing.service';
 import { ChainService } from './services/chain.service';
 import { MemoryService } from './services/memory';
 import { ChromaService } from './services/chroma.service';
+import { QAChainResponse } from './api/qa-chain-response';
 class LLMQuerier {
   static retrivalQAQuery = async (
     projectId: string,
@@ -17,18 +21,19 @@ class LLMQuerier {
   ): Promise<Chat> => {
     logger.debug(`New Retrieval QA query for chat ${chatId}: ${query}`);
     TracingService.enableTracing();
-    TracingService.switchToTracingSession(chatId);
     await addMessageToChat(chatId, query, 'user');
 
-    const store = await ChromaService.getCollection(projectId);
     const memory = await MemoryService.initMotorheadMemory(chatId);
-    const chain = ConversationalRetrievalQAChain.fromLLM(
+    const chain = ChainService.getChatQAChain(
       ModelService.getOpenAi(),
-      store.asRetriever()
+      await ChromaService.getCollection(projectId)
     );
-    const resp = await chain.call({ question: query, chat_history: memory });
+    const resp: QAChainResponse = (await chain.call({
+      question: query,
+      chat_history: memory
+    })) as QAChainResponse;
 
-    return await addMessageToChat(chatId, resp.text, 'llm');
+    return await addMessageWithSourceToChat(projectId, chatId, resp);
   };
 
   static conversationQuery = async (
@@ -37,7 +42,6 @@ class LLMQuerier {
   ): Promise<Chat> => {
     logger.debug(`New query for chat ${chatId}: ${query}`);
     TracingService.enableTracing();
-    TracingService.switchToTracingSession(chatId);
     await addMessageToChat(chatId, query, 'user');
 
     const memory = await MemoryService.initMotorheadMemory(chatId);

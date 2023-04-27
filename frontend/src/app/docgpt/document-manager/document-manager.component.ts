@@ -10,6 +10,7 @@ import { ContextService } from '../services/context.service';
 import { FileUpload } from 'primeng/fileupload';
 import { DebugService } from 'src/app/shared/debug.service';
 import { SettingsService } from 'src/app/shared/settings.service';
+import { UiService } from '../services/ui.service';
 
 @Component({
   selector: 'app-document-manager',
@@ -34,7 +35,8 @@ export class DocumentManagerComponent implements OnInit {
     },
     {
       label: 'Visualiser',
-      icon: 'pi pi-fw pi-pencil'
+      icon: 'pi pi-fw pi-pencil',
+      command: () => this.openDocument()
     },
     {
       label: 'Supprimer',
@@ -50,7 +52,8 @@ export class DocumentManagerComponent implements OnInit {
     private contextService: ContextService,
     private documentService: DocumentService,
     private messageService: MessageService,
-    private settings: SettingsService
+    private settings: SettingsService,
+    private uiService: UiService
   ) {}
 
   ngOnInit(): void {
@@ -59,7 +62,7 @@ export class DocumentManagerComponent implements OnInit {
       this.currentProject = v[1]?.id;
       this.currentProjectName = v[1]?.name || '';
       this.uploadUrl = `http://localhost:3000/doc-gpt/projects/${this.currentProject}/documents`;
-      this.embeddingsUrl = `http://localhost:4202/  #http://127.0.0.1:8123/#default#embeddings#1%3D1%20AND%20collection_uuid%20%3D%20'${this.currentProject}'`;
+      this.embeddingsUrl = `http://localhost:4202/#http://127.0.0.1:8123/#default#embeddings#1%3D1%20AND%20collection_uuid%20%3D%20'${this.currentProject}'`;
     });
     this.settings.getSettings().subscribe((s) => (this.debugOn = s.debug));
   }
@@ -86,6 +89,9 @@ export class DocumentManagerComponent implements OnInit {
     }
   }
 
+  openDocument() {
+    this.uiService.displayDocument(this.selectedNode.data.id);
+  }
   /**
    * on file drop handler
    */

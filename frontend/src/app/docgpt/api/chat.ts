@@ -16,4 +16,13 @@ export interface ChatMessage {
   id: string;
   content: string;
   origin: string;
+  sources?: Source[];
+}
+
+export interface Source {
+  id: string;
+  pageContent: string;
+  source: string;
+  to: number;
+  from: number;
 }

@@ -58,8 +58,10 @@ export const deleteFileFromProject = async (
 
 export const getDocumentById = async (
   docId: string
-): Promise<OriginalDocument | null> => {
-  return await AppDataSource.manager.findOneBy(OriginalDocument, { id: docId });
+): Promise<OriginalDocument> => {
+  return await AppDataSource.manager.findOneByOrFail(OriginalDocument, {
+    id: docId
+  });
 };
 
 export const getAllProjectDocuments = async (

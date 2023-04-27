@@ -20,7 +20,7 @@ import { Subscription } from 'rxjs';
 export class DocgptComponent implements OnInit, OnDestroy {
   currentProject!: string;
   private subscriptions: Subscription[] = [];
-
+  sidebarVisible = false;
   constructor(
     private route: ActivatedRoute,
     private contextService: ContextService

@@ -47,6 +47,7 @@ export class ChatPanelComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.contexteService.listenToDataChange().subscribe((v) => {
         this.currentChat = v[2];
+        console.log(this.currentChat);
         this.currentProject = v[1];
         window.scrollTo(0, document.body.scrollHeight);
       })
