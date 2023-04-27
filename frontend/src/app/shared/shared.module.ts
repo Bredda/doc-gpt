@@ -21,6 +21,7 @@ import { TagModule } from 'primeng/tag';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { AccordionModule } from 'primeng/accordion';
 import { InplaceModule } from 'primeng/inplace';
+import { FilenamePipe } from './filename.pipe';
 
 const UI_MODULES = [
   ToolbarModule,
@@ -48,8 +49,8 @@ const UI_MODULES = [
 const NG_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
 
 @NgModule({
-  declarations: [],
+  declarations: [FilenamePipe],
   imports: [...NG_MODULES, ...UI_MODULES],
-  exports: [...NG_MODULES, ...UI_MODULES]
+  exports: [...NG_MODULES, ...UI_MODULES, FilenamePipe]
 })
 export class SharedModule {}

@@ -39,7 +39,8 @@
             </p-inplace>
           </p>
           <div class="text-xs text-right font-italic">
-            {{source.source}} - Ligne {{source.from}} à {{source.to}}
+            {{source.source |filename}} - Ligne {{source.from}} à {{source.to}}
+            <a [href]="source.source">Link</a>
           </div>
           <p-divider></p-divider>
         </div>

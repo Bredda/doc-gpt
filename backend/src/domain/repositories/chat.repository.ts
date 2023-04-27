@@ -110,7 +110,12 @@ export const addMessageWithSourceToChat = async (
   // Return the chat updated with new message and source docs
   return await AppDataSource.manager.findOneOrFail(Chat, {
     where: { id: chatId },
-    relations: { messages: true, settings: true }
+    relations: { messages: true, settings: true },
+    order: {
+      messages: {
+        createdAt: 'ASC'
+      }
+    }
   });
 };
 
