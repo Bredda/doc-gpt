@@ -52,6 +52,10 @@ export class DocumentService {
     });
   }
 
+  public getUploadedDocUrl(projectId: string, docId: string) {
+    return `${this.url}/${projectId}/documents/${docId}`;
+  }
+
   public uploadFile(
     projectId: string | undefined,
     file: File

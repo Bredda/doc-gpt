@@ -1,14 +1,31 @@
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { Document } from 'langchain/dist/document';
 import { TextLoader } from 'langchain/document_loaders/fs/text';
+import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
 import logger from '../../common/logger';
+import { MIMEType } from 'util';
 
 export class DocumentService {
   static createDocFromFile = async (
-    path: string
+    file: Express.Multer.File
   ): Promise<Document<Record<string, any>>[]> => {
-    logger.debug(`Loading ans splitting file ${path}`);
-    const loader = new TextLoader(path);
+    logger.debug(`Loading ans splitting file ${file.path}`);
+    let loader;
+
+    switch (file.mimetype) {
+      case 'text/plain':
+        loader = new TextLoader(file.path);
+        break;
+      case 'application/pdf':
+        loader = new PDFLoader(file.path, {
+          splitPages: false
+        });
+        break;
+      default:
+        loader = new TextLoader(file.path);
+        break;
+    }
+
     return await loader.loadAndSplit(new RecursiveCharacterTextSplitter());
   };
 }

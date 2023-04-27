@@ -14,6 +14,7 @@ import { ChatPanelComponent } from './chat-panel/chat-panel.component';
 import { ChatInfoComponent } from './chat-info/chat-info.component';
 import { DocumentViewerComponent } from './document-viewer/document-viewer.component';
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
     SplitterModule,
     SharedModule,
     TreeModule,
-    HighlightModule
+    HighlightModule,
+    PdfViewerModule
   ]
 })
 export class DocgptModule {}
