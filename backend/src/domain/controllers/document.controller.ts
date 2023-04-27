@@ -23,6 +23,8 @@ class DocumentController {
   @Post('/projects/:projectId/documents')
   static uploadToContext = async (req: Request, res: Response) => {
     if (req.file) {
+      console.log(req.file.mimetype);
+
       await registerFileToProject(req.params.projectId, req.file);
       await ChromaService.addFileToCollection(req.params.projectId, req.file);
       const context = await getAllProjectDocuments(req.params.projectId);

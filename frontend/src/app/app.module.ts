@@ -14,6 +14,7 @@ import { HttpInterceptorService } from './shared/http-interceptor.service';
 import { MenuBarComponent } from './layout/menu-bar.component';
 import { SettingsComponent } from './layout/settings.component';
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +30,8 @@ import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
     AppRoutingModule,
     SharedModule,
     HttpClientModule,
-    MenuModule
+    MenuModule,
+    PdfViewerModule
   ],
   providers: [
     {

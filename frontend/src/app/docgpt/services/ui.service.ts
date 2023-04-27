@@ -6,7 +6,7 @@ import { Observable, Subject } from 'rxjs';
 })
 export class UiService {
   private _openCreateChatDiag = new Subject<boolean>();
-  private _displayDocument = new Subject<string>();
+  private _displayDocument = new Subject<any>();
   constructor() {}
 
   public triggerChatDiag() {
@@ -17,15 +17,15 @@ export class UiService {
     return this._openCreateChatDiag.asObservable();
   }
 
-  public listenDocumentDisplay(): Observable<string> {
+  public listenDocumentDisplay(): Observable<any> {
     return this._displayDocument.asObservable();
   }
 
-  public displayDocument(docId: string) {
-    this._displayDocument.next(docId);
+  public displayDocument(doc: any) {
+    this._displayDocument.next(doc);
   }
 
   public hideDocument() {
-    this._displayDocument.next('');
+    this._displayDocument.next(undefined);
   }
 }

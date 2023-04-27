@@ -1,5 +1,15 @@
 <p-sidebar [(visible)]="sidebarVisible" (onHide)="onHide()" [fullScreen]="true">
-  <div style="width: 100%; overflow: auto" class="p-8">
+  <div *ngIf="content !== ''" style="width: 100%; overflow: auto" class="p-8">
     <pre><code [highlight]="content"></code></pre>
+  </div>
+
+  <div class="h-full">
+    <pdf-viewer
+      class="h-full"
+      *ngIf="url !== ''"
+      [src]="url"
+      [render-text]="true"
+      [original-size]="true"
+      [original-size]="true"></pdf-viewer>
   </div>
 </p-sidebar>

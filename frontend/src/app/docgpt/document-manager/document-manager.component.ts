@@ -90,7 +90,7 @@ export class DocumentManagerComponent implements OnInit {
   }
 
   openDocument() {
-    this.uiService.displayDocument(this.selectedNode.data.id);
+    this.uiService.displayDocument(this.selectedNode.data);
   }
   /**
    * on file drop handler
