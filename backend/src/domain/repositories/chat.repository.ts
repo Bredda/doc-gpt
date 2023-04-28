@@ -9,9 +9,8 @@ import {
 } from '../api/index';
 import { Language, LlmModel } from '../api/enum';
 import { ChatType } from '../api/enum';
-import { QAChainResponse } from '../../llm/api/qa-chain-response';
 import { SourceDocument } from '../api/source-document';
-import logger from '../../common/logger';
+import { getDocumentsById } from './project.repository';
 
 export interface ICreateChatPayload {
   name: string;
@@ -20,6 +19,7 @@ export interface ICreateChatPayload {
     model: string;
     type: string;
   };
+  docIds?: string[];
 }
 
 export interface IUpdateChatPayload {
@@ -37,7 +37,8 @@ export const getChatsByProjectId = async (
       }
     },
     relations: {
-      settings: true
+      settings: true,
+      documents: true
     }
   });
 };
@@ -172,10 +173,12 @@ export const createNewProjecthat = async (
     model: payload.settings.model as LlmModel,
     type: payload.settings.type as ChatType
   });
+  const docs = payload.docIds ? await getDocumentsById(payload.docIds) : [];
   const newChat = {
     name: payload.name,
     project: project,
-    settings: newSettings
+    settings: newSettings,
+    documents: docs
   };
   await AppDataSource.manager.save(Chat, newChat);
   return AppDataSource.manager.findOneOrFail(Chat, {

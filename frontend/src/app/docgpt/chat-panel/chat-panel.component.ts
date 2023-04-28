@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   OnDestroy,
@@ -24,7 +23,6 @@ export class ChatPanelComponent implements OnInit, OnDestroy {
   queryProcessing = false;
   @ViewChild('target', { static: false })
   set viewChildReference(v: ElementRef) {
-    console.log(v);
     if (v != undefined) {
       v.nativeElement.scroll({
         top: v.nativeElement.scrollHeight + 200,

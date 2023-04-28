@@ -1,19 +1,11 @@
-import { Get, Route, Tags, Post, Put, Delete } from 'tsoa';
+import { Get, Route, Tags, Post, Delete } from 'tsoa';
 import { Request, Response } from 'express';
-import {
-  createNewProject,
-  deleteProjectById,
-  getAllProjectDocuments,
-  getProjectById,
-  getProjectsByUserId,
-  registerFileToProject
-} from '../repositories/project.repository';
+import { getProjectsByUserId } from '../repositories/project.repository';
 import {
   createNewProjecthat,
   deleteChatById,
   getChat,
-  getChatsByProjectId,
-  updateChatSettings
+  getChatsByProjectId
 } from '../repositories/chat.repository';
 @Route('projects')
 @Tags('Chats')
@@ -43,7 +35,6 @@ class ChatController {
   @Post('/projects/:projectId/chats')
   static createNewProjecthat = async (req: Request, res: Response) => {
     const chat = await createNewProjecthat(req.params.projectId, req.body);
-    //await createNewTracingSession(chat.id);
     const projects = await getProjectsByUserId(
       res.locals.jwtPayload.userId,
       true

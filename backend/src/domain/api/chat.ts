@@ -8,11 +8,14 @@ import {
   UpdateDateColumn,
   JoinColumn,
   OneToOne,
-  Relation
+  Relation,
+  ManyToMany,
+  JoinTable
 } from 'typeorm';
 import { ChatMessage } from './chat-message';
 import { ChatSettings } from './chat-settings';
 import { Project } from './project';
+import { OriginalDocument } from './document';
 
 @Entity()
 export class Chat {
@@ -37,6 +40,10 @@ export class Chat {
 
   @CreateDateColumn()
   createdAt!: Date;
+
+  @ManyToMany(() => OriginalDocument)
+  @JoinTable()
+  documents!: OriginalDocument[];
 
   @UpdateDateColumn()
   updatedAt!: Date;

@@ -1,6 +1,6 @@
 import { User, Project, OriginalDocument } from '../api/index';
 import { AppDataSource } from '../../config/data-source';
-import { DeleteResult } from 'typeorm';
+import { DeleteResult, In } from 'typeorm';
 
 export interface ICreateProjectPayload {
   name: string;
@@ -61,6 +61,16 @@ export const getDocumentById = async (
 ): Promise<OriginalDocument> => {
   return await AppDataSource.manager.findOneByOrFail(OriginalDocument, {
     id: docId
+  });
+};
+
+export const getDocumentsById = async (
+  docIds: string[]
+): Promise<OriginalDocument[]> => {
+  return await AppDataSource.manager.find(OriginalDocument, {
+    where: {
+      id: In(docIds)
+    }
   });
 };
 
