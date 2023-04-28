@@ -3,7 +3,6 @@ import { Document } from 'langchain/dist/document';
 import { TextLoader } from 'langchain/document_loaders/fs/text';
 import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
 import logger from '../../common/logger';
-import { MIMEType } from 'util';
 
 export class DocumentService {
   static createDocFromFile = async (
@@ -26,6 +25,17 @@ export class DocumentService {
         break;
     }
 
-    return await loader.loadAndSplit(new RecursiveCharacterTextSplitter());
+    return await loader.loadAndSplit(
+      new RecursiveCharacterTextSplitter({ chunkSize: 1000 })
+    );
+  };
+
+  static createDocFromFilePath = async (
+    path: string
+  ): Promise<Document<Record<string, any>>[]> => {
+    const loader = new TextLoader(path);
+    return await loader.loadAndSplit(
+      new RecursiveCharacterTextSplitter({ chunkSize: 1000 })
+    );
   };
 }

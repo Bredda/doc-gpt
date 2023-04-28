@@ -10,7 +10,6 @@ Front
 - Formattage de la réponse, notamment lorsque du code est renvoyé
 - Revamp moving dots while query processing
 - Error toast et message clean quand erreur dans la query vers llm
-- Affichage des sources lorsque
 - More user settings (avatar, email change)
 - About avec version
 - Récup password
@@ -21,7 +20,6 @@ Features:
 
 - Multiple type doc (pdf, txt, autre)
 - améliorer tracing (aim ?)
-- visualisation des fichiers après upload
 - Renommage de document
 - fournir max d'info sur data et usage
 - cancel request

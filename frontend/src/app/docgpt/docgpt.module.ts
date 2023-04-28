@@ -15,6 +15,9 @@ import { ChatInfoComponent } from './chat-info/chat-info.component';
 import { DocumentViewerComponent } from './document-viewer/document-viewer.component';
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { NoChatComponent } from './chat-panel/no-chat/no-chat.component';
+import { SourceComponent } from './chat-panel/source/source.component';
+import { MessageComponent } from './chat-panel/message/message.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,10 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     DndUploadDirective,
     ChatPanelComponent,
     ChatInfoComponent,
-    DocumentViewerComponent
+    DocumentViewerComponent,
+    NoChatComponent,
+    SourceComponent,
+    MessageComponent
   ],
   imports: [
     CommonModule,

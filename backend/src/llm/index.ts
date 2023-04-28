@@ -13,6 +13,8 @@ import { ChainService } from './services/chain.service';
 import { MemoryService } from './services/memory';
 import { ChromaService } from './services/chroma.service';
 import { QAChainResponse } from './api/qa-chain-response';
+import { getDocumentById } from '../domain/repositories/project.repository';
+import { DocumentService } from './services/document.service';
 class LLMQuerier {
   static retrivalQAQuery = async (
     projectId: string,
@@ -57,6 +59,19 @@ class LLMQuerier {
     );
     const resp = await chain.call({ input: query });
     return await addMessageToChat(chatId, resp.response, 'llm');
+  };
+
+  static summarizationQuery = async (docIds: string[]) => {
+    const chain = ChainService.getSummarizationChain(ModelService.getOpenAi());
+    const docs: any[] = [];
+    docIds.forEach(async (id) => {
+      const originalDoc = await getDocumentById(id);
+      docs.push(await DocumentService.createDocFromFilePath(originalDoc.path));
+    });
+    const resp = await chain.call({
+      input_documents: docs
+    });
+    return resp;
   };
 }
 

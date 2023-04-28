@@ -6,12 +6,10 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import { ChatService } from '../services/chat.service';
 import { Chat } from '../api/chat';
 import { ContextService } from '../services/context.service';
 import { Subscription } from 'rxjs';
 import { LlmService } from '../services/llm.service';
-import { UiService } from '../services/ui.service';
 import { Project } from '../api/project';
 
 @Component({
@@ -37,10 +35,8 @@ export class ChatPanelComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private chatService: ChatService,
     private contexteService: ContextService,
-    private llm: LlmService,
-    private ui: UiService
+    private llm: LlmService
   ) {}
 
   ngOnInit(): void {
@@ -57,10 +53,6 @@ export class ChatPanelComponent implements OnInit, OnDestroy {
         this.queryProcessing = q;
       })
     );
-  }
-
-  onCreateChat() {
-    this.ui.triggerChatDiag();
   }
 
   ngOnDestroy(): void {

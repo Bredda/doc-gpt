@@ -12,7 +12,7 @@ export const run = async () => {
     modelName: 'gpt-3.5-turbo',
     openAIApiKey: process.env.OPENAI_API_KEY
   });
-  const docs = await DocumentService.createDocFromFile(SOURCES.state_union);
+  const docs = await DocumentService.createDocFromFilePath(SOURCES.state_union);
   const vectorStore = await ChromaService.addDocToCollection(
     'test_ingest',
     docs

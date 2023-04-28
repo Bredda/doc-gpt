@@ -75,6 +75,11 @@ export class App {
           data.query
         ).then((resp) => socket.emit('retrieval-response', resp));
       });
+      socket.on('summarization-query', (data: any) => {
+        LLMQuerier.summarizationQuery(data.docIds).then((resp) =>
+          socket.emit('summarization-response', resp)
+        );
+      });
     });
   }
 
