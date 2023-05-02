@@ -11,5 +11,18 @@ export const Models = [
 export const ChatType = [
   { id: 0, name: 'Conversation Chat-GPT', value: 'conversationnal' },
   { id: 1, name: 'Chat with your data', value: 'chat_with_data' },
-  { id: 1, name: 'Génération de code', value: 'code_generation' }
+  { id: 2, name: 'Résumé de documents', value: 'summarization' }
+];
+
+export const GROUPED_CHAT_TYPE = [
+  {
+    label: 'Conversation',
+    value: 'chat',
+    items: [ChatType[0], ChatType[1]]
+  },
+  {
+    label: 'Analyse',
+    value: 'analyse',
+    items: [ChatType[2]]
+  }
 ];

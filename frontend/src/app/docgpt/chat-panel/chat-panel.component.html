@@ -1,17 +1,9 @@
-<div #target *ngIf="currentChat" class="overflow-auto h-full">
+<div #target class="overflow-auto h-full">
   <app-message
-    *ngFor="let mess of currentChat.messages"
+    *ngFor="let mess of currentChat?.messages"
     [message]="mess"></app-message>
 
   <app-message
     *ngIf="queryProcessing"
     [processing]="queryProcessing"></app-message>
 </div>
-
-<div
-  *ngIf="!currentProject"
-  class="h-full w-full flex flex-column align-items-center justify-content-center text-2xl">
-  Ouvrir ou créer un nouveau projet
-</div>
-
-<app-no-chat *ngIf="currentProject && !currentChat"></app-no-chat>

@@ -1,0 +1,27 @@
+<div class="grid message">
+  <div class="col-8">
+    <p-button
+      icon="pi pi-plus"
+      (click)="onModifyFiles()"
+      class="align-self-center"
+      styleClass="p-button-outlined "
+      label="Générer">
+    </p-button>
+  </div>
+
+  <div class="col-4">
+    <div class="text-center">Documents inclus</div>
+
+    <div
+      class="card flex flex-column justify-content-center align-items-center">
+      <p-listbox
+        [options]="cities"
+        [(ngModel)]="selectedCity"
+        optionLabel="name"
+        [checkbox]="true"
+        [multiple]="true"
+        [disabled]="!editFiles"
+        [style]="{'width':'15rem'}"></p-listbox>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 <div
-  *ngIf="currentChat !== undefined
+  *ngIf="currentChat !== undefined && currentChat.settings.type !== 'summarization'
   "
   class="flex justify-content-center p-inputgroup pt-4">
   <textarea

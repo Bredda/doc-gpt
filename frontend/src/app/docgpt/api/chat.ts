@@ -3,6 +3,7 @@ export interface Chat {
   name: string;
   settings: ChatSettings;
   messages: ChatMessage[];
+  docIds: string[];
 }
 
 export interface ChatSettings {

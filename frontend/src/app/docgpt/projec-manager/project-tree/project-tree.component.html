@@ -1,0 +1,27 @@
+<p-fieldset [toggleable]="true">
+  <ng-template pTemplate="header">
+    <div class="flex align-items-center text-primary">
+      <span class="pi pi-folder-open mr-2"></span>
+      <span class="font-bold text-lg">Projets</span>
+    </div>
+  </ng-template>
+  <div class="flex flex-column gap-4">
+    <p-tree
+      [value]="datas"
+      emptyMessage="Aucun projet"
+      selectionMode="single"
+      [(selection)]="selectedNode"
+      (onNodeSelect)="navigateToSelectedNode()"
+      [contextMenu]="cm">
+    </p-tree>
+    <p-button
+      icon="pi pi-plus"
+      (click)="showCreateProjectDiag()"
+      class="align-self-center"
+      styleClass="p-button-outlined "
+      label="Nouveau projet">
+    </p-button>
+  </div>
+</p-fieldset>
+
+<p-contextMenu #cm [model]="items" (onShow)="onContext()"></p-contextMenu>

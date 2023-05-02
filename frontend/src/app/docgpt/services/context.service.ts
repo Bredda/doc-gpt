@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, combineLatest, tap } from 'rxjs';
+import { Observable, combineLatest, map, tap } from 'rxjs';
 import { Project } from '../api/project';
 import { Chat } from '../api/chat';
 import { ProjectService } from './project.service';
@@ -10,9 +10,9 @@ import { DocumentService } from './documents.service';
   providedIn: 'root'
 })
 export class ContextService {
-  private currentDocuments = new BehaviorSubject<any[]>([]);
   public currentChatId: string | undefined;
   public currentProjectId: string | undefined;
+
   constructor(
     private projectService: ProjectService,
     private chatService: ChatService,
@@ -56,27 +56,49 @@ export class ContextService {
     ]);
   }
 
-  /**
-   * Subscription to the latest projects mlist from backend
-   * @returns
-   */
-  public listenProjectList(): Observable<Project[]> {
-    return this.projectService.currentProjecChatList.asObservable();
+  public hasCurrentChat(): Observable<boolean> {
+    return combineLatest([
+      this.hasCurrentProject(),
+      this.chatService.currentChat
+    ]).pipe(map(([p, c]) => p && c !== undefined));
   }
-  /**
-   * Subscription to the currently displayed Chat data
-   * @returns
-   */
-  public listenCurrentChat(): Observable<Chat | undefined> {
-    return this.chatService.currentChat.asObservable();
+
+  public hasProjectButNoChat(): Observable<boolean> {
+    return combineLatest([
+      this.hasCurrentProject(),
+      this.hasCurrentChat()
+    ]).pipe(map(([p, c]) => p && !c));
   }
-  /**
-   * Subscription to the currently displayed Project data
-   * @returns
-   */
-  public listenCurrentProject(): Observable<Project | undefined> {
-    return this.projectService.currentProject.asObservable();
+
+  public hasCurrentProject(): Observable<boolean> {
+    return this.projectService.currentProject.pipe(map((c) => c !== undefined));
   }
+
+  public hasNoProjectNoChat(): Observable<boolean> {
+    return combineLatest([
+      this.hasCurrentProject(),
+      this.hasCurrentChat()
+    ]).pipe(map(([p, c]) => !p && !c));
+  }
+
+  public currentChatIsSummary(): Observable<boolean> {
+    return this.chatService.currentChat.pipe(
+      map((c) => c?.settings.type === 'summarization')
+    );
+  }
+
+  public currentProjectHasDocuments(): Observable<boolean> {
+    return this.documentService
+      .getCurrentProjectContext()
+      .pipe(map((d) => d.length > 0));
+  }
+
+  public currentChatIsChat(): Observable<boolean> {
+    return this.chatService.currentChat.pipe(
+      map((c) => c?.settings.type !== 'summarization')
+    );
+  }
+
   /**
    * Trigger a backend data refresh for the currently displayed Chat
    * @param projectId

@@ -6,11 +6,21 @@ import { Observable, Subject } from 'rxjs';
 })
 export class UiService {
   private _openCreateChatDiag = new Subject<boolean>();
+  private _openCreateProjectDiag = new Subject<boolean>();
   private _displayDocument = new Subject<any>();
   constructor() {}
 
   public triggerChatDiag() {
     this._openCreateChatDiag.next(true);
+  }
+
+  public triggerProjectDiag() {
+    console.log('Tigger diag open');
+    this._openCreateProjectDiag.next(true);
+  }
+
+  public listenProjectDiagOpen(): Observable<boolean> {
+    return this._openCreateProjectDiag.asObservable();
   }
 
   public listenChatDiagOpen(): Observable<boolean> {

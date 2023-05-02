@@ -1,0 +1,83 @@
+<p-dialog
+  header="Nouvelle discussion"
+  [(visible)]="visible"
+  [modal]="true"
+  [style]="{width: '50vw'}">
+  <div class="grid">
+    <div class="col-12">
+      <div class="p-fluid p-formgrid grid">
+        <div class="field col-fixed" style="width: 400px">
+          <label htmlFor="newChatName">Nom de la discussion</label>
+          <input
+            class="p-inputtext"
+            pInputText
+            id="newChatName"
+            type="text"
+            required
+            [(ngModel)]="newName" />
+        </div>
+        <div class="col"></div>
+      </div>
+      <div class="p-fluid p-formgrid grid">
+        <div class="field col-12 md:col-6">
+          <label htmlFor="type">Type</label>
+          <p-dropdown
+            [group]="true"
+            id="type"
+            appendTo="body"
+            [options]="types"
+            optionLabel="name"
+            placeholder="Select a Country"
+            [(ngModel)]="selectedType">
+            <ng-template let-group pTemplate="group">
+              <div class="flex align-items-center">
+                <span>{{ group.label }}</span>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+        <div class="field col-12 md:col-6">
+          <label htmlFor="files" *ngIf="selectedType.value==='summarization'"
+            >Fichiers à résumer</label
+          >
+          <p-multiSelect
+            *ngIf="selectedType.value==='summarization'"
+            id="files"
+            [options]="projectFiles"
+            [(ngModel)]="selectedFiles"
+            optionLabel="name"></p-multiSelect>
+        </div>
+        <div class="field col-12 md:col-3">
+          <label htmlFor="langue">Langue</label>
+          <p-dropdown
+            id="langue"
+            appendTo="body"
+            [options]="languages"
+            optionLabel="name"
+            [(ngModel)]="selectedLanguage"></p-dropdown>
+        </div>
+        <div class="field col-12 md:col-3">
+          <label htmlFor="model">Model</label>
+          <p-dropdown
+            id="model"
+            appendTo="body"
+            [options]="models"
+            optionLabel="name"
+            [(ngModel)]="selectedModel"></p-dropdown>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-times"
+      (click)="onCancelCreateChat()"
+      label="Annuler"
+      styleClass="p-button-text"></p-button>
+    <p-button
+      icon="pi pi-check"
+      (click)="onConfirmCreateChat()"
+      label="Créer"
+      styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>

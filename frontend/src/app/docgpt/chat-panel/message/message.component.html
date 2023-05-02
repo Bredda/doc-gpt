@@ -1,11 +1,11 @@
 <div
-  [ngClass]="message.origin==='llm' ? 'message message-llm w-full flex flex-column align-items-center ' : 'message message-user w-full flex flex-column align-items-center'">
+  [ngClass]="processing || message.origin==='llm'   ? 'message message-llm w-full flex flex-column align-items-center ' : 'message message-user w-full flex flex-column align-items-center'">
   <div>
-    <div *ngIf="message.origin==='user'" class="flex gap-4">
+    <div *ngIf="!processing && message.origin==='user'" class="flex gap-4">
       <span class="pi pi-user" style="font-size: 1.5rem"></span>
       <span>{{message.content}}</span>
     </div>
-    <div *ngIf="message.origin==='llm'" class="flex gap-4">
+    <div *ngIf="processing || message.origin==='llm'" class="flex gap-4">
       <svg
         width="24"
         height="24"
@@ -22,5 +22,7 @@
       <div *ngIf="processing" class="dot-typing"></div>
     </div>
   </div>
-  <app-source [message]="message"></app-source>
+  <app-source
+    *ngIf="!processing && message.sources"
+    [message]="message"></app-source>
 </div>

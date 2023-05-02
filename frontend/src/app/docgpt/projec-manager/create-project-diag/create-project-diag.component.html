@@ -1,0 +1,26 @@
+<p-dialog
+  header="Nouveau projet"
+  [visible]="visible"
+  [modal]="true"
+  [style]="{width: '50vw'}">
+  <input
+    id="newProjectName"
+    type="text"
+    placeholder="Nom du projet"
+    pInputText
+    class="p-inputtext w-full md:w-30rem mb-5"
+    style="padding: 1rem"
+    [(ngModel)]="newName" />
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-times"
+      (click)="onCancelCreate()"
+      label="Annuler"
+      styleClass="p-button-text"></p-button>
+    <p-button
+      icon="pi pi-check"
+      (click)="onConfirmCreate()"
+      label="Créer"
+      styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>

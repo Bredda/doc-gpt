@@ -2,19 +2,30 @@
   <div class="flex flex-column align-items-center gap-4 w-3 p-3 surface-ground">
     <app-projec-manager class="w-full"></app-projec-manager>
     <app-document-manager
-      *ngIf="currentProject !== undefined"
+      *ngIf="contextService.hasCurrentProject() | async"
       class="w-full"></app-document-manager>
   </div>
 
   <div class="flex h-full max-w-full flex-1 flex-column items-stretch">
     <app-chat-info class="w-full"></app-chat-info>
 
+    <app-no-chat
+      class="h-full w-full"
+      *ngIf="contextService.hasProjectButNoChat() | async"></app-no-chat>
+    <app-no-project
+      class="h-full w-full"
+      *ngIf="contextService.hasNoProjectNoChat() | async"></app-no-project>
     <app-chat-panel
+      *ngIf="contextService.currentChatIsChat() | async"
       class="h-full w-full flex-1 flex-col overflow-hidden"></app-chat-panel>
-    <app-query-manager class="w-full pt-2"></app-query-manager>
+    <app-summary-panel
+      *ngIf="contextService.currentChatIsSummary() | async"></app-summary-panel>
+    <app-query-manager
+      *ngIf="contextService.currentChatIsChat() | async"
+      class="w-full pt-2"></app-query-manager>
   </div>
 </div>
-
+<app-document-viewer
+  *ngIf="contextService.currentProjectHasDocuments() | async"></app-document-viewer>
 <p-toast></p-toast>
 <p-confirmDialog></p-confirmDialog>
-<app-document-viewer></app-document-viewer>

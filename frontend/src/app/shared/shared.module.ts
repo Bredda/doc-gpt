@@ -23,6 +23,8 @@ import { AccordionModule } from 'primeng/accordion';
 import { InplaceModule } from 'primeng/inplace';
 import { FilenamePipe } from './filename.pipe';
 import { SidebarModule } from 'primeng/sidebar';
+import { ListboxModule } from 'primeng/listbox';
+
 const UI_MODULES = [
   ToolbarModule,
   ButtonModule,
@@ -44,7 +46,8 @@ const UI_MODULES = [
   ProgressBarModule,
   AccordionModule,
   InplaceModule,
-  SidebarModule
+  SidebarModule,
+  ListboxModule
 ];
 
 const NG_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];

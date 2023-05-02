@@ -39,6 +39,9 @@ export const getChatsByProjectId = async (
     relations: {
       settings: true,
       documents: true
+    },
+    order: {
+      createdAt: 'ASC'
     }
   });
 };

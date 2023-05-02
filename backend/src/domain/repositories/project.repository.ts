@@ -22,6 +22,9 @@ export const getProjectsByUserId = async (
         chats: {
           settings: true
         }
+      },
+      order: {
+        createdAt: 'ASC'
       }
     });
   } else {
