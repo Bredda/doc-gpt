@@ -6,11 +6,11 @@
   "scripts": {
     "backend:dev": "cd ./backend && npm run dev",
     "frontend:dev": "cd ./frontend && npm run start",
-    "database:dev": "docker-compose -f ./database/docker-compose.yml --env-file .env up",
-    "chroma:dev": "docker-compose -f ./tools/chroma/docker-compose.yml --env-file .env up",
-    "langchainplus:dev": "docker-compose -f ./tools/langchainplus/docker-compose.yml --env-file .env up",
-    "motorhead:dev": "docker-compose -f ./tools/motorhead/docker-compose.yml --env-file .env up",
-    "lighthouse:dev": "docker-compose -f ./tools/lighthouse/docker-compose.yml --env-file .env up"
+    "database:dev": "docker-compose -f ./database/docker-compose.yml --env-file .env up -d",
+    "chroma:dev": "docker-compose -f ./tools/chroma/docker-compose.yml --env-file .env up -d",
+    "langchainplus:dev": "docker-compose -f ./tools/langchainplus/docker-compose.yml --env-file .env up -d",
+    "motorhead:dev": "docker-compose -f ./tools/motorhead/docker-compose.yml --env-file .env up -d",
+    "lighthouse:dev": "docker-compose -f ./tools/lighthouse/docker-compose.yml --env-file .env up -d"
   },
   "repository": {
     "type": "git",

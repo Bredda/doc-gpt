@@ -37,3 +37,7 @@ volumes:
   clickhouse_data:
   index_data:
   backups:
+networks:
+  default:
+    external:
+      name: dockgpt-network

@@ -1,6 +1,10 @@
 version: '3'
 services:
   frontend:
-    build: frontend
+    build: .
     ports:
       - '80:80'
+networks:
+  default:
+    external:
+      name: dockgpt-network

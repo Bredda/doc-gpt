@@ -18,3 +18,7 @@ services:
       - db
     ports:
       - ${DOCGPT_ADMINER_PORT}:8080
+networks:
+  default:
+    external:
+      name: dockgpt-network
