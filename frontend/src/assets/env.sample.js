@@ -2,5 +2,5 @@
   window['env'] = window['env'] || {};
 
   // Environment variables
-  window['env']['API_URL'] = '${BACKEND_BASE_URL}';
+  window['env']['API_URL'] = '${API_URL}';
 })(this);
