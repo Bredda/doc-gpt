@@ -4,12 +4,13 @@ import { Project } from '../api/project';
 import { HttpClient } from '@angular/common/http';
 import { Chat } from '../api/chat';
 import { ProjectService } from './project.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
-  private url = 'http://localhost:3000/doc-gpt';
+  private url = `${environment.API_URL}/doc-gpt`;
   public currentChat = new BehaviorSubject<Chat | undefined>(undefined);
   private $queryBeingPrecessed = new BehaviorSubject<string | undefined>(
     undefined

@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DocumentService {
-  url = `http://localhost:3000/doc-gpt/projects`;
+  url = `${environment.API_URL}/doc-gpt/projects`;
   public documents = new BehaviorSubject<Array<any>>([]);
 
   constructor(private httpClient: HttpClient) {}

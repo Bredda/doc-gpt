@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Socket, io } from 'socket.io-client';
 import { ChatService } from './chat.service';
 import { ContextService } from './context.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class LlmService {
     private chatService: ChatService,
     private contextService: ContextService
   ) {
-    this.socket = io('http://localhost:3000', {
+    this.socket = io(environment.API_URL, {
       autoConnect: true,
       reconnection: true
     });

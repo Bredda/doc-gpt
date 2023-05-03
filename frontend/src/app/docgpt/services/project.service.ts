@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Project } from '../api/project';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
-  private url = 'http://localhost:3000/doc-gpt/projects';
+  private url = `${environment.API_URL}/doc-gpt/projects`;
   public currentProject = new BehaviorSubject<Project | undefined>(undefined);
 
   public currentProjecChatList = new BehaviorSubject<Project[]>([]);

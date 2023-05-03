@@ -4,12 +4,13 @@ import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { User } from '../api/user';
 import { LocalStorageService } from 'src/app/shared/local-storage.service';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private url = 'http://localhost:3000/doc-gpt/auth';
+  private url = `${environment.API_URL}/doc-gpt/auth`;
   private _user = new BehaviorSubject<User | null>(null);
 
   constructor(
