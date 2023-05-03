@@ -53,6 +53,8 @@ services:
       - POSTGRES_DB=${DOCGPT_DB_NAME}
       - POSTGRES_USER=${DOCGPT_DB_USER}
       - POSTGRES_PASSWORD=${DOCGPT_DB_PASSWORD}
+    volumes:
+      - ./database/data:/var/lib/postgresql/data
     ports:
       - 5432:5432
 
@@ -84,6 +86,7 @@ services:
       - CHROMA_PORT=${CHROMA_PORT}
       - LIGHTHOUSE_HOST=${LIGHTHOUSE_HOST}
       - LIGHTHOUSE_PORT=${LIGHTHOUSE_PORT}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
     ports:
       - "3000:3000"
 volumes:

@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  API_URL: 'http://209.38.230.43:3000'
+  // @ts-ignore
+  API_URL: window['env']['API_URL'] || 'http://localhost:3000'
 };

@@ -14,17 +14,19 @@ const config = {
   DB_PASSWORD: process.env.DOCGPT_DB_PASSWORD || 'postgres',
   JWT_SECRET: process.env.DOCGPT_SECRET || '@QEGTUI',
   OPENAI_API_KEY: process.env.OPENAI_API_KEY,
-  CHROMA_PORT: process.env.CHROMA_SERVER_PORT || 8000,
+  CHROMA_PORT: Number(process.env.CHROMA_PORT) || 8000,
   UPLOAD_PATH: process.env.DOCGPT_BACK_UPLOAD_PATH || './public/uploads',
   MOTORHEAD_HOST: process.env.MOTORHEAD_HOST || 'motorhead',
-  MOTORHEAD_PORT: process.env.MOTORHEAD_PORT || 8081,
+  MOTORHEAD_PORT: Number(process.env.MOTORHEAD_PORT) || 8081,
   CHROMA_HOST: process.env.CHROMA_HOST || 'chroma'
 };
 
-logger.debug('DB Settings');
-logger.debug(`host: ${config.DB_HOST}`);
-logger.debug(`port: ${config.DB_PORT}`);
-logger.debug(`name: ${config.DB_NAME}`);
-logger.debug(`user: ${config.DB_USER}`);
-logger.debug(`password: ${config.DB_PASSWORD}`);
+logger.debug('Settings');
+logger.debug(`Database - host: ${config.DB_HOST}, port: ${config.DB_PORT}`);
+logger.debug(
+  `Motorhead - host: ${config.MOTORHEAD_HOST}, port: ${config.MOTORHEAD_PORT}`
+);
+logger.debug(
+  `Chroma - host: ${config.CHROMA_HOST}, port: ${config.CHROMA_PORT}`
+);
 export default config;

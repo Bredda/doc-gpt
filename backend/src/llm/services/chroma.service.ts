@@ -9,7 +9,7 @@ import { ChromaClient } from 'chromadb';
 export class ChromaService {
   private static getChromaSettings = (collectionName: string) => {
     return {
-      url: `${config.CHROMA_HOST}:${config.CHROMA_PORT}`,
+      url: `http://${config.CHROMA_HOST}:${config.CHROMA_PORT}`,
       collectionName: collectionName
     };
   };
@@ -28,7 +28,9 @@ export class ChromaService {
 
   static deleteCollection = async (collectionName: string) => {
     logger.debug(`Deleting from store collection ${collectionName}`);
-    const client = new ChromaClient(`http://localhost:${config.CHROMA_PORT}`);
+    const client = new ChromaClient(
+      `http://${config.CHROMA_HOST}:${config.CHROMA_PORT}`
+    );
     await client.deleteCollection(collectionName);
   };
 

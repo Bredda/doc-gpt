@@ -14,7 +14,7 @@ ENV MOTORHEAD_HOST=motorhead
 ENV DOCGPT_SECRET=@QEGTUI
 ENV CHROMA_HOST=chroma
 ENV CHROMA_PORT=8000
-
+ENV OPENAI_API_KEY=sk...
 COPY package*.json ./
 
 RUN npm install
