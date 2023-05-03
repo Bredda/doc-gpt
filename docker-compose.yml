@@ -4,6 +4,7 @@ services:
   docgpt-db:
     image: postgres:14.1
     environment:
+      - POSTGRES_HOST=${DOCGPT_DB_HOST}
       - POSTGRES_DB=${DOCGPT_DB_NAME}
       - POSTGRES_USER=${DOCGPT_DB_USER}
       - POSTGRES_PASSWORD=${DOCGPT_DB_PASSWORD}
@@ -46,35 +47,6 @@ services:
       - backups:/backups
       - ./config/backup_disk.xml:/etc/clickhouse-server/config.d/backup_disk.xml
       - ./config/chroma_users.xml:/etc/clickhouse-server/users.d/chroma.xml
-  langchain-frontend:
-    image: notlangchain/langchainplus-frontend:latest
-    ports:
-      - ${LANGCHAIN_FRONT_PORT}:4173
-    environment:
-      - BACKEND_URL=http://langchain-backend:8000
-      - PUBLIC_BASE_URL=http://localhost:8000
-      - PUBLIC_DEV_MODE=true
-    depends_on:
-      - langchain-backend
-  langchain-backend:
-    container_name: langchainplus_back
-    image: notlangchain/langchainplus:latest
-    environment:
-      - PORT=8000
-      - LANGCHAIN_ENV=local
-    ports:
-      - ${LANGCHAIN_BACK_PORT}:8000
-    depends_on:
-      - langchain-db
-  langchain-db:
-    container_name: langchainplus_db
-    image: postgres:14.1
-    environment:
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=postgres
-    ports:
-      - ${LANGCHAIN_DB_PORT}:5432
   lighthouse:
     build: tools/lighthouse
     ports:
@@ -82,7 +54,7 @@ services:
   motorhead:
     build: tools/motorhead
     ports:
-      - "${MOTORHEAD_SERVER_PORT}:8080"
+      - "${MOTORHEAD_PORT}:8080"
     links:
       - redis
     environment:
@@ -100,6 +72,14 @@ services:
       - "80:80"
   backend:
     build: backend
+    environment:
+      - DOCGPT_DB_HOST=${DOCGPT_DB_HOST}
+      - DOCGPT_DB_NAME=${DOCGPT_DB_NAME}
+      - DOCGPT_DB_USER=${DOCGPT_DB_USER}
+      - DOCGPT_DB_PASSWORD=${DOCGPT_DB_PASSWORD}
+      - MOTORHEAD_PORT=${MOTORHEAD_PORT}
+      - MOTORHEAD_HOST=${MOTORHEAD_HOST}
+      - CHROMA_HOST=${CHROMA_HOST}
     ports:
       - "3000:3000"
 volumes:

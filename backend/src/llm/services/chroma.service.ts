@@ -9,7 +9,7 @@ import { ChromaClient } from 'chromadb';
 export class ChromaService {
   private static getChromaSettings = (collectionName: string) => {
     return {
-      url: `http://localhost:${config.CHROMA_PORT}`,
+      url: `${config.CHROMA_HOST}:${config.CHROMA_PORT}`,
       collectionName: collectionName
     };
   };
