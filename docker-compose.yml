@@ -1,22 +1,6 @@
 version: "3"
 
 services:
-  docgpt-db:
-    image: postgres:14.1
-    environment:
-      - POSTGRES_HOST=${DOCGPT_DB_HOST}
-      - POSTGRES_DB=${DOCGPT_DB_NAME}
-      - POSTGRES_USER=${DOCGPT_DB_USER}
-      - POSTGRES_PASSWORD=${DOCGPT_DB_PASSWORD}
-    ports:
-      - ${DOCGPT_DB_PORT}:5432
-  adminer:
-    image: adminer
-    restart: always
-    depends_on:
-      - docgpt-db
-    ports:
-      - ${DOCGPT_ADMINER_PORT}:8080
   chroma:
     build:
       context: tools/chroma
@@ -27,9 +11,9 @@ services:
     environment:
       - CHROMA_DB_IMPL=clickhouse
       - CLICKHOUSE_HOST=clickhouse
-      - CLICKHOUSE_PORT=${CHROMA_DB_HTTP_PORT}
+      - CLICKHOUSE_PORT=8123
     ports:
-      - ${CHROMA_SERVER_PORT}:8000
+      - ${CHROMA_PORT}:8000
     depends_on:
       - clickhouse
 
@@ -39,18 +23,12 @@ services:
       - ALLOW_EMPTY_PASSWORD=yes
       - CLICKHOUSE_TCP_PORT=9000
       - CLICKHOUSE_HTTP_PORT=8123
-    ports:
-      - "${CHROMA_DB_HTTP_PORT}:8123"
-      - "${CHROMA_DB_TCP_PORT}:9000"
     volumes:
       - clickhouse_data:/bitnami/clickhouse
       - backups:/backups
       - ./config/backup_disk.xml:/etc/clickhouse-server/config.d/backup_disk.xml
       - ./config/chroma_users.xml:/etc/clickhouse-server/users.d/chroma.xml
-  lighthouse:
-    build: tools/lighthouse
-    ports:
-      - ${LIGHTHOUSE_PORT}:80
+
   motorhead:
     build: tools/motorhead
     ports:
@@ -62,8 +40,30 @@ services:
       REDIS_URL: "redis://redis:6379"
   redis:
     image: redis:latest
+
+  lighthouse:
+    build: tools/lighthouse
     ports:
-      - "${MOTORHEAD_REDIS_PORT}:6379"
+      - ${LIGHTHOUSE_PORT}:80
+
+  docgpt-db:
+    image: postgres:14.1
+    environment:
+      - POSTGRES_HOST=${DOCGPT_DB_HOST}
+      - POSTGRES_DB=${DOCGPT_DB_NAME}
+      - POSTGRES_USER=${DOCGPT_DB_USER}
+      - POSTGRES_PASSWORD=${DOCGPT_DB_PASSWORD}
+    ports:
+      - 5432:5432
+
+  adminer:
+    image: adminer
+    restart: always
+    depends_on:
+      - docgpt-db
+    ports:
+      - ${DOCGPT_ADMINER_PORT}:8080
+
   frontend:
     build: frontend
     env_file:
@@ -74,12 +74,16 @@ services:
     build: backend
     environment:
       - DOCGPT_DB_HOST=${DOCGPT_DB_HOST}
+      - DOCGPT_DB_PORT=${DOCGPT_DB_PORT}
       - DOCGPT_DB_NAME=${DOCGPT_DB_NAME}
       - DOCGPT_DB_USER=${DOCGPT_DB_USER}
       - DOCGPT_DB_PASSWORD=${DOCGPT_DB_PASSWORD}
       - MOTORHEAD_PORT=${MOTORHEAD_PORT}
       - MOTORHEAD_HOST=${MOTORHEAD_HOST}
       - CHROMA_HOST=${CHROMA_HOST}
+      - CHROMA_PORT=${CHROMA_PORT}
+      - LIGHTHOUSE_HOST=${LIGHTHOUSE_HOST}
+      - LIGHTHOUSE_PORT=${LIGHTHOUSE_PORT}
     ports:
       - "3000:3000"
 volumes:
