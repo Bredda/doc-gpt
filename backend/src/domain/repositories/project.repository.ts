@@ -1,13 +1,24 @@
 import { User, Project, OriginalDocument } from '../api/index';
 import { AppDataSource } from '../../config/data-source';
 import { DeleteResult } from 'typeorm';
+import { AppError } from '../../exceptions/exceptions';
+import { http } from 'winston';
+import { HttpCode } from '../../exceptions/exceptions';
 
 export interface ICreateProjectPayload {
   name: string;
 }
 
 export const getProjectById = async (projectId: string): Promise<Project> => {
-  return AppDataSource.manager.findOneByOrFail(Project, { id: projectId });
+  try {
+    return AppDataSource.manager.findOneByOrFail(Project, { id: projectId });
+  } catch (error) {
+    throw new AppError({
+      httpCode: HttpCode.NOT_FOUND,
+      isOperational: true,
+      description: `Could not find project ${projectId}`
+    });
+  }
 };
 
 export const getProjectsByUserId = async (
@@ -40,13 +51,19 @@ export const registerFileToProject = async (
   projectId: string,
   doc: Partial<OriginalDocument>
 ): Promise<OriginalDocument> => {
-  const project = await AppDataSource.manager.findOneByOrFail(Project, {
-    id: projectId
-  });
-  return await AppDataSource.manager.save(OriginalDocument, {
-    ...doc,
-    project: project
-  });
+  const project = await getProjectById(projectId);
+  try {
+    return await AppDataSource.manager.save(OriginalDocument, {
+      ...doc,
+      project: project
+    });
+  } catch (error) {
+    throw new AppError({
+      httpCode: 500,
+      isOperational: true,
+      description: 'Could not save file to project'
+    });
+  }
 };
 
 export const deleteFileFromProject = async (

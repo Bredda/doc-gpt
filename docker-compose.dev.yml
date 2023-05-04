@@ -28,6 +28,8 @@ services:
       - backups:/backups
       - ./config/backup_disk.xml:/etc/clickhouse-server/config.d/backup_disk.xml
       - ./config/chroma_users.xml:/etc/clickhouse-server/users.d/chroma.xml
+    ports:
+      - 8123:8123
 
   motorhead:
     build: tools/motorhead
