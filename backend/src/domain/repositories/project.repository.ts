@@ -10,15 +10,7 @@ export interface ICreateProjectPayload {
 }
 
 export const getProjectById = async (projectId: string): Promise<Project> => {
-  try {
-    return AppDataSource.manager.findOneByOrFail(Project, { id: projectId });
-  } catch (error) {
-    throw new AppError({
-      httpCode: HttpCode.NOT_FOUND,
-      isOperational: true,
-      description: `Could not find project ${projectId}`
-    });
-  }
+  return AppDataSource.manager.findOneByOrFail(Project, { id: projectId });
 };
 
 export const getProjectsByUserId = async (
@@ -52,18 +44,10 @@ export const registerFileToProject = async (
   doc: Partial<OriginalDocument>
 ): Promise<OriginalDocument> => {
   const project = await getProjectById(projectId);
-  try {
-    return await AppDataSource.manager.save(OriginalDocument, {
-      ...doc,
-      project: project
-    });
-  } catch (error) {
-    throw new AppError({
-      httpCode: 500,
-      isOperational: true,
-      description: 'Could not save file to project'
-    });
-  }
+  return await AppDataSource.manager.save(OriginalDocument, {
+    ...doc,
+    project: project
+  });
 };
 
 export const deleteFileFromProject = async (

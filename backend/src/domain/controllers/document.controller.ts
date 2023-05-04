@@ -35,17 +35,31 @@ class DocumentController {
     next: NextFunction
   ) => {
     async function runAsync() {
-      if (req.file) {
-        await registerFileToProject(req.params.projectId, req.file);
-        await ChromaService.addFileToCollection(req.params.projectId, req.file);
-        const context = await getAllProjectDocuments(req.params.projectId);
-        res.status(201).send(context);
-      } else {
+      if (!req.file) {
         throw new AppError({
           httpCode: HttpCode.BAD_REQUEST,
           description: 'No file attached to request'
         });
       }
+      try {
+        await ChromaService.addFileToCollection(req.params.projectId, req.file);
+      } catch (error) {
+        throw new AppError({
+          httpCode: HttpCode.INTERNAL_SERVER_ERROR,
+          description: 'Error while saving to vector store'
+        });
+      }
+      try {
+        await registerFileToProject(req.params.projectId, req.file);
+      } catch (error) {
+        throw new AppError({
+          httpCode: HttpCode.INTERNAL_SERVER_ERROR,
+          description: 'Error while saving file to project'
+        });
+      }
+
+      const context = await getAllProjectDocuments(req.params.projectId);
+      res.status(201).send(context);
     }
     runAsync().catch(next);
   };

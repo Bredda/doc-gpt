@@ -61,16 +61,9 @@ export class ChromaService {
     logger.debug(
       `Adding file ${file.path} to store in collection ${collectionName}`
     );
-    try {
-      return this.addDocToCollection(
-        collectionName,
-        await DocumentService.createDocFromFile(file)
-      );
-    } catch (error) {
-      throw new AppError({
-        httpCode: HttpCode.INTERNAL_SERVER_ERROR,
-        description: 'A problem occured while saving to vector store'
-      });
-    }
+    return this.addDocToCollection(
+      collectionName,
+      await DocumentService.createDocFromFile(file)
+    );
   };
 }
