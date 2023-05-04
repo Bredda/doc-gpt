@@ -1,0 +1,19 @@
+{
+  "name": "chromadb",
+  "version": "0.3.21",
+  "description": "<p align=\"center\">\r   <a href=\"https://trychroma.com\"><img src=\"https://user-images.githubusercontent.com/891664/227103090-6624bf7d-9524-4e05-9d2c-c28d5d451481.png\" alt=\"Chroma logo\"></a>\r </p>",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "buildAndPublish": "node build-tag-publish.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "config": {
+    "docker": {
+      "imageName": "bredda/chromadb"
+    }
+  }
+}

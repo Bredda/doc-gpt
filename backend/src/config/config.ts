@@ -1,9 +1,9 @@
 import dotenv from 'dotenv';
 import logger from '../common/logger';
 
-if (process.env.ENV !== 'PRODUCTION') {
-  dotenv.config({ path: '../.env' });
-}
+dotenv.config({
+  path: process.env.ENV !== 'PRODUCTION' ? '../.env.dev' : '../.env'
+});
 
 const config = {
   PORT: Number(process.env.DOCGPT_BACK_PORT) || 3000,

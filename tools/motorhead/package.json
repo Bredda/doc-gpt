@@ -1,0 +1,19 @@
+{
+  "name": "motorhead",
+  "version": "0.1.0",
+  "description": "<h1 align=\"center\" >\r Motörhead\r </h1>\r <p align=\"center\">\r     <a href=\"https://github.com/getmetal/motorhead/blob/main/LICENSE\">\r     <img src=\"https://img.shields.io/github/license/getmetal/motorhead?style=flat&label=license&logo=github&color=4f46e5&logoColor=fff\" alt=\"License\" />\r     </a>\r   <a href=\"https://twitter.com/Metal_io\">\r     <img src=\"https://img.shields.io/badge/metal-message?style=flat&logo=twitter&color=4f46e5&logoColor=#4f46e5\" alt=\"Metal\" style=\"margin-right:3px\" />\r   </a>\r   <a href=\"https://discord.gg/GHY3Y8tU3J\">\r     <img src=\"https://dcbadge.vercel.app/api/server/GHY3Y8tU3J?compact=true&style=flat\" alt=\"License\" />\r   </a>\r </p>",
+  "main": "build-tag-publish.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "buildAndPublish": "node build-tag-publish.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "config": {
+    "docker": {
+      "imageName": "bredda/motorhead"
+    }
+  }
+}

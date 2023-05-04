@@ -1,0 +1,16 @@
+{
+  "name": "lighthouse",
+  "version": "1.0.0",
+  "description": "LightHouse is a lightweight GUI interface for ClickHouse. Do not confuse it with LightHouse from Google (https://github.com/GoogleChrome/lighthouse). Interface is inspired by Sequel Pro (https://www.sequelpro.com/).",
+  "main": "app.js",
+  "scripts": {
+    "buildAndPublish": "node build-tag-publish.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "config": {
+    "docker": {
+      "imageName": "bredda/lighthouse"
+    }
+  }
+}
