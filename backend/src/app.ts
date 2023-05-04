@@ -13,16 +13,19 @@ import http, { Server } from 'http';
 import { Server as IoServer, Socket } from 'socket.io';
 import LLMQuerier from './llm/index';
 import getRoutes from './domain/routes';
+
 export class App {
   private server: Server;
   private app: Application;
   constructor() {
     this.app = express();
     this.server = http.createServer(this.app);
-    this.setupWebSocket();
     this.setupMiddlewares();
+    this.setupWebSocket();
+
     this.setupSwagger();
     this.setupRoutes();
+    this.setupErrorHandler();
   }
 
   setupMiddlewares(): void {
@@ -79,7 +82,7 @@ export class App {
   }
 
   setupErrorHandler(): void {
-    this.app.use(errorHandler.handleError);
+    this.app.use(errorHandler);
   }
 
   setupRoutes(): void {

@@ -31,14 +31,18 @@
   [(visible)]="createProjectVisible"
   [modal]="true"
   [style]="{width: '50vw'}">
+  <!--form [formGroup]="projectForm"-->
   <input
     id="newProjectName"
     type="text"
     placeholder="Nom du projet"
     pInputText
+    required
     class="p-inputtext w-full md:w-30rem mb-5"
     style="padding: 1rem"
     [(ngModel)]="newName" />
+  <!--/form-->
+
   <ng-template pTemplate="footer">
     <p-button
       icon="pi pi-times"
@@ -67,6 +71,7 @@
             pInputText
             id="newChatName"
             type="text"
+            required
             [(ngModel)]="newName" />
         </div>
         <div class="col"></div>

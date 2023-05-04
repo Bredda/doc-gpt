@@ -1,6 +1,9 @@
 import { User, Project, OriginalDocument } from '../api/index';
 import { AppDataSource } from '../../config/data-source';
 import { DeleteResult } from 'typeorm';
+import { AppError } from '../../exceptions/exceptions';
+import { http } from 'winston';
+import { HttpCode } from '../../exceptions/exceptions';
 
 export interface ICreateProjectPayload {
   name: string;
@@ -40,9 +43,7 @@ export const registerFileToProject = async (
   projectId: string,
   doc: Partial<OriginalDocument>
 ): Promise<OriginalDocument> => {
-  const project = await AppDataSource.manager.findOneByOrFail(Project, {
-    id: projectId
-  });
+  const project = await getProjectById(projectId);
   return await AppDataSource.manager.save(OriginalDocument, {
     ...doc,
     project: project

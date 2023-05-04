@@ -12,6 +12,7 @@ import { ContextService } from '../services/context.service';
 import { Project } from '../api/project';
 import { ChatType, Languages, Models } from '../api/settings';
 import { UiService } from '../services/ui.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-projec-manager',
@@ -20,6 +21,9 @@ import { UiService } from '../services/ui.service';
   providers: [ConfirmationService, MessageService]
 })
 export class ProjecManagerComponent implements OnInit {
+  projectForm = new FormGroup({
+    projectName: new FormControl<string>('', [Validators.required])
+  });
   visible = false;
   selectedNode!: TreeNode;
   newName = '';

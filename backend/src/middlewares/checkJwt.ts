@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import config from '../config/config';
 import { getUserById } from '../domain/repositories/user.repository';
+import { AppError, HttpCode } from '../exceptions/exceptions';
 
 export const checkJwt = async (
   req: Request,
@@ -11,9 +12,12 @@ export const checkJwt = async (
   //Get the jwt token from the head
   let token = <string>req.headers['authorization'];
   let jwtPayload;
+
   if (!token) {
-    res.status(401).send();
-    return;
+    throw new AppError({
+      httpCode: HttpCode.UNAUTHORIZED,
+      description: 'User not authenticated'
+    });
   }
   token = token.replace('Bearer ', '');
   //Try to validate the token and get data
@@ -23,9 +27,10 @@ export const checkJwt = async (
     res.locals.jwtPayload = jwtPayload;
     await getUserById(jwtPayload.userId);
   } catch (error) {
-    //If token is not valid, respond with 401 (unauthorized)
-    res.status(401).send();
-    return;
+    throw new AppError({
+      httpCode: HttpCode.UNAUTHORIZED,
+      description: 'User not authenticated'
+    });
   }
 
   //The token is valid for 1 hour

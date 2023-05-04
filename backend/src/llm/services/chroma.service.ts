@@ -5,6 +5,7 @@ import { DocumentService } from './document.service';
 import config from '../../config/config';
 import logger from '../../common/logger';
 import { ChromaClient } from 'chromadb';
+import { AppError, HttpCode } from '../../exceptions/exceptions';
 
 export class ChromaService {
   private static getChromaSettings = (collectionName: string) => {
@@ -39,11 +40,18 @@ export class ChromaService {
     docs: Document<Record<string, any>>[]
   ): Promise<Chroma> => {
     logger.debug(`Adding docs to store in collection ${collectionName}`);
-    return await Chroma.fromDocuments(
-      docs,
-      this.getOpenAiEmbeddings(),
-      this.getChromaSettings(collectionName)
-    );
+    try {
+      return await Chroma.fromDocuments(
+        docs,
+        this.getOpenAiEmbeddings(),
+        this.getChromaSettings(collectionName)
+      );
+    } catch (error) {
+      throw new AppError({
+        httpCode: HttpCode.INTERNAL_SERVER_ERROR,
+        description: 'A problem occured while saving to vector store'
+      });
+    }
   };
 
   static addFileToCollection = async (

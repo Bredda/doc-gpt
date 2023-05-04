@@ -21,7 +21,10 @@ class AuthController {
     //Check if username and password are set
     const { email, password } = req.body;
     if (!(email && password)) {
-      res.status(400).send();
+      throw new AppError({
+        httpCode: HttpCode.BAD_REQUEST,
+        description: 'Username and password are required'
+      });
     }
 
     //Get user from database
@@ -29,13 +32,18 @@ class AuthController {
     try {
       user = await getUser(email);
     } catch (error) {
-      res.status(401).send();
+      throw new AppError({
+        httpCode: HttpCode.UNAUTHORIZED,
+        description: 'Username or password invalid'
+      });
     }
 
     //Check if encrypted password match
     if (!user || !user.checkIfUnencryptedPasswordIsValid(password)) {
-      res.status(401).send();
-      return;
+      throw new AppError({
+        httpCode: HttpCode.UNAUTHORIZED,
+        description: 'Username or password invalid'
+      });
     }
 
     //Sing JWT, valid for 1 hour
@@ -58,12 +66,12 @@ class AuthController {
       if (!email || !password)
         throw new AppError({
           httpCode: HttpCode.BAD_REQUEST,
-          description: 'Email et password requis'
+          description: 'Username and password are required'
         });
       if (await emailAlreadyExists(email))
         throw new AppError({
           httpCode: HttpCode.UNAUTHORIZED,
-          description: 'Email déjà utilisé'
+          description: 'User already exists'
         });
 
       const user = new User();

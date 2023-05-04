@@ -11,6 +11,7 @@ import { FileUpload } from 'primeng/fileupload';
 import { DebugService } from 'src/app/shared/debug.service';
 import { SettingsService } from 'src/app/shared/settings.service';
 import { UiService } from '../services/ui.service';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-document-manager',
@@ -108,14 +109,24 @@ export class DocumentManagerComponent implements OnInit {
     let nbFileDone = 0;
     this.progress = 1;
     for (const f of this.uploadedFiles) {
-      this.documentService.uploadFile(this.currentProject, f).subscribe(() => {
-        console.log('upload done');
-        nbFileDone = nbFileDone + 1;
-        this.progress = Math.round(
-          (nbFileDone / this.uploadedFiles.length) * 100
-        );
-        this.onProgress = this.progress !== 100;
-        f.done = true;
+      this.documentService.uploadFile(this.currentProject, f).subscribe({
+        next: () => {
+          console.log('upload done');
+          nbFileDone = nbFileDone + 1;
+          this.progress = Math.round(
+            (nbFileDone / this.uploadedFiles.length) * 100
+          );
+          this.onProgress = this.progress !== 100;
+          f.done = true;
+        },
+        error: (err) => {
+          this.closeUploadDiag();
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: `Erreur lors de l'upload de document`
+          });
+        }
       });
     }
   }
