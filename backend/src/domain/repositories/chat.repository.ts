@@ -1,4 +1,4 @@
-import { AppDataSource } from '../../config/data-source';
+import { AppDataSource } from '../../config/index';
 import { DeleteResult } from 'typeorm';
 import {
   Chat,
@@ -7,11 +7,8 @@ import {
   OriginalDocument,
   Project
 } from '../api/index';
-import { Language, LlmModel } from '../api/enum';
-import { ChatType } from '../api/enum';
-import { QAChainResponse } from '../../llm/api/qa-chain-response';
+import { Language, LlmModel, ChatType } from '../api/enum';
 import { SourceDocument } from '../api/source-document';
-import logger from '../../common/logger';
 
 export interface ICreateChatPayload {
   name: string;

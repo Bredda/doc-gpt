@@ -5,11 +5,11 @@ import {
   getAllProjectDocuments,
   getDocumentById,
   registerFileToProject
-} from '../repositories/project.repository';
+} from '../repositories/document.repository';
 import fs from 'fs';
 import path from 'path';
 import { ChromaService } from '../../llm/services/chroma.service';
-import config from '../../config/config';
+import { config } from '../../config/index';
 import { AppError, HttpCode } from '../../exceptions/exceptions';
 @Route('projects')
 @Tags('Documents')
@@ -22,8 +22,7 @@ class DocumentController {
     next: NextFunction
   ) => {
     async function runAsync() {
-      const context = await getAllProjectDocuments(req.params.projectId);
-      res.status(200).send(context);
+      res.status(200).send(await getAllProjectDocuments(req.params.projectId));
     }
     runAsync().catch(next);
   };
@@ -58,8 +57,7 @@ class DocumentController {
         });
       }
 
-      const context = await getAllProjectDocuments(req.params.projectId);
-      res.status(201).send(context);
+      res.status(201).send(await getAllProjectDocuments(req.params.projectId));
     }
     runAsync().catch(next);
   };
@@ -77,11 +75,10 @@ class DocumentController {
 
       const doc = await getDocumentById(req.params.docId);
       res.sendFile(path.basename(doc.path), options, function (err) {
-        if (err) {
-          next(err);
-        } else {
-          console.log('Sent:', doc.path);
-        }
+        throw new AppError({
+          httpCode: HttpCode.INTERNAL_SERVER_ERROR,
+          description: 'Error while reading file'
+        });
       });
     }
     runAsync().catch(next);
@@ -98,9 +95,13 @@ class DocumentController {
       if (doc) {
         fs.unlinkSync(doc.path);
         await deleteFileFromProject(req.params.projectId, req.params.docId);
+      } else {
+        throw new AppError({
+          httpCode: HttpCode.NOT_FOUND,
+          description: `Error no document with id ${req.params.docId}`
+        });
       }
-      const context = await getAllProjectDocuments(req.params.projectId);
-      res.status(200).send(context);
+      res.status(200).send(await getAllProjectDocuments(req.params.projectId));
     }
     runAsync().catch(next);
   };

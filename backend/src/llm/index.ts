@@ -6,7 +6,7 @@ import {
 import { PromptService } from './services/prompts.service';
 import { Chat } from '../domain/api/index';
 import logger from '../common/logger';
-import { ConversationalRetrievalQAChain } from 'langchain/chains';
+
 import { ModelService } from './services/model.service';
 import { TracingService } from './services/tracing.service';
 import { ChainService } from './services/chain.service';
@@ -57,6 +57,19 @@ class LLMQuerier {
     );
     const resp = await chain.call({ input: query });
     return await addMessageToChat(chatId, resp.response, 'llm');
+  };
+
+  static summarizationQuery = (
+    projectId: string,
+    chatId: string,
+    docId: string
+  ) => {
+    //1.Add query to chat table (with original file linked)
+    //2. Get chain
+    //3. Prepare doc from file
+    //Run chain
+    //Add response to chat table
+    //Return response
   };
 }
 

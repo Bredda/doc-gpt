@@ -7,10 +7,12 @@ import {
   UpdateDateColumn,
   JoinColumn,
   Relation,
-  OneToMany
+  OneToMany,
+  OneToOne
 } from 'typeorm';
 import { Chat } from './chat';
 import { SourceDocument } from './source-document';
+import { OriginalDocument } from './document';
 
 @Entity()
 export class ChatMessage {
@@ -33,6 +35,10 @@ export class ChatMessage {
     eager: true
   })
   sources!: SourceDocument[];
+
+  @OneToOne(() => OriginalDocument)
+  @JoinColumn()
+  document!: Relation<OriginalDocument>;
 
   @CreateDateColumn()
   createdAt!: Date;
