@@ -1,10 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ContextService } from '../services/context.service';
-import { ChatType } from '../api/settings';
-import { Models } from '../api/settings';
-import { Languages } from '../api/settings';
-import { DebugService } from 'src/app/shared/debug.service';
 import { SettingsService } from 'src/app/shared/settings.service';
 
 @Component({

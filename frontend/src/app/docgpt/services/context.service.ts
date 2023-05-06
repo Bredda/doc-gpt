@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, combineLatest, tap } from 'rxjs';
+import { Observable, combineLatest, tap } from 'rxjs';
 import { Project } from '../api/project';
 import { Chat } from '../api/chat';
 import { ProjectService } from './project.service';
@@ -10,7 +10,6 @@ import { DocumentService } from './documents.service';
   providedIn: 'root'
 })
 export class ContextService {
-  private currentDocuments = new BehaviorSubject<any[]>([]);
   public currentChatId: string | undefined;
   public currentProjectId: string | undefined;
   constructor(

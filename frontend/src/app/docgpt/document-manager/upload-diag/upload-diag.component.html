@@ -1,0 +1,43 @@
+<p-dialog
+  header="Ajout de document au projet"
+  [(visible)]="visible"
+  [closable]="false"
+  [closeOnEscape]="false"
+  [modal]="true"
+  [style]="{width: '50vw'}">
+  <p>
+    Les documents suivants vont être uploadés et ajoutés au contexte du projet
+    <span class="font-bold"> {{projectName}}</span>
+  </p>
+  <p-progressBar
+    [showValue]="false"
+    *ngIf="onProgress || progress ===100"
+    [value]="progress"></p-progressBar>
+  <ul class="list-disc">
+    <li class="ml-8 p-2" *ngFor="let f of uploadedFiles">
+      {{f.name}}
+      <i *ngIf="f.done" class="pi pi-check-cirle" style="color: green"></i>
+    </li>
+  </ul>
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-close"
+      *ngIf="!onProgress && progress !==100"
+      (click)="closeUploadDiag()"
+      label="Annuler"
+      styleClass="p-button-text"></p-button>
+    <p-button
+      icon="pi pi-check"
+      *ngIf="!onProgress && progress !==100"
+      (click)="onUploadConfirm()"
+      label="Confirmer"
+      styleClass="p-button-text"></p-button>
+    <p-button
+      icon="pi pi-check"
+      *ngIf="onProgress || progress ===100"
+      [loading]="onProgress"
+      (click)="closeUploadDiag()"
+      label="Fermer"
+      styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>

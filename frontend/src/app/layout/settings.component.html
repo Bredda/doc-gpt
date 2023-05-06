@@ -5,7 +5,7 @@
       class="p-inputswitch"
       id="theme"
       [ngModel]="settings.darkTheme"
-      (onChange)="toggleTheme($event)"></p-inputSwitch>
+      (onChange)="toggleTheme()"></p-inputSwitch>
   </div>
   <label for="debug" class="col-12 mb-2 md:col-2 md:mb-0">Debug links</label>
   <div class="col-12 md:col-10">
@@ -13,6 +13,6 @@
       class="p-inputswitch"
       id="debug"
       [ngModel]="settings.debug"
-      (onChange)="toggleDebug($event)"></p-inputSwitch>
+      (onChange)="toggleDebug()"></p-inputSwitch>
   </div>
 </div>

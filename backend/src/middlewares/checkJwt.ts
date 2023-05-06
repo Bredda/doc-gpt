@@ -14,10 +14,13 @@ export const checkJwt = async (
   let jwtPayload;
 
   if (!token) {
-    throw new AppError({
-      httpCode: HttpCode.UNAUTHORIZED,
-      description: 'User not authenticated'
-    });
+    next(
+      new AppError({
+        httpCode: HttpCode.UNAUTHORIZED,
+        description: 'User not authenticated'
+      })
+    );
+    return;
   }
   token = token.replace('Bearer ', '');
   //Try to validate the token and get data
@@ -27,10 +30,13 @@ export const checkJwt = async (
     res.locals.jwtPayload = jwtPayload;
     await getUserById(jwtPayload.userId);
   } catch (error) {
-    throw new AppError({
-      httpCode: HttpCode.UNAUTHORIZED,
-      description: 'User not authenticated'
-    });
+    next(
+      new AppError({
+        httpCode: HttpCode.UNAUTHORIZED,
+        description: 'User not authenticated'
+      })
+    );
+    return;
   }
 
   //The token is valid for 1 hour

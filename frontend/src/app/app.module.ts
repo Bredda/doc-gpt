@@ -4,7 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppLayoutComponent } from './layout/app.layout.component';
-import { AppTopbarComponent } from './layout/app.topbar.component';
 import { SharedModule } from './shared/shared.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './auth/services/auth.interceptor';
@@ -19,7 +18,6 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
   declarations: [
     AppComponent,
     AppLayoutComponent,
-    AppTopbarComponent,
     PageNotFoundComponent,
     MenuBarComponent,
     SettingsComponent

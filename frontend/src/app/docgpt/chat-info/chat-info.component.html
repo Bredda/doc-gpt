@@ -8,8 +8,11 @@
       >Traces <i class="pi pi-external-link" style="font-size: 0.75rem"></i
     ></a>
     <span class="mr-2"></span>
-    <span *ngIf="projectName" class="text-1xl font-italic"
+    <span *ngIf="projectName && chatName" class="text-1xl font-italic"
       >[{{projectName}}]</span
+    >
+    <span *ngIf="projectName && !chatName" class="text-3xl"
+      >{{projectName}}</span
     >
   </div>
   <div

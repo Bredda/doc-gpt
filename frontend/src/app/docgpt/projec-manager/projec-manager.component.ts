@@ -10,9 +10,6 @@ import { Router } from '@angular/router';
 import { ChatService } from '../services/chat.service';
 import { ContextService } from '../services/context.service';
 import { Project } from '../api/project';
-import { ChatType, Languages, Models } from '../api/settings';
-import { UiService } from '../services/ui.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-projec-manager',
@@ -21,22 +18,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   providers: [ConfirmationService, MessageService]
 })
 export class ProjecManagerComponent implements OnInit {
-  projectForm = new FormGroup({
-    projectName: new FormControl<string>('', [Validators.required])
-  });
-  visible = false;
   selectedNode!: TreeNode;
-  newName = '';
+
   createProjectVisible = false;
   createChatVisible = false;
   datas: TreeNode[] = [];
   items: MenuItem[] = [];
-  languages = Languages;
-  selectedLanguage = Languages[0];
-  selectedModel = Models[0];
-  models = Models;
-  types = ChatType;
-  selectedType = ChatType[0];
+  selectedProjectId = '';
   currentProjectId: string | undefined;
   currentChatId: string | undefined;
   constructor(
@@ -45,8 +33,7 @@ export class ProjecManagerComponent implements OnInit {
     private chatService: ChatService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private contextService: ContextService,
-    private uiService: UiService
+    private contextService: ContextService
   ) {}
 
   ngOnInit(): void {
@@ -55,9 +42,6 @@ export class ProjecManagerComponent implements OnInit {
       this.currentProjectId = v[1]?.id;
       this.currentChatId = v[2]?.id;
     });
-    this.uiService
-      .listenChatDiagOpen()
-      .subscribe((v) => (this.createChatVisible = true));
   }
 
   private transformProjectListToNode(projects: Project[]): TreeNode[] {
@@ -135,62 +119,6 @@ export class ProjecManagerComponent implements OnInit {
           });
       }
     });
-  }
-
-  onCancelCreate() {
-    this.createProjectVisible = false;
-    this.newName = '';
-  }
-  onConfirmCreate() {
-    this.projectService.createNewProject(this.newName).subscribe((projects) => {
-      this.newName = '';
-      this.createProjectVisible = false;
-      this.messageService.add({
-        severity: 'info',
-        summary: 'Confirmed',
-        detail: 'Projet créé'
-      });
-      this.router.navigate(['project', projects[projects.length - 1].id]);
-    });
-  }
-
-  onCancelCreateChat() {
-    this.createChatVisible = false;
-    this.newName = '';
-  }
-  onConfirmCreateChat() {
-    this.chatService
-      .createNewChat(this.getTargetProject().data.id, {
-        name: this.newName,
-        settings: {
-          type: this.selectedType.value,
-          model: this.selectedModel.name,
-          language: this.selectedLanguage.value
-        }
-      })
-      .subscribe((projects) => {
-        this.newName = '';
-        this.createChatVisible = false;
-        this.messageService.add({
-          severity: 'info',
-          summary: 'Confirmed',
-          detail: 'Nouvelle conversation créée'
-        });
-
-        const targetProject = projects.find(
-          (p) => p.id === this.getTargetProject().data.id
-        );
-        if (targetProject !== undefined) {
-          const targetChat =
-            targetProject.chats[targetProject.chats.length - 1];
-          this.router.navigate([
-            'project',
-            targetProject.id,
-            'chat',
-            targetChat.id
-          ]);
-        }
-      });
   }
 
   deleteChat() {

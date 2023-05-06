@@ -1,0 +1,15 @@
+<div
+  class="border-dashed border-1 pt-4"
+  appDndUpload
+  (fileDropped)="onFileDropped($event)">
+  <div class="text-center text-lg">
+    <span class="pi pi-upload"></span> Dépôt de fichier
+  </div>
+  <input
+    type="file"
+    class="max-w-0"
+    #fileDropRef
+    id="fileDrop"
+    multiple
+    (change)="fileBrowseHandler($event)" />
+</div>

@@ -20,25 +20,21 @@ export class DndUploadDirective {
     evt.preventDefault();
     evt.stopPropagation();
     this.fileOver = true;
-    console.log('drag over');
   }
 
   @HostListener('dragleave', ['$event']) onDragLeave(evt: any) {
     evt.preventDefault();
     evt.stopPropagation();
     this.fileOver = false;
-    console.log('drag leave');
   }
   @HostListener('drop', ['$event']) onDrop(evt: any) {
     evt.preventDefault();
     evt.stopPropagation();
-    console.log('Drop');
     this.fileOver = false;
-    console.log(evt);
     const files = evt.dataTransfer.files;
     if (files.length > 0) {
-      console.log(`You dropped ${files.length} files`);
       this.fileDropped.emit(files);
+      console.log(files);
     }
   }
 }

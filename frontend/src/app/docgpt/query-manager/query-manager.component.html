@@ -19,7 +19,8 @@
     class="mb-5"
     style="padding: 1rem; height: 57px"
     styleClass="p-button-warn"
-    [loading]="loading"
-    [disabled]="query === ''"
+    [loading]="(llm
+    .listenToProcessing() | async) || false"
+    [disabled]=""
     (click)="onAsk()"></button>
 </div>

@@ -1,0 +1,21 @@
+<p-accordion *ngIf="message">
+  <p-accordionTab header="Sources">
+    <div *ngFor="let source of message.sources" class="mb-2">
+      <p class="text-sm">
+        <p-inplace>
+          <ng-template pTemplate="display">
+            {{(source.pageContent | slice:0:100)+'...'}}
+          </ng-template>
+          <ng-template pTemplate="content">
+            {{source.pageContent}}
+          </ng-template>
+        </p-inplace>
+      </p>
+      <div class="text-xs text-right font-italic">
+        {{source.source |filename}} - Ligne {{source.from}} à {{source.to}}
+        <a [href]="source.source">Link</a>
+      </div>
+      <p-divider></p-divider>
+    </div>
+  </p-accordionTab>
+</p-accordion>

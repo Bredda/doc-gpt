@@ -26,9 +26,9 @@ export class LlmService {
   }
 
   queryRetrieval(query: string) {
-    this.chatService.addTempNewqueryToCurrentChat(query);
     this.$queryBeingPrecessed.next(true);
-    console.log(query);
+    this.chatService.addTempNewqueryToCurrentChat(query);
+
     this.socket.emit('retrieval-query', {
       projectId: this.contextService.currentProjectId,
       chatId: this.contextService.currentChatId,
@@ -41,10 +41,9 @@ export class LlmService {
   }
 
   query(chatId: string, query: string) {
-    this.chatService.addTempNewqueryToCurrentChat(query);
     this.$queryBeingPrecessed.next(true);
-    console.log(chatId);
-    console.log(query);
+    this.chatService.addTempNewqueryToCurrentChat(query);
+
     this.socket.emit('conversation-query', { chatId: chatId, query: query });
     this.socket.on('conversation-response', (resp) => {
       this.chatService.updateCurrentChat(resp);

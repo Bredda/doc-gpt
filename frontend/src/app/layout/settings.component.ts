@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ThemeService } from '../shared/theme.service';
-import { DebugService } from '../shared/debug.service';
-import { LocalStorageService } from '../shared/local-storage.service';
 import { SettingsService } from '../shared/settings.service';
 import { UserSettings } from '../docgpt/api/user-settings';
 
@@ -14,7 +11,7 @@ export class SettingsComponent implements OnInit {
   settings!: UserSettings;
   constructor(private settingsService: SettingsService) {}
 
-  toggleTheme(event: any) {
+  toggleTheme() {
     this.settingsService.toggleTheme();
   }
 
@@ -22,7 +19,7 @@ export class SettingsComponent implements OnInit {
     this.settingsService.getSettings().subscribe((s) => (this.settings = s));
   }
 
-  toggleDebug(event: any) {
+  toggleDebug() {
     this.settingsService.toggleDebug();
   }
 }

@@ -15,6 +15,12 @@ import { ChatInfoComponent } from './chat-info/chat-info.component';
 import { DocumentViewerComponent } from './document-viewer/document-viewer.component';
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { UploadDiagComponent } from './document-manager/upload-diag/upload-diag.component';
+import { DocumentUploaderComponent } from './document-manager/document-uploader/document-uploader.component';
+import { ChatMessageComponent } from './chat-panel/chat-message/chat-message.component';
+import { MessageSourcesComponent } from './chat-panel/message-sources/message-sources.component';
+import { CreateProjectDiagComponent } from './projec-manager/create-project-diag/create-project-diag.component';
+import { CreateChatDiagComponent } from './projec-manager/create-chat-diag/create-chat-diag.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +31,13 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     DndUploadDirective,
     ChatPanelComponent,
     ChatInfoComponent,
-    DocumentViewerComponent
+    DocumentViewerComponent,
+    UploadDiagComponent,
+    DocumentUploaderComponent,
+    ChatMessageComponent,
+    MessageSourcesComponent,
+    CreateProjectDiagComponent,
+    CreateChatDiagComponent
   ],
   imports: [
     CommonModule,

@@ -1,15 +1,22 @@
-export const Languages = [
-  { id: 0, name: 'Français', value: 'french' },
-  { id: 1, name: 'English', value: 'english' }
+export type Setting = {
+  id: number;
+  label: string;
+  code: string;
+};
+
+export const Languages: Setting[] = [
+  { id: 0, label: 'Français', code: 'french' },
+  { id: 1, label: 'English', code: 'english' }
 ];
 
-export const Models = [
-  { id: 0, name: 'gpt-3.5-turbo' },
-  { id: 1, name: 'gpt4' }
+export const Models: Setting[] = [
+  { id: 0, label: 'gpt-3.5-turbo', code: 'gpt-3.5-turbo' },
+  { id: 1, label: 'gpt4', code: 'gpt4' }
 ];
 
-export const ChatType = [
-  { id: 0, name: 'Conversation Chat-GPT', value: 'conversationnal' },
-  { id: 1, name: 'Chat with your data', value: 'chat_with_data' },
-  { id: 1, name: 'Génération de code', value: 'code_generation' }
+export const ChatType: Setting[] = [
+  { id: 0, label: 'Conversation Chat-GPT', code: 'conversationnal' },
+  { id: 1, label: 'Chat with your data', code: 'chat_with_data' },
+  { id: 2, label: 'Résumé de document', code: 'summarization' },
+  { id: 2, label: 'Génération de code', code: 'code_generation' }
 ];

@@ -33,7 +33,7 @@ export class AuthService {
       );
   }
   signup(email: string, password: string): Observable<User> {
-    return this.httpClient.post<any>(`${this.url}/signup`, {
+    return this.httpClient.post<User>(`${this.url}/signup`, {
       email: email,
       password: password
     });

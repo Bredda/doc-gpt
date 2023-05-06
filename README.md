@@ -21,3 +21,24 @@ La soultion est composée de différents composants:
 - motorhead: gestion de la mémoire des conversations
 
 ## Usage dev
+
+- Copier .env.dev.example, renommer en .env.dev et mettre sa clé d'api OpenAI
+- Lancer la stack chromaDb, LightHouse, LangchainPlus et Motorhead
+
+```
+npm run stack:dev
+```
+
+- Installer les dépendences du front et le démarrer
+
+```
+npm i
+npm run frontend:dev
+```
+
+- Installer les dépendences du back et le démarrer
+
+```
+npm i
+npm run backend:dev
+```
