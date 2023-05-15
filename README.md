@@ -9,7 +9,8 @@ Parmi les premiers use cases:
 - Chat with your data: utilisation de source de donnée personnalisée (fichiers txt, pdf, etc.)
 - Résumé de document
 
-La soultion est composée de différents composants:
+La solution comprend différents composants:
+![alt text](./archi.png "Architecture de la solution")
 
 - frontend: ui sous Angular
 - backend: server express avec des
@@ -42,3 +43,8 @@ npm run frontend:dev
 npm i
 npm run backend:dev
 ```
+
+## Références
+
+https://js.langchain.com/docs/modules/indexes/
+https://github.com/mayooear/gpt4-pdf-chatbot-langchain

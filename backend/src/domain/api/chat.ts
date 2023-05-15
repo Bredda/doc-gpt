@@ -13,6 +13,7 @@ import {
 import { ChatMessage } from './chat-message';
 import { ChatSettings } from './chat-settings';
 import { Project } from './project';
+import { Summary } from './summary';
 
 @Entity()
 export class Chat {
@@ -28,6 +29,9 @@ export class Chat {
 
   @OneToMany(() => ChatMessage, (chatMessage) => chatMessage.chat)
   messages!: ChatMessage[];
+
+  @OneToMany(() => Summary, (summary) => summary.chat)
+  summaries!: Summary[];
 
   @ManyToOne((_type) => Project, (project: Project) => project.chats, {
     onDelete: 'CASCADE'

@@ -157,6 +157,7 @@ export class ProjecManagerComponent implements OnInit {
 
   onContext() {
     if (this.selectedIsProject()) {
+      this.selectedProjectId = this.selectedNode.data.id;
       this.items = [
         {
           label: 'Charger',

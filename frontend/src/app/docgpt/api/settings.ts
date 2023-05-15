@@ -18,5 +18,5 @@ export const ChatType: Setting[] = [
   { id: 0, label: 'Conversation Chat-GPT', code: 'conversationnal' },
   { id: 1, label: 'Chat with your data', code: 'chat_with_data' },
   { id: 2, label: 'Résumé de document', code: 'summarization' },
-  { id: 2, label: 'Génération de code', code: 'code_generation' }
+  { id: 3, label: 'Génération de code', code: 'code_generation' }
 ];

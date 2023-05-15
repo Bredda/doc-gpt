@@ -25,6 +25,20 @@ export class LlmService {
     return this.$queryBeingPrecessed.asObservable();
   }
 
+  querySummarization(docId: string) {
+    this.$queryBeingPrecessed.next(true);
+    this.socket.emit('summarization-query', {
+      projectId: this.contextService.currentProjectId,
+      chatId: this.contextService.currentChatId,
+      docId: docId
+    });
+    this.socket.on('summarization-response', (resp) => {
+      console.log(resp);
+      this.chatService.updateCurrentChat(resp);
+      this.$queryBeingPrecessed.next(false);
+    });
+  }
+
   queryRetrieval(query: string) {
     this.$queryBeingPrecessed.next(true);
     this.chatService.addTempNewqueryToCurrentChat(query);

@@ -23,6 +23,7 @@ import { AccordionModule } from 'primeng/accordion';
 import { InplaceModule } from 'primeng/inplace';
 import { FilenamePipe } from './filename.pipe';
 import { SidebarModule } from 'primeng/sidebar';
+import { DotTypingComponent } from './dot-typing/dot-typing.component';
 const UI_MODULES = [
   ToolbarModule,
   ButtonModule,
@@ -50,8 +51,8 @@ const UI_MODULES = [
 const NG_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
 
 @NgModule({
-  declarations: [FilenamePipe],
+  declarations: [FilenamePipe, DotTypingComponent],
   imports: [...NG_MODULES, ...UI_MODULES],
-  exports: [...NG_MODULES, ...UI_MODULES, FilenamePipe]
+  exports: [...NG_MODULES, ...UI_MODULES, FilenamePipe, DotTypingComponent]
 })
 export class SharedModule {}

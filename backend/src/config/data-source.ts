@@ -5,7 +5,8 @@ import {
   OriginalDocument,
   Project,
   User,
-  ChatSettings
+  ChatSettings,
+  Summary
 } from '../domain/api/index';
 import { InitTables1681723146559 } from '../../migrations/1681723146559-InitTables';
 import { InitDatas1681723156753 } from '../../migrations/1681723156753-InitDatas';
@@ -28,7 +29,8 @@ export const AppDataSource = new DataSource({
     Chat,
     ChatSettings,
     OriginalDocument,
-    SourceDocument
+    SourceDocument,
+    Summary
   ],
   subscribers: [],
   //migrations: [InitTables1681723146559, InitDatas1681723156753],

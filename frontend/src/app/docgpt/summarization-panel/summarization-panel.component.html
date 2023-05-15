@@ -1,0 +1,13 @@
+<div
+  class="summary overflow-auto w-full flex flex-column align-items-center"
+  *ngFor="let summary of currentChat?.summaries ; index as index"
+  [ngClass]="{even: index % 2 === 0, odd: index % 2 !== 0}">
+  <div class="flex gap-4">
+    <div class="align-self-center">{{summary.document.originalname}}</div>
+
+    {{summary.content}}
+  </div>
+</div>
+<div *ngIf="processing">
+  Génération du résumé en cours <app-dot-typing></app-dot-typing>
+</div>

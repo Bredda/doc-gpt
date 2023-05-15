@@ -21,6 +21,8 @@ import { ChatMessageComponent } from './chat-panel/chat-message/chat-message.com
 import { MessageSourcesComponent } from './chat-panel/message-sources/message-sources.component';
 import { CreateProjectDiagComponent } from './projec-manager/create-project-diag/create-project-diag.component';
 import { CreateChatDiagComponent } from './projec-manager/create-chat-diag/create-chat-diag.component';
+import { SummarizationPanelComponent } from './summarization-panel/summarization-panel.component';
+import { SummarizationManagerComponent } from './summarization-manager/summarization-manager.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { CreateChatDiagComponent } from './projec-manager/create-chat-diag/creat
     ChatMessageComponent,
     MessageSourcesComponent,
     CreateProjectDiagComponent,
-    CreateChatDiagComponent
+    CreateChatDiagComponent,
+    SummarizationPanelComponent,
+    SummarizationManagerComponent
   ],
   imports: [
     CommonModule,

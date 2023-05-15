@@ -10,8 +10,18 @@
     <app-chat-info class="w-full"></app-chat-info>
 
     <app-chat-panel
+      *ngIf="chatType !== 'summarization'"
       class="h-full w-full flex-1 flex-col overflow-hidden"></app-chat-panel>
-    <app-query-manager class="w-full pt-2"></app-query-manager>
+    <app-query-manager
+      class="w-full pt-2"
+      *ngIf="chatType !== 'summarization'"></app-query-manager>
+    <app-summarization-panel
+      *ngIf="chatType == 'summarization'"
+      class="h-full w-full flex-1 flex-col overflow-hidden"></app-summarization-panel>
+    <app-summarization-manager
+      *ngIf="chatType == 'summarization'"
+      class="w-full pt-2">
+    </app-summarization-manager>
   </div>
 </div>
 

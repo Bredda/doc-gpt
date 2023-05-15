@@ -63,7 +63,7 @@ export class ChromaService {
     );
     return this.addDocToCollection(
       collectionName,
-      await DocumentService.createDocFromFile(file)
+      await DocumentService.createDocument(file)
     );
   };
 }

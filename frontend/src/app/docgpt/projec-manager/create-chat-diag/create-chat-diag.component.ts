@@ -41,6 +41,7 @@ export class CreateChatDiagComponent implements OnInit {
     this.uiService
       .listenChatDiagOpen()
       .subscribe((v) => this.visibleChange.emit(true));
+    this.chatForm.valueChanges.subscribe((v) => console.log(v));
   }
 
   onCancelCreateChat() {
@@ -52,7 +53,7 @@ export class CreateChatDiagComponent implements OnInit {
       .createNewChat(this.targetProjectId, {
         name: this.chatForm.value.name || '',
         settings: {
-          type: this.chatForm.value.type?.code,
+          type: this.chatForm.value.type,
           model: this.chatForm.value.model?.code,
           language: this.chatForm.value.language?.code
         }
