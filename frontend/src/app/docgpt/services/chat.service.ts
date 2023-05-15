@@ -58,6 +58,7 @@ export class ChatService {
   }
 
   public createNewChat(projectId: string, newChat: Partial<Chat>) {
+    console.log('Creating chat', newChat);
     return this.httpClient
       .post<Project[]>(`${this.url}/projects/${projectId}/chats`, newChat)
       .pipe(tap((p) => this.projectService.updateProjectList(p)));

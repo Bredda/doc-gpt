@@ -1,0 +1,20 @@
+<div class="flex justify-content-center align-items-center pt-4 gap-2">
+  <p-dropdown
+    placeholder="Selectionnez un fichier"
+    [options]="documents"
+    optionLabel="originalname"
+    optionValue="id"
+    class="mb-5"
+    [disabled]="processing || done"
+    [(ngModel)]="selectedDocument"></p-dropdown>
+
+  <p-button
+    icon="pi pi-times"
+    (click)="onSummarize()"
+    [disabled]="selectedDocument === undefined
+  "
+    class="mb-5"
+    [loading]="processing"
+    label="Générer résumé"
+    styleClass="p-button-outlined "></p-button>
+</div>

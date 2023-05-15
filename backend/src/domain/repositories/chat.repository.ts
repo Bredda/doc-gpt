@@ -1,17 +1,15 @@
-import { AppDataSource } from '../../config/data-source';
+import { AppDataSource } from '../../config/index';
 import { DeleteResult } from 'typeorm';
 import {
   Chat,
   ChatMessage,
   ChatSettings,
   OriginalDocument,
-  Project
+  Project,
+  Summary
 } from '../api/index';
-import { Language, LlmModel } from '../api/enum';
-import { ChatType } from '../api/enum';
-import { QAChainResponse } from '../../llm/api/qa-chain-response';
+import { Language, LlmModel, ChatType } from '../api/enum';
 import { SourceDocument } from '../api/source-document';
-import logger from '../../common/logger';
 
 export interface ICreateChatPayload {
   name: string;
@@ -28,7 +26,9 @@ export interface IUpdateChatPayload {
 }
 
 export const getChatsByProjectId = async (
-  projectId: string
+  projectId: string,
+  chatMessages?: boolean,
+  summaries?: boolean
 ): Promise<Array<Chat>> => {
   return await AppDataSource.manager.find(Chat, {
     where: {
@@ -37,7 +37,9 @@ export const getChatsByProjectId = async (
       }
     },
     relations: {
-      settings: true
+      settings: true,
+      messages: chatMessages || false,
+      summaries: summaries || false
     }
   });
 };
@@ -85,7 +87,37 @@ export const addMessageToChat = async (
 
   return await AppDataSource.manager.findOneOrFail(Chat, {
     where: { id: chatId },
-    relations: { messages: true, settings: true },
+    relations: { messages: true, settings: true, summaries: true },
+    order: {
+      messages: {
+        createdAt: 'ASC'
+      }
+    }
+  });
+};
+
+export const addSummarizationToChat = async (
+  projectId: string,
+  chatId: string,
+  document: OriginalDocument,
+  content: string
+) => {
+  const chat: Chat = await AppDataSource.manager.findOneByOrFail(Chat, {
+    id: chatId
+  });
+  // Persist new message linked to summarized doc
+  await AppDataSource.manager.save(Summary, {
+    content: content,
+    chat: chat,
+    document: document
+  });
+  return await AppDataSource.manager.findOneOrFail(Chat, {
+    where: { id: chatId },
+    relations: {
+      messages: true,
+      settings: true,
+      summaries: { document: true }
+    },
     order: {
       messages: {
         createdAt: 'ASC'
@@ -147,7 +179,11 @@ export const addMessageWithSourceToChat = async (
 export const getChat = async (chatId: string): Promise<Chat> => {
   return AppDataSource.manager.findOneOrFail(Chat, {
     where: { id: chatId },
-    relations: { messages: true, settings: true },
+    relations: {
+      messages: true,
+      settings: true,
+      summaries: { document: true }
+    },
     order: {
       messages: {
         createdAt: 'ASC'

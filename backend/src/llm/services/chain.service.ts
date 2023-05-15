@@ -1,6 +1,7 @@
 import {
   ConversationalRetrievalQAChain,
-  ConversationChain
+  ConversationChain,
+  loadSummarizationChain
 } from 'langchain/chains';
 import { Chroma } from 'langchain/vectorstores/chroma';
 import { BaseLLM } from 'langchain/llms/base';
@@ -16,6 +17,10 @@ export class ChainService {
       vectorStore.asRetriever(),
       { returnSourceDocuments: true }
     );
+  };
+
+  static getSummarizationChain = (model: BaseLLM) => {
+    return loadSummarizationChain(model, { type: 'map_reduce' });
   };
 
   static getConversationChain = (

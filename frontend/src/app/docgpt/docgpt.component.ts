@@ -20,6 +20,7 @@ import { Subscription } from 'rxjs';
 export class DocgptComponent implements OnInit, OnDestroy {
   currentProject!: string;
   private subscriptions: Subscription[] = [];
+  chatType = '';
   sidebarVisible = false;
   constructor(
     private route: ActivatedRoute,
@@ -36,6 +37,9 @@ export class DocgptComponent implements OnInit, OnDestroy {
         );
       })
     );
+    this.contextService.listenToDataChange().subscribe((v) => {
+      this.chatType = v[2]?.settings.type;
+    });
   }
 
   ngOnDestroy(): void {

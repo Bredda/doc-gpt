@@ -1,14 +1,14 @@
-.message {
+.summary {
   padding: 3rem 0 3rem 0;
   width: 100%;
   & > div {
-    width: 50%;
+    width: 80%;
   }
 }
 
-.message-user {
+.summary.odd {
   background-color: var(--surface-a);
 }
-.message-llm {
+.summary.even {
   background-color: var(--surface-d);
 }

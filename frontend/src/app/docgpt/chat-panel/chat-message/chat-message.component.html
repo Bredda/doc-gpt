@@ -20,7 +20,7 @@
           fill="currentColor"></path>
       </svg>
       <span class="flex-1" *ngIf="!processing">{{message.content}}</span>
-      <div *ngIf="processing" class="dot-typing"></div>
+      <app-dot-typing *ngIf="processing" class="dot-typing"></app-dot-typing>
     </div>
   </div>
   <app-message-sources></app-message-sources>

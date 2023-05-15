@@ -10,5 +10,7 @@ export enum Language {
 
 export enum ChatType {
   CONVERSATIONNAL = 'conversationnal',
-  Chat_WITH_DATA = 'chat_with_data'
+  CHAT_WITH_DATA = 'chat_with_data',
+  SUMMARIZATION = 'summarization',
+  CODE_GENERATION = 'code_generation'
 }

@@ -15,15 +15,12 @@ import { SourceDocument } from './source-document';
 import { OriginalDocument } from './document';
 
 @Entity()
-export class ChatMessage {
+export class Summary {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
   @Column()
   content!: string;
-
-  @Column()
-  origin!: string;
 
   @ManyToOne((_type) => Chat, (chat: Chat) => chat.messages, {
     onDelete: 'CASCADE'
@@ -31,10 +28,14 @@ export class ChatMessage {
   @JoinColumn()
   chat!: Relation<Chat>;
 
-  @OneToMany(() => SourceDocument, (source) => source.message, {
-    eager: true
-  })
-  sources!: SourceDocument[];
+  @ManyToOne(
+    (_type) => OriginalDocument,
+    (originalDocument: OriginalDocument) => originalDocument.summaries,
+    {
+      onDelete: 'CASCADE'
+    }
+  )
+  document!: Relation<OriginalDocument>;
 
   @CreateDateColumn()
   createdAt!: Date;

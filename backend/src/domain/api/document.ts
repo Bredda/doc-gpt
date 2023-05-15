@@ -6,9 +6,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   JoinColumn,
-  Relation
+  Relation,
+  OneToMany
 } from 'typeorm';
 import { Project } from './project';
+import { Summary } from './summary';
 
 @Entity()
 export class OriginalDocument {
@@ -37,6 +39,11 @@ export class OriginalDocument {
   )
   @JoinColumn()
   project!: Relation<Project>;
+
+  @OneToMany(() => Summary, (summary) => summary.document, {
+    eager: true
+  })
+  summaries!: Summary[];
 
   @CreateDateColumn()
   createdAt!: Date;
