@@ -19,7 +19,8 @@ export class ProjectRoutes extends CommonRoutesConfig {
     this.app
       .route('/doc-gpt/projects/:projectId')
       .get([checkJwt], ProjectController.getUserProjects)
-      .delete([checkJwt], ProjectController.deleteUserProject);
+      .delete([checkJwt], ProjectController.deleteUserProject)
+      .put([checkJwt], ProjectController.renameProjectById);
 
     return this.app;
   }
