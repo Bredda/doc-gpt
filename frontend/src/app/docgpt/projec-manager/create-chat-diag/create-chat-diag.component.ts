@@ -25,9 +25,9 @@ export class CreateChatDiagComponent implements OnInit {
 
   chatForm = new FormGroup({
     name: new FormControl<string>('', [Validators.required]),
-    language: new FormControl<Setting>(Languages[0], Validators.required),
-    model: new FormControl<Setting>(Models[0], Validators.required),
-    type: new FormControl<Setting>(ChatType[0], Validators.required)
+    language: new FormControl<string>(Languages[0].code, Validators.required),
+    model: new FormControl<string>(Models[0].code, Validators.required),
+    type: new FormControl<string>(ChatType[0].code, Validators.required)
   });
 
   constructor(
@@ -48,14 +48,16 @@ export class CreateChatDiagComponent implements OnInit {
     this.visibleChange.emit(false);
     this.chatForm.reset();
   }
+
   onConfirmCreateChat() {
+    console.log(this.chatForm.value);
     this.chatService
       .createNewChat(this.targetProjectId, {
         name: this.chatForm.value.name || '',
         settings: {
           type: this.chatForm.value.type,
-          model: this.chatForm.value.model?.code,
-          language: this.chatForm.value.language?.code
+          model: this.chatForm.value.model,
+          language: this.chatForm.value.language
         }
       })
       .subscribe((projects) => {

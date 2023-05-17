@@ -176,6 +176,10 @@ export const addMessageWithSourceToChat = async (
   });
 };
 
+export const getChatModel = async (chatId: string): Promise<string> => {
+  return (await getChat(chatId)).settings.model;
+};
+
 export const getChat = async (chatId: string): Promise<Chat> => {
   return AppDataSource.manager.findOneOrFail(Chat, {
     where: { id: chatId },

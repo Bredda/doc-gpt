@@ -11,7 +11,7 @@ export const Languages: Setting[] = [
 
 export const Models: Setting[] = [
   { id: 0, label: 'gpt-3.5-turbo', code: 'gpt-3.5-turbo' },
-  { id: 1, label: 'gpt4', code: 'gpt4' }
+  { id: 1, label: 'gpt4', code: 'gpt-4' }
 ];
 
 export const ChatType: Setting[] = [

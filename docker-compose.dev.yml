@@ -1,6 +1,7 @@
 version: "3"
 
 services:
+  # VECTORE STORE
   chroma:
     build:
       context: tools/chroma
@@ -31,6 +32,7 @@ services:
     ports:
       - 8123:8123
 
+  # MEMOIRE
   motorhead:
     build: tools/motorhead
     ports:
@@ -48,6 +50,7 @@ services:
     ports:
       - ${LIGHTHOUSE_PORT}:80
 
+  # BDD PROJET
   docgpt-db:
     image: postgres:14.1
     environment:
@@ -59,7 +62,6 @@ services:
       - ./database/data:/var/lib/postgresql/data
     ports:
       - 5432:5432
-
   adminer:
     image: adminer
     restart: always

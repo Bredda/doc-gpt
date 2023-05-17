@@ -11,6 +11,7 @@ Front
 - Revamp moving dots while query processing
 - Error toast et message clean quand erreur dans la query vers llm
 - Affichage des sources lorsque
+
 - More user settings (avatar, email change)
 - About avec version
 - Récup password
@@ -19,6 +20,7 @@ Front
 
 Features:
 
+- Partage de projets entre utilisateur
 - Multiple type doc (pdf, txt, autre)
 - améliorer tracing (aim ?)
 - visualisation des fichiers après upload
@@ -31,7 +33,4 @@ Infra
 
 - Ajouter des tests front et back
 - build des images front et back de docgpt
-
-Veille
-
-- Mini GPT4
+- Image docker de Mtorhead: https://github.com/getmetal/motorhead/pkgs/container/motorhead

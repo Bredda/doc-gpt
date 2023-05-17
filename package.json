@@ -6,7 +6,6 @@
   "scripts": {
     "backend:dev": "cd ./backend && npm run dev",
     "frontend:dev": "cd ./frontend && npm run start",
-    "database:dev": "docker-compose -f ./database/docker-compose.yml --env-file .env.dev up -d",
     "stack:dev": "docker-compose -f docker-compose.dev.yml --env-file .env.dev up -d"
   },
   "repository": {

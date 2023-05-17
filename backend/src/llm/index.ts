@@ -2,7 +2,9 @@ import { Language } from '../domain/api/enum';
 import {
   addMessageToChat,
   addMessageWithSourceToChat,
-  addSummarizationToChat
+  addSummarizationToChat,
+  getChat,
+  getChatModel
 } from '../domain/repositories/chat.repository';
 import { PromptService } from './services/prompts.service';
 import { Chat } from '../domain/api/index';
@@ -53,8 +55,11 @@ class LLMQuerier {
       Language.FRENCH,
       memory
     );
+
+    const modelName = await getChatModel(chatId);
+
     const chain = ChainService.getConversationChain(
-      ModelService.getOpenAi(),
+      ModelService.getOpenAi(modelName),
       chatPrompt,
       memory
     );

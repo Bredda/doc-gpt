@@ -11,6 +11,10 @@ import { ChromaService } from '../../llm/services/chroma.service';
 @Route('projects')
 @Tags('Project')
 class ProjectController {
+
+
+
+  
   @Get('/projects')
   static getUserProjects = async (
     req: Request,
@@ -24,6 +28,8 @@ class ProjectController {
     }
     runAsync().catch(next);
   };
+
+
 
   @Get('/projects/:projectId')
   static getProjectById = async (

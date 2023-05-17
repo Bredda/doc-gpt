@@ -10,7 +10,7 @@ Parmi les premiers use cases:
 - Résumé de document
 
 La solution comprend différents composants:
-![alt text](./archi.png "Architecture de la solution")
+![alt text](./documentation/archi.png "Architecture de la solution")
 
 - frontend: ui sous Angular
 - backend: server express avec des
@@ -44,7 +44,58 @@ npm i
 npm run backend:dev
 ```
 
+## Frontend
+
+Le front est développé en Angular et utilise principalement
+
+- [PrimeNG](https://primeng.org/installation) - librairie de composants Angular
+- [PrimeFlex](https://www.primefaces.org/primeflex/) - librairie utilitaire CSS
+
+### Routing
+
+Deux routes principales
+
+- `/auth`
+  - vers le module `Auth` pour
+  - Pages de signin et signup
+  - Non soumis à authentification
+- `/`
+  - vers le module `DOCGPT` pour toutes les
+  - Pages fonctionnelles de DocGPT
+  - Soumises à authentification
+
+### Composants
+
+![alt text](./documentation/front-components.png "Composants du front")
+
+- `AppLayout` - Layout principal de l'application. Contient le composant `MenuBar` et les composants selon la navigation (`<router-oulet>` vers `AuthModule` ou `DocGptModule`)
+- `DocGPT` - Layout principal pour `DocuGPTModule`, inclus l'ensemble des composants (avec des `ngIf` selon le cas d'usage)
+
+- `ProjectManager` - Composant contenant le `tree` avec la liste des projets et conversation. Intègre également les dialogues de creation de projet et de conversation
+
+### Services
+
+#### Shared par toutes l'application
+
+- DebugService
+- LocalStorageService - gère le local storage pour les settings du user et pour le token d'authentification
+- SettingsService - gère les settings applicatifs (thème et debug)
+- ThemeService - gère simplement le switch entre les thèmes sombre et clair
+
+#### Specific module `DocGpt`
+
+- ChatService
+- ContextService
+- DocumentService
+- LLMService
+- ProjectService
+- UIService
+
+## BAckend
+
 ## Références
 
 https://js.langchain.com/docs/modules/indexes/
 https://github.com/mayooear/gpt4-pdf-chatbot-langchain
+https://docs.trychroma.com/
+https://typeorm.io/
