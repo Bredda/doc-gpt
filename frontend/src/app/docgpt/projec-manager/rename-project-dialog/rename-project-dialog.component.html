@@ -1,0 +1,44 @@
+<p-dialog
+  header="Renommer projet"
+  [(visible)]="visible"
+  [modal]="true"
+  [style]="{width: '50vw'}">
+  <form [formGroup]="projectForm">
+    <div class="field mb-5">
+      <input
+        id="newProjectName"
+        type="text"
+        placeholder="Nom"
+        pInputText
+        required
+        class="p-inputtext w-full md:w-30rem"
+        style="padding: 1rem"
+        formControlName="name"
+        [(ngModel)]="projectName"
+         />
+      <small
+        class="p-error block"
+        *ngIf="
+      projectForm.get('name')?.invalid &&
+      projectForm.get('name')?.dirty
+    ">
+        Nom de projet requis</small
+      >
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-times"
+      (click)="onCancelCreate()"
+      label="Annuler"
+      styleClass="p-button-text"></p-button>
+    <p-button
+      icon="pi pi-check"
+      (click)="onRenameProject()"
+      [disabled]="projectForm.invalid"
+      label="Renommer"
+      styleClass="p-button-text"></p-button>
+      
+  </ng-template>
+</p-dialog>

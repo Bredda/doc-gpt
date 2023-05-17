@@ -31,5 +31,10 @@
 <app-create-chat-diag
   [(visible)]="createChatVisible"
   [targetProjectId]="selectedProjectId"></app-create-chat-diag>
+  <app-rename-project-dialog
+  [(visible)]="renameProject"
+  [targetProjectId]="selectedProjectId"
+  [projectName]="selectedProjectName"
+  ></app-rename-project-dialog>
 <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
 <p-toast></p-toast>

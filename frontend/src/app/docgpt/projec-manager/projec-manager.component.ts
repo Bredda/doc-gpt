@@ -22,9 +22,11 @@ export class ProjecManagerComponent implements OnInit {
 
   createProjectVisible = false;
   createChatVisible = false;
+  renameProject=false;
   datas: TreeNode[] = [];
   items: MenuItem[] = [];
   selectedProjectId = '';
+  selectedProjectName=''
   currentProjectId: string | undefined;
   currentChatId: string | undefined;
   constructor(
@@ -158,6 +160,7 @@ export class ProjecManagerComponent implements OnInit {
   onContext() {
     if (this.selectedIsProject()) {
       this.selectedProjectId = this.selectedNode.data.id;
+      this.selectedProjectName=this.selectedNode.data.name;
       this.items = [
         {
           label: 'Charger',
@@ -171,7 +174,8 @@ export class ProjecManagerComponent implements OnInit {
         },
         {
           label: 'Renommer',
-          icon: 'pi pi-fw pi-pencil'
+          icon: 'pi pi-fw pi-pencil',
+          command:() =>(this.renameProject=true)
         },
         {
           label: 'Supprimer',
@@ -198,4 +202,5 @@ export class ProjecManagerComponent implements OnInit {
       ];
     }
   }
+ 
 }
