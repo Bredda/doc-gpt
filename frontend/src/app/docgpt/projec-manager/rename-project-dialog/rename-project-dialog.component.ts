@@ -1,3 +1,4 @@
+import { ContextService } from './../../services/context.service';
 import { Component, EventEmitter, Input, Output,OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { ProjectService } from '../../services';
@@ -22,12 +23,13 @@ export class RenameProjectDialogComponent  implements OnInit {
   });
   constructor(    private messageService: MessageService,
     private projectService: ProjectService,
-    private router: Router
+    private router: Router,
+    private contextService:ContextService
 ) {}
   ngOnInit(): void {
     }
 
- 
+
   onRenameProject(){
     const ctrl = this.projectForm.get('name');
     if (ctrl && ctrl.value) {
@@ -39,10 +41,11 @@ export class RenameProjectDialogComponent  implements OnInit {
           summary: 'Confirmed',
           detail: 'Projet renomé'
         });
-        this.router.navigate(['project', this.targetProjectId]);
+
+        this.contextService.triggerProjectListRefresh(this.targetProjectId);
       });
     }
-    
+
   }
 
   onCancelCreate() {
