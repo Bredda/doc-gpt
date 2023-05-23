@@ -32,7 +32,7 @@ services:
       - 8123:8123
 
   motorhead:
-    build: tools/motorhead
+    image: ghcr.io/getmetal/motorhead:v1.0.2
     ports:
       - "${MOTORHEAD_PORT}:8080"
     links:
@@ -68,6 +68,11 @@ services:
     ports:
       - ${DOCGPT_ADMINER_PORT}:8080
 
+  unstructured-api:
+    image: quay.io/unstructured-io/unstructured-api:latest
+    ports:
+      - ${UNSTRUCTURED_API_PORT}:8000
+ 
 volumes:
   clickhouse_data:
   index_data:

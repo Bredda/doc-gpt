@@ -18,7 +18,9 @@ const config = {
   UPLOAD_PATH: process.env.DOCGPT_BACK_UPLOAD_PATH || './public/uploads',
   MOTORHEAD_HOST: process.env.MOTORHEAD_HOST || 'motorhead',
   MOTORHEAD_PORT: Number(process.env.MOTORHEAD_PORT) || 8081,
-  CHROMA_HOST: process.env.CHROMA_HOST || 'chroma'
+  CHROMA_HOST: process.env.CHROMA_HOST || 'chroma',
+  UNSTRUCTURED_API_HOST:process.env.UNSTRUCTURED_API_HOST || 'UNSTRUCTURED_API',
+  UNSTRUCTURED_API_PORT: Number(process.env.UNSTRUCTURED_API_PORT) || 8083
 };
 
 logger.debug('Settings');
@@ -28,5 +30,9 @@ logger.debug(
 );
 logger.debug(
   `Chroma - host: ${config.CHROMA_HOST}, port: ${config.CHROMA_PORT}`
+);
+
+logger.debug(
+  `UNSTRUCTURED_API - host: ${config.UNSTRUCTURED_API_HOST}, port: ${config.UNSTRUCTURED_API_PORT}`
 );
 export default config;

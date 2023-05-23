@@ -5,27 +5,16 @@ import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
 import logger from '../../common/logger';
 import { MIMEType } from 'util';
 import { OriginalDocument } from '../../domain/api';
+import { UnstructuredLoader } from "langchain/document_loaders/fs/unstructured";
+import config from '../../config/config';
 
 export class DocumentService {
   static createDocument = async (
     file: OriginalDocument | Express.Multer.File
   ) => {
     logger.debug(`Creating doc for file ${file.path}`);
-    let loader;
-    switch (file.mimetype) {
-      case 'text/plain':
-        loader = new TextLoader(file.path);
-        break;
-      case 'application/pdf':
-        loader = new PDFLoader(file.path, {
-          splitPages: false
-        });
-        break;
-      default:
-        loader = new TextLoader(file.path);
-        break;
-    }
-
+    let apiUrl=`http://${config.UNSTRUCTURED_API_HOST}:${config.UNSTRUCTURED_API_PORT}/general/v0/general`;
+    let loader = new UnstructuredLoader( apiUrl,file.path);
     return await loader.loadAndSplit(new RecursiveCharacterTextSplitter());
   };
 }
