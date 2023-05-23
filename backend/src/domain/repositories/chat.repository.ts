@@ -10,7 +10,7 @@ import {
 } from '../api/index';
 import { Language, LlmModel, ChatType } from '../api/enum';
 import { SourceDocument } from '../api/source-document';
-
+import path from 'path';
 export interface ICreateChatPayload {
   name: string;
   settings: {
@@ -150,14 +150,14 @@ export const addMessageWithSourceToChat = async (
           project: {
             id: projectId
           },
-          path: sd.metadata.source
+          path: path.join('public','uploads',projectId,sd.metadata.filename)
         }
       }
     );
 
     await AppDataSource.manager.save(SourceDocument, {
       pageContent: sd.pageContent,
-      source: sd.metadata.source,
+      source: sd.metadata.filename,
       to: sd.metadata.loc.lines.to,
       from: sd.metadata.loc.lines.from,
       originalDocId: originalDoc.id,
