@@ -1,12 +1,14 @@
-import { Get, Route, Tags, Post, Delete } from 'tsoa';
+import { Get, Route, Tags, Post, Delete, Put } from 'tsoa';
 import { NextFunction, Request, Response } from 'express';
 import {
   createNewProject,
   deleteProjectById,
   getProjectById,
-  getProjectsByUserId
+  getProjectsByUserId,
+  renameProjectById
 } from '../repositories/project.repository';
 import { ChromaService } from '../../llm/services/chroma.service';
+import { HttpCode } from '../../exceptions/exceptions';
 
 @Route('projects')
 @Tags('Project')
@@ -78,6 +80,22 @@ class ProjectController {
     }
     runAsync().catch(next);
   };
-}
+
+  @Put('/projects/:projectId')
+  static renameProjectById=async(req:Request,res:Response,next:NextFunction)=>{
+  async function runAsync() {
+    const userId = res.locals.jwtPayload.userId;
+    await renameProjectById(userId,req.params.projectId,req.body.name);
+        const projects = await getProjectsByUserId(
+          res.locals.jwtPayload.userId,
+          true
+        );
+    res.status(HttpCode.OK).send(projects);
+  }
+  runAsync().catch(next);
+  };
+  
+  }
+  
 
 export default ProjectController;

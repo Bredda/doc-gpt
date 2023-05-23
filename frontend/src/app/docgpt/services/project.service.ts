@@ -26,4 +26,7 @@ export class ProjectService {
   public updateProjectList(project: Project[]) {
     this.currentProjecChatList.next(project);
   }
+  public renameProject(projectId: string,name:string): Observable<Project[]> {
+    return this.httpClient.put<Project[]>(`${this.url}/${projectId}`, { name: name });
+  }
 }

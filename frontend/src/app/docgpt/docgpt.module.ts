@@ -23,6 +23,7 @@ import { CreateProjectDiagComponent } from './projec-manager/create-project-diag
 import { CreateChatDiagComponent } from './projec-manager/create-chat-diag/create-chat-diag.component';
 import { SummarizationPanelComponent } from './summarization-panel/summarization-panel.component';
 import { SummarizationManagerComponent } from './summarization-manager/summarization-manager.component';
+import { RenameProjectDialogComponent } from './projec-manager/rename-project-dialog/rename-project-dialog.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { SummarizationManagerComponent } from './summarization-manager/summariza
     CreateProjectDiagComponent,
     CreateChatDiagComponent,
     SummarizationPanelComponent,
-    SummarizationManagerComponent
+    SummarizationManagerComponent,
+    RenameProjectDialogComponent
   ],
   imports: [
     CommonModule,

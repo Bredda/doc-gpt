@@ -54,3 +54,14 @@ export const createNewProject = async (
     where: { name: payload.name }
   });
 };
+
+export const renameProjectById = async (
+  userId: string,
+  projectId: string,
+  projectName: string
+
+): Promise<any> => {
+  await AppDataSource.manager.update(Project,{id:projectId,userId:userId},{
+    name:projectName
+  });
+};
